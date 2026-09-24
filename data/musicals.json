@@ -1,0 +1,182 @@
+[
+  {
+    "title": "Hamilton",
+    "title_zh": "汉密尔顿",
+    "wiki": "Hamilton (musical)",
+    "year": 2015,
+    "composer": "Lin-Manuel Miranda",
+    "official_url": "https://hamiltonmusical.com",
+    "fever_query": "Hamilton musical"
+  },
+  {
+    "title": "The Phantom of the Opera",
+    "title_zh": "歌剧魅影",
+    "wiki": "The Phantom of the Opera (1986 musical)",
+    "year": 1986,
+    "composer": "Andrew Lloyd Webber",
+    "official_url": "https://www.thephantomoftheopera.com",
+    "fever_query": "The Phantom of the Opera musical"
+  },
+  {
+    "title": "Les Miserables",
+    "title_zh": "悲惨世界",
+    "wiki": "Les Miserables (musical)",
+    "year": 1985,
+    "composer": "Claude-Michel Schonberg",
+    "official_url": "https://www.lesmis.com",
+    "fever_query": "Les Miserables musical"
+  },
+  {
+    "title": "The Lion King",
+    "title_zh": "狮子王",
+    "wiki": "The Lion King (musical)",
+    "year": 1997,
+    "composer": "Elton John & Tim Rice",
+    "official_url": "https://www.lionking.com",
+    "fever_query": "The Lion King musical"
+  },
+  {
+    "title": "Wicked",
+    "title_zh": "魔法坏女巫",
+    "wiki": "Wicked (musical)",
+    "year": 2003,
+    "composer": "Stephen Schwartz",
+    "official_url": "https://wickedthemusical.com",
+    "fever_query": "Wicked musical"
+  },
+  {
+    "title": "Chicago",
+    "title_zh": "芝加哥",
+    "wiki": "Chicago (musical)",
+    "year": 1975,
+    "composer": "John Kander & Fred Ebb",
+    "official_url": "https://chicagothemusical.com",
+    "fever_query": "Chicago the musical"
+  },
+  {
+    "title": "Cats",
+    "title_zh": "猫",
+    "wiki": "Cats (musical)",
+    "year": 1981,
+    "composer": "Andrew Lloyd Webber",
+    "official_url": "https://www.catsthemusical.com",
+    "fever_query": "Cats musical"
+  },
+  {
+    "title": "Mamma Mia!",
+    "title_zh": "妈妈咪呀！",
+    "wiki": "Mamma Mia! (musical)",
+    "year": 1999,
+    "composer": "Benny Andersson & Bjorn Ulvaeus",
+    "official_url": "https://mammamiathemusical.com",
+    "fever_query": "Mamma Mia musical"
+  },
+  {
+    "title": "Dear Evan Hansen",
+    "title_zh": "致埃文·汉森",
+    "wiki": "Dear Evan Hansen",
+    "year": 2015,
+    "composer": "Benj Pasek & Justin Paul",
+    "official_url": "https://dearevanhansen.com",
+    "fever_query": "Dear Evan Hansen musical"
+  },
+  {
+    "title": "Hadestown",
+    "title_zh": "哈迪斯城",
+    "wiki": "Hadestown",
+    "year": 2016,
+    "composer": "Anais Mitchell",
+    "official_url": "https://hadestown.com",
+    "fever_query": "Hadestown musical"
+  },
+  {
+    "title": "Six",
+    "title_zh": "六位皇后",
+    "wiki": "Six (musical)",
+    "year": 2017,
+    "composer": "Toby Marlow & Lucy Moss",
+    "official_url": "https://www.sixthemusical.com",
+    "fever_query": "Six the musical"
+  },
+  {
+    "title": "The Book of Mormon",
+    "title_zh": "摩门经",
+    "wiki": "The Book of Mormon (musical)",
+    "year": 2011,
+    "composer": "Parker, Lopez & Stone",
+    "official_url": "https://bookofmormonbroadway.com",
+    "fever_query": "The Book of Mormon musical"
+  },
+  {
+    "title": "Moulin Rouge!",
+    "title_zh": "红磨坊！",
+    "wiki": "Moulin Rouge! (musical)",
+    "year": 2018,
+    "composer": "Various (Jukebox)",
+    "official_url": "https://moulinrougemusical.com",
+    "fever_query": "Moulin Rouge musical"
+  },
+  {
+    "title": "Beetlejuice",
+    "title_zh": "阴间大法师",
+    "wiki": "Beetlejuice (musical)",
+    "year": 2018,
+    "composer": "Eddie Perfect",
+    "official_url": "https://beetlejuicebroadway.com",
+    "fever_query": "Beetlejuice musical"
+  },
+  {
+    "title": "Heathers: The Musical",
+    "title_zh": "希德姐妹帮",
+    "wiki": "Heathers: The Musical",
+    "year": 2014,
+    "composer": "Laurence O'Keefe & Kevin Murphy",
+    "official_url": "https://heathersthemusical.com",
+    "fever_query": "Heathers the musical"
+  },
+  {
+    "title": "Come From Away",
+    "title_zh": "来自远方",
+    "wiki": "Come from Away",
+    "year": 2013,
+    "composer": "Irene Sankoff & David Hein",
+    "official_url": "https://comefromaway.com",
+    "fever_query": "Come From Away musical"
+  },
+  {
+    "title": "Waitress",
+    "title_zh": "女招待",
+    "wiki": "Waitress (musical)",
+    "year": 2015,
+    "composer": "Sara Bareilles",
+    "official_url": "https://waitressthemusical.com",
+    "fever_query": "Waitress musical"
+  },
+  {
+    "title": "Newsies",
+    "title_zh": "报童",
+    "wiki": "Newsies (musical)",
+    "year": 2011,
+    "composer": "Alan Menken & Jack Feldman",
+    "official_url": "https://newsiesthemusical.com",
+    "fever_query": "Newsies musical"
+  },
+  {
+    "title": "Frozen",
+    "title_zh": "冰雪奇缘",
+    "wiki": "Frozen (musical)",
+    "year": 2017,
+    "composer": "Kristen Anderson-Lopez & Robert Lopez",
+    "official_url": "https://frozenthemusical.com",
+    "fever_query": "Frozen musical"
+  },
+  {
+    "title": "Fiddler on the Roof",
+    "title_zh": "屋顶上的小提琴手",
+    "wiki": "Fiddler on the Roof",
+    "year": 1964,
+    "composer": "Jerry Bock & Sheldon Harnick",
+    "official_url": "https://fiddlermusical.com",
+    "fever_query": "Fiddler on the Roof musical"
+  }
+]

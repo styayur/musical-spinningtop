@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Spinning Top · 每日音乐剧</title>
+  <meta name="description" content="每天为你推送一部音乐剧：经典剧照、官方简介、官网与 Fever 演出信息。">
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎭</text></svg>">
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">🎭</span>
+      <div class="brand-text">
+        <h1>Spinning Top</h1>
+        <p class="tagline">每日音乐剧 · 转起来的那一张卡片</p>
+      </div>
+    </div>
+    <div class="date-pill" id="datePill">—</div>
+  </header>
+
+  <main class="stage">
+    <button class="nav-arrow left" id="prevBtn" aria-label="前一天" title="前一天">&#8249;</button>
+
+    <div class="scene">
+      <div class="card" id="card">
+        <!-- 正面：剧照 + 向下滚动看简介 -->
+        <section class="face front">
+          <div class="hero" id="hero">
+            <div class="hero-scrim"></div>
+            <div class="hero-meta">
+              <span class="chip" id="yearChip">—</span>
+              <h2 class="hero-title" id="title">载入中…</h2>
+              <p class="hero-sub" id="composer">—</p>
+            </div>
+          </div>
+          <div class="scroll-hint" id="scrollHint">
+            <span class="mouse"></span>
+            <span>向下滚动 · 官方简介</span>
+          </div>
+          <div class="front-body" id="frontBody">
+            <div class="gallery" id="gallery" hidden></div>
+            <h3 class="section-title">官方简介 <span class="source-tag" id="translatorTag"></span></h3>
+            <p class="intro" id="intro">正在抓取简介并翻译…</p>
+            <p class="flip-hint">👆 左键单击卡片翻转 · 查看官网 / Fever 演出信息</p>
+          </div>
+        </section>
+
+        <!-- 背面：官网 + Fever -->
+        <section class="face back">
+          <div class="back-inner">
+            <p class="back-kicker">TICKETS &amp; INFO</p>
+            <h2 class="back-title" id="backTitle">—</h2>
+            <p class="back-sub">选择一个渠道，看看本剧的演出与购票信息</p>
+            <div class="back-links">
+              <a class="btn official" id="officialBtn" href="#" target="_blank" rel="noopener">
+                <span class="btn-emoji">🌐</span>
+                <span class="btn-label">官方网站<small>Official Site</small></span>
+              </a>
+              <a class="btn fever" id="feverBtn" href="#" target="_blank" rel="noopener">
+                <span class="btn-emoji">🎟️</span>
+                <span class="btn-label">Fever 演出信息<small>Fever Events</small></span>
+              </a>
+              <a class="btn wiki" id="wikiBtn" href="#" target="_blank" rel="noopener">
+                <span class="btn-emoji">📖</span>
+                <span class="btn-label">维基百科<small>Wikipedia</small></span>
+              </a>
+            </div>
+            <p class="back-hint">再点一下空白处，翻回正面</p>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <button class="nav-arrow right" id="nextBtn" aria-label="后一天" title="后一天">&#8250;</button>
+  </main>
+
+  <footer class="foot">
+    <button class="today-btn" id="todayBtn">回到今日</button>
+    <p class="credit">数据来源：Wikipedia（简介经 deep-translator 免费翻译） · AGPL-3.0</p>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
