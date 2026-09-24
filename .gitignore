@@ -14,3 +14,9 @@ data/translations.json
 Thumbs.db
 .idea/
 .vscode/
+
+data/runtime/
+artifacts/
+.pytest_cache/
+_site/
+dist/

@@ -1,138 +1,122 @@
-# 🎭 Spinning Top · 每日音乐剧
+# Spinning Top · 每日音乐剧
 
-> 打开就转出来一张音乐剧卡片：经典剧照、官方简介、官网与 Fever 演出信息，一天一部。
+从 **2,650 部**真实剧目中，每天随机遇见一部。无需账号或 API Key。
 
-**Spinning Top** 是一个极轻量的每日音乐剧小应用。运行一个 Python 程序（或打开它托管的网页），
-就会以 **3D 卡片** 的形式为你“推送”一部音乐剧：
+**[在线使用](https://styayur.github.io/musical-spinningtop/)** · **[下载 v2.0.0](https://github.com/styayur/musical-spinningtop/releases/tag/v2.0.0)** · [更新记录](CHANGELOG.md)
 
-| 交互 | 效果 |
-| --- | --- |
-| 🖼️ 卡片正面 | 动态抓取的**经典剧照/海报** |
-| 🖱️ 滚轮向下 | 查看 **官方简介**（Wikipedia 实时抓取，经 `deep-translator` **免费**翻译为中文） |
-| 👆 左键单击 | 卡片 **3D 翻转**，露出**官网**与 **Fever 演出信息**链接 |
+双击 `run.bat`，或运行 `python app.py`，打开程序给出的本地地址即可使用。
 
----
+## 已实现
 
-## ✨ 特性
+- **每日抽取**：每天第一次访问时，使用 `secrets.choice`（操作系统提供的安全随机源）等概率抽取一部，并把剧目快照保存到 SQLite。刷新页面、重启、更新片库都不会改变该日结果。
+- **不放回抽取**：每日片单和“再抽一部”分别维护已抽记录；每轮覆盖全部可用剧目，耗尽后开启新一轮。每轮交界避免连续重复（仅一部可用时除外）。两种模式之间可能遇到同一部。
+- **真正的大型来源片库**：附带从 Wikipedia 的 156 个年份分类抓取、按页面 ID 去重的片库。收录经典、冷门及不同国家的作品；保留原始条目链接，不编造剧名或官网。
+- **离线可用**：片库和超过 2,600 篇百科摘要随程序附带。联网时后台更新当前作品资料；断网时仍可抽取并阅读已有摘要。图片是外部链接，未下载的图片离线不可用。
+- **日期回看**：左右按钮或日期选择器查看其他日期，点击“回到今日”返回。尚未打开过的日期在第一次查看时抽取，包括过去和未来日期；它不是历史演出档案。
+- **片库更新**：点击“更新片库”启动后台全量抓取。独立运行时，片库超过 7 天会在启动时自动更新；完整抓取成功后才替换，失败保留现有片库。页面显示进度、错误和实际条目数。
+- **翻转卡片**：点击封面或“翻面看链接”，查看百科、已收录官网和演出搜索。支持键盘、手机、减少动态效果偏好和请求失败重试。
 
-- **每日一部**：按日期（一年中的第几天）从片单里轮换，每天打开都是不同剧目；页面上可左右箭头翻看相邻日期、一键“回到今日”。
-- **动态抓取**：剧照、海报与简介来自 [Wikipedia API](https://www.mediawiki.org/wiki/API:Main_page)，每次打开都是最新内容。
-- **免费翻译**：调用 [`deep-translator`](https://github.com/nidhaloff/deep-translator) 的免费后端
-  （Google 翻译 → MyMemory 兜底）把简介翻成中文；翻译结果自动缓存到本地，离线/被限流时回退到内置中文摘要。
-- **零密钥**：全程无需任何 API Key，开箱即用。
-- **响应式**：手机、平板、桌面均可正常翻转与滚动。
+## 网站版与本地版
 
----
+网站发布在 [GitHub Pages](https://styayur.github.io/musical-spinningtop/)，无需 Python。浏览器使用 `crypto.getRandomValues` 和拒绝采样避免取模偏差，使用 IndexedDB 事务保存每日结果与抽取周期。每日日期以浏览器所在时区为准；同一浏览器的多个标签页共享记录，不同浏览器/设备分别保存，清除网站数据会重置历史。
 
-## 🚀 快速开始
+网站首次下载片库后保存数据缓存，后续可在数据接口暂时不可用时继续抽取。它没有离线应用壳：完全断网时重新打开网页仍取决于浏览器对页面本身的缓存。网站的“检查片库更新”下载最新发布快照；Python 本地版则直接从 Wikipedia 抓取。网页摘要使用发布时附带的数据，实时获取中文简介请使用本地版。网站图片仍需要访问外部图片地址。
 
-需要 **Python 3.9+**（已在 3.14 测试）。
+GitHub Actions 在每次推送 `main` 后执行后端与浏览器测试，再部署网站；每周一 UTC 04:23 尝试重抓片库与摘要并部署。定时抓取失败会保留上一版网站。定时快照通过网站的 `data/site-catalog.json` 提供，不自动提交到仓库，Release 中的数据保持发布时版本。
 
-### Windows（推荐，双击即可）
+构建网站：
 
-双击 `run.bat`。首次运行会自动创建 `.venv` 虚拟环境并安装依赖，然后打开浏览器。
+```powershell
+.venv\Scripts\python.exe build_site.py
+python -m http.server 8080 --directory _site
+```
 
-### 通用方式
+部署内容仅包含公开片库、前端资源和 LICENSE，**不包含本机抽取历史或 SQLite 数据库**。网站持续提供仓库完整源码入口；代码采用 AGPL-3.0-only，资料按各自许可标注。
 
-```bash
-# 1) 创建并激活虚拟环境
+## 运行
+
+需要 **Python 3.9+**（本次在 Windows / Python 3.14 验证）。
+
+```powershell
 python -m venv .venv
-# Windows:
-.venv\Scripts\activate
-# macOS / Linux:
-source .venv/bin/activate
-
-# 2) 安装依赖
-pip install -r requirements.txt
-
-# 3) 运行（自动打开浏览器）
-python app.py
+.venv\Scripts\python.exe -m pip install -r requirements.txt
+.venv\Scripts\python.exe app.py
 ```
 
-打开 <http://127.0.0.1:5000/> 即可。命令行参数：
+macOS / Linux 使用 `.venv/bin/python`。程序默认仅监听本机 `127.0.0.1:5000`。
 
-```bash
-python app.py 8000            # 指定端口
-python app.py 8000 --no-browser   # 不自动打开浏览器
+```powershell
+.venv\Scripts\python.exe app.py 8000 --no-browser
 ```
 
-环境变量：`PORT`（端口）、`NO_BROWSER=1`（不自动打开浏览器）。
+环境变量：`PORT` 指定端口，`NO_BROWSER=1` 关闭自动打开浏览器，`SPINNINGTOP_DATA_DIR` 指定运行数据目录（默认 `data/runtime`）。
 
----
+## 随机与存储规则
 
-## 🧠 工作原理
+这里的“随机”是操作系统安全随机源提供的随机抽样，不是按日期取模、热门推荐或固定种子排序。每次从当前模式尚未抽过的剧目集合中均匀抽取。每日结果按运行程序的电脑本地日期分组，同一运行数据目录的使用者共享结果，不同安装各自随机。页面停留在今日时，每分钟检查是否跨日；历史浏览不会自动跳走。
 
-```
-python app.py
-      │  按“今天”的日序数选一部剧
-      ▼
-data/musicals.json  ──▶  Wikipedia API（剧照 + 简介 + 图集）
-                              │
-                              ▼
-                    deep-translator 免费翻译（Google → MyMemory）
-                              │
-                              ▼
-               /api/musical  ──▶  浏览器 3D 翻转卡片
-```
+SQLite 的 `BEGIN IMMEDIATE` 事务确保多个标签页或并发请求不会为同一天生成不同结果。更新片库后新增剧目可进入未抽集合，已保存日期不受影响。不要删除 `data/runtime/spinningtop.sqlite3`，否则每日记录、已抽记录和动态资料缓存会重置。
 
-1. **选片**：`today_musical()` 用 `date.today().toordinal() % len(musicals)` 决定当日剧目，
-   因此每天自动轮换，且对所有人一致、可复现。
-2. **抓取**：`fetch_wikipedia()` 拉取条目的首段简介（`extracts`）、题图（`pageimages`）与链接；
-   `fetch_gallery()` 再取若干张剧照/海报组成图集。
-3. **翻译**：`translate_via_deep()` 依次尝试 `GoogleTranslator`、`MyMemoryTranslator`（均为免费、无需密钥）；
-   成功结果写入 `data/translations.json` 缓存。若两者都不可用，回退到 `data/summaries_zh.json` 的内置中文摘要。
-4. **渲染**：前端单页卡片，滚轮向下看简介，单击翻面看链接。
+自由抽取使用 POST：同一次请求成功返回一部。不为网络中断的 POST 自动重试，以免重复消耗抽取记录。
 
-> 为什么 Fever 链接是 Google 站内搜索？
-> Fever（feverup.com）没有稳定的公开搜索 URL，因此链接使用
-> `https://www.google.com/search?q=<剧名> site:feverup.com`，能稳定直达该剧在 Fever 上的演出页。
+## 数据范围与来源
 
----
+附带快照于 **2026-09-25** 抓取。候选来源为英文 Wikipedia 的 [Musicals by year](https://en.wikipedia.org/wiki/Category:Musicals_by_year)，仅遍历形如 `Category:2026 musicals` 的直接年份分类，完整处理 API 分页；不递归进入音乐电影分类。原始候选 2,676 条，另排除 26 条已识别的小说、电影、电视节目、唱片或团体主条目，实际片库为 2,650 条。排除理由记录在 `data/exclusions.json`，每次更新同样应用。
 
-## 📁 项目结构
+这不是全球所有音乐剧的完整名录，也不是某地区当前正在演出的剧目列表。来源分类包含部分轻歌剧、歌舞综艺、概念音乐剧等相邻形式；分类、年份和资料完整性取决于来源的社区维护。年份取所属年份分类的最早值，不应理解为统一的百老汇首演年份。
 
-```
-musical/_spinningtop
-├── app.py                 # Flask 后端：选片、抓取、翻译、接口
-├── run.bat                # Windows 一键启动
-├── requirements.txt       # 依赖（Flask / requests / deep-translator）
-├── data/
-│   ├── musicals.json      # 片单（20 部，可自行增删）
-│   └── summaries_zh.json  # 内置中文摘要（翻译兜底）
-├── templates/
-│   └── index.html         # 单页卡片
-├── static/
-│   ├── style.css          # 剧场风样式 + 3D 翻转
-│   └── app.js             # 取数、渲染、翻转、滚动交互
-└── LICENSE                # AGPL-3.0
+简介优先读取中文 Wikipedia；没有中文条目时使用已有中文摘要或明确标注的英文摘要。取消了原先没有请求超时的免费翻译调用，不把百科摘要称为“官方简介”。可展开英文原文、点击来源核对。部分条目没有简介或可用海报，会显示清楚的占位说明；所有图像均为条目提供的题图，并不保证是剧照。
+
+官网仅使用原有人工补充的链接，可能随时间失效；其余剧目提供“查找官网与演出”。Fever 按钮是 Google 对 `feverup.com` 的站内搜索，**不代表已找到当前演出或余票**。
+
+抓取遵循 [MediaWiki Categorymembers](https://www.mediawiki.org/wiki/API:Categorymembers) 与 [Continue](https://www.mediawiki.org/wiki/API:Continue) 协议：最多 3 个并行连接、请求超时、一次重试、明确 User-Agent。摘要以 20 个页面为一批抓取。详情请求合并去重，最多排队 12 部；成功缓存 7 天，失败冷却 5 分钟。
+
+## 文件与维护
+
+| 文件 | 用途 |
+| --- | --- |
+| `build_site.py` | 生成 GitHub Pages 网站到 `_site/` |
+| `static/static-api.js` | 浏览器安全随机与 IndexedDB 存储 |
+| `.github/workflows/pages.yml` | 测试、定时片库更新与网站部署 |
+| `app.py` | Flask 接口、SQLite 抽取、后台详情缓存 |
+| `catalog.py` | 分页抓取、去重、原子发布完整片库 |
+| `cache_articles.py` | 重建可随程序分发的离线摘要 |
+| `data/catalog.json` | 随程序附带的真实剧目快照 |
+| `data/articles.json` | 附带英文摘要、部分中文名、图片和出处链接 |
+| `data/musicals.json` | 人工补充的中文名、创作者与官网信息 |
+| `data/exclusions.json` | 已核对的非目标条目及排除理由 |
+| `data/runtime/` | 本机数据库、更新后的片库，不提交 Git |
+| `tests/` | 后端回归和浏览器功能测试 |
+
+重建分发用快照（需要联网；中途失败不会覆盖旧文件）：
+
+```powershell
+.venv\Scripts\python.exe catalog.py
+.venv\Scripts\python.exe cache_articles.py
 ```
 
-## ➕ 添加/修改剧目
+日常使用点击界面的“更新片库”即可，更新保存在运行目录。人工补充信息通过 `wiki` 字段匹配真实条目；增加新的抽取作品应通过来源分类或维护 `data/catalog.json` 中有明确来源的记录。
 
-编辑 `data/musicals.json`，每部剧一个对象：
+## 接口与测试
 
-```json
-{
-  "title": "Hamilton",
-  "title_zh": "汉密尔顿",
-  "wiki": "Hamilton (musical)",
-  "year": 2015,
-  "composer": "Lin-Manuel Miranda",
-  "official_url": "https://hamiltonmusical.com",
-  "fever_query": "Hamilton musical"
-}
+- `GET /api/musical`：今天；可选 `date=YYYY-MM-DD` 或兼容旧版 `offset=-1`。
+- `POST /api/random`：自由抽取，不改变今日结果。
+- `GET /api/details?id=en:页面ID`：当前资料缓存及加载状态。
+- `GET /api/catalog`：规模、更新时间、同步进度和本机今日日期。
+- `POST /api/catalog/refresh`：启动后台更新（60 秒内不重复启动）。
+
+```powershell
+.venv\Scripts\python.exe -m unittest discover -s tests -v
+# 浏览器测试：另开终端运行应用，再执行（测试期间会产生抽取记录）
+python -m pip install playwright
+python -m playwright install chromium
+python tests/browser_smoke.py http://127.0.0.1:5000
+# 网站版回归测试（先运行 build_site.py）
+python tests/site_smoke.py
 ```
 
-- `wiki`：对应英文维基百科的条目名（用于抓取简介与剧照）。
-- `fever_query`：用于生成 Fever 演出信息搜索链接。
+测试覆盖不重复抽取、所有候选可达、跨实例持久化、并发同日一致性、无网络首屏、错误日期、更新失败回退、分页去重、中文来源与英文回退，以及桌面和移动端交互。统计检验不能证明随机源的物理随机性；实现直接使用系统随机源，而不是手写伪随机公式。
 
----
+## 许可
 
-## ⚠️ 说明
-
-- 剧照、海报与简介版权归各自权利人所有，本应用仅通过 Wikipedia API 引用展示，请勿用于商业用途。
-- 免费翻译后端（Google / MyMemory）存在速率限制，属正常现象；应用已做缓存与兜底，不影响日常使用。
-
-## 📄 许可证
-
-[AGPL-3.0](./LICENSE) © 2026
+程序代码为 [AGPL-3.0](LICENSE)。附带 Wikipedia 文字摘要按 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) 使用；为截短摘录，原条目和贡献者历史可通过每条 `intro_source` 链接访问。摘要数据文件包含许可说明。图片未打包下载，其各自许可、作者与使用条件见 `image_source` 文件页面，可能涉及非自由图片；代码许可不替代内容本身的许可。

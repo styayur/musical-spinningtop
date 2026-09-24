@@ -2,87 +2,55 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Spinning Top · 每日音乐剧</title>
-  <meta name="description" content="每天为你推送一部音乐剧：经典剧照、官方简介、官网与 Fever 演出信息。">
+  <meta name="description" content="从数千部真实音乐剧中，每天随机遇见一部。">
   <link rel="stylesheet" href="/static/style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎭</text></svg>">
 </head>
 <body>
-  <div class="backdrop" aria-hidden="true"></div>
-
   <header class="topbar">
-    <div class="brand">
-      <span class="brand-mark">🎭</span>
-      <div class="brand-text">
-        <h1>Spinning Top</h1>
-        <p class="tagline">每日音乐剧 · 转起来的那一张卡片</p>
-      </div>
-    </div>
-    <div class="date-pill" id="datePill">—</div>
+    <a class="brand" href="./" aria-label="每日音乐剧首页"><span aria-hidden="true">✳</span><div><h1>Spinning Top</h1><p>每日音乐剧</p></div></a>
+    <div class="library"><span id="catalogCount">正在读取片库…</span><button id="syncBtn" class="text-btn">更新片库</button></div>
   </header>
-
-  <main class="stage">
-    <button class="nav-arrow left" id="prevBtn" aria-label="前一天" title="前一天">&#8249;</button>
-
-    <div class="scene">
-      <div class="card" id="card">
-        <!-- 正面：剧照 + 向下滚动看简介 -->
-        <section class="face front">
-          <div class="hero" id="hero">
-            <div class="hero-scrim"></div>
-            <div class="hero-meta">
-              <span class="chip" id="yearChip">—</span>
-              <h2 class="hero-title" id="title">载入中…</h2>
-              <p class="hero-sub" id="composer">—</p>
-            </div>
-          </div>
-          <div class="scroll-hint" id="scrollHint">
-            <span class="mouse"></span>
-            <span>向下滚动 · 官方简介</span>
-          </div>
-          <div class="front-body" id="frontBody">
-            <div class="gallery" id="gallery" hidden></div>
-            <h3 class="section-title">官方简介 <span class="source-tag" id="translatorTag"></span></h3>
-            <p class="intro" id="intro">正在抓取简介并翻译…</p>
-            <p class="flip-hint">👆 左键单击卡片翻转 · 查看官网 / Fever 演出信息</p>
-          </div>
-        </section>
-
-        <!-- 背面：官网 + Fever -->
-        <section class="face back">
-          <div class="back-inner">
-            <p class="back-kicker">TICKETS &amp; INFO</p>
-            <h2 class="back-title" id="backTitle">—</h2>
-            <p class="back-sub">选择一个渠道，看看本剧的演出与购票信息</p>
-            <div class="back-links">
-              <a class="btn official" id="officialBtn" href="#" target="_blank" rel="noopener">
-                <span class="btn-emoji">🌐</span>
-                <span class="btn-label">官方网站<small>Official Site</small></span>
-              </a>
-              <a class="btn fever" id="feverBtn" href="#" target="_blank" rel="noopener">
-                <span class="btn-emoji">🎟️</span>
-                <span class="btn-label">Fever 演出信息<small>Fever Events</small></span>
-              </a>
-              <a class="btn wiki" id="wikiBtn" href="#" target="_blank" rel="noopener">
-                <span class="btn-emoji">📖</span>
-                <span class="btn-label">维基百科<small>Wikipedia</small></span>
-              </a>
-            </div>
-            <p class="back-hint">再点一下空白处，翻回正面</p>
-          </div>
-        </section>
-      </div>
+  <main>
+    <section class="invitation"><h2>把今天，交给一场好戏。</h2><p>经典之外，还有许多未曾听过的名字。</p></section>
+    <div class="date-nav" aria-label="每日片单日期">
+      <button class="nav-arrow" id="prevBtn" aria-label="前一天">‹</button>
+      <div><label for="dateInput" id="datePill">每日随机</label><input id="dateInput" type="date" min="1900-01-01" max="2200-12-31" aria-label="选择片单日期"></div>
+      <button class="nav-arrow" id="nextBtn" aria-label="后一天">›</button>
     </div>
-
-    <button class="nav-arrow right" id="nextBtn" aria-label="后一天" title="后一天">&#8250;</button>
+    <div class="scene">
+      <article class="card" id="card" aria-busy="true">
+        <section class="face front" id="frontFace" aria-label="剧目介绍">
+          <div class="hero" id="hero"><div class="hero-art" aria-hidden="true">✳</div><div class="hero-scrim"></div><div class="hero-meta"><span class="chip" id="yearChip">音乐剧</span><h2 id="title">即将开场</h2><p id="composer">正在抽取今天的音乐剧…</p></div></div>
+          <div class="front-body" id="frontBody" tabindex="0" aria-label="滚动阅读简介">
+            <div class="section-heading"><h3>剧目简介</h3><span id="translatorTag" class="source-tag"></span></div>
+            <p id="intro" class="intro">请稍候。</p>
+            <details id="original" hidden><summary>查看英文原文</summary><p id="introEn" class="intro" lang="en"></p></details>
+            <div class="source-links"><a id="introSource" target="_blank" rel="noopener noreferrer" hidden>阅读来源条目</a><a id="imageSource" target="_blank" rel="noopener noreferrer" hidden>图片来源与版权</a></div>
+          </div>
+        </section>
+        <section class="face back" id="backFace" aria-label="剧目相关链接" inert>
+          <div class="back-inner"><span class="back-symbol" aria-hidden="true">✳</span><h2 id="backTitle">—</h2><p>让好奇心，走得更远一点。</p>
+            <div class="back-links">
+              <a class="btn official" id="officialBtn" target="_blank" rel="noopener noreferrer" hidden>官方网站 <span>↗</span></a>
+              <a class="btn" id="searchBtn" target="_blank" rel="noopener noreferrer" hidden>查找官网与演出 <span>↗</span></a>
+              <a class="btn" id="feverBtn" target="_blank" rel="noopener noreferrer" hidden>搜索 Fever 演出 <span>↗</span></a>
+              <a class="btn" id="wikiBtn" target="_blank" rel="noopener noreferrer" hidden>阅读维基百科 <span>↗</span></a>
+            </div><p class="back-note">搜索结果不代表当前有演出或余票。<br>请以演出方公布的信息为准。</p>
+          </div>
+        </section>
+      </article>
+    </div>
+    <div class="card-status" id="detailStatus" role="status" aria-live="polite"></div>
+    <div class="actions"><button class="primary-btn" id="randomBtn">再抽一部 <span aria-hidden="true">↻</span></button><button id="todayBtn" class="secondary-btn">回到今日</button><button id="flipBtn" class="secondary-btn" aria-pressed="false">翻面看链接</button></div>
+    <p class="notice" id="notice" role="status" aria-live="polite"></p>
+    <button id="retryBtn" class="text-btn retry" hidden>重试加载</button>
+    <p class="draw-note">今日结果为你保留。再抽一部，自由探索。<br>两种抽取各自不放回，抽完整个片库后重新开始。</p>
   </main>
-
-  <footer class="foot">
-    <button class="today-btn" id="todayBtn">回到今日</button>
-    <p class="credit">数据来源：Wikipedia（简介经 deep-translator 免费翻译） · AGPL-3.0</p>
-  </footer>
-
+  <footer><p id="catalogStatus" role="status">片库可离线抽取；首次查看的简介和图片需要联网。</p><p>资料：<a href="https://en.wikipedia.org/wiki/Category:Musicals_by_year" target="_blank" rel="noopener noreferrer">Wikipedia</a> · 文字遵循 CC BY-SA，图片许可见来源页 · <a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank" rel="noopener noreferrer">AGPL-3.0</a></p></footer>
+  <footer class="source-code"><a href="https://github.com/styayur/musical-spinningtop" target="_blank" rel="noopener noreferrer">完整源码 · AGPL-3.0</a> · <a href="https://github.com/styayur/musical-spinningtop/releases" target="_blank" rel="noopener noreferrer">下载本地版</a></footer>
   <script src="/static/app.js"></script>
 </body>
 </html>
