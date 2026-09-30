@@ -1,7 +1,9 @@
-name: Test and deploy GitHub Pages
+name: Deploy GitHub Pages
 
 on:
-  push:
+  workflow_run:
+    workflows: [Verify]
+    types: [completed]
     branches: [main]
   workflow_dispatch:
   schedule:
@@ -18,9 +20,13 @@ concurrency:
 
 jobs:
   build:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -31,6 +37,8 @@ jobs:
         run: |
           python catalog.py
           python cache_articles.py
+      - name: Validate catalogue and summaries
+        run: python scripts/validate_catalog.py
       - name: Backend regression tests
         run: python -m unittest discover -s tests -v
       - name: Build website

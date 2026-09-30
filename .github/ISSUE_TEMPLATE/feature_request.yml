@@ -1,0 +1,30 @@
+name: Feature request
+description: Propose a scoped discovery or data-pipeline improvement.
+title: '[Feature]: '
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: User or data problem
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+    validations:
+      required: true
+  - type: textarea
+    id: provenance
+    attributes:
+      label: Data and licensing impact
+      description: Explain catalogue, Wikipedia text, image, translation, or provenance effects.
+    validations:
+      required: true
+  - type: textarea
+    id: offline
+    attributes:
+      label: Local and offline behaviour
+      description: Explain effects on Python mode, static mode, IndexedDB, SQLite, and rebuild reproducibility.
+    validations:
+      required: true

@@ -117,6 +117,18 @@ python tests/site_smoke.py
 
 测试覆盖不重复抽取、所有候选可达、跨实例持久化、并发同日一致性、无网络首屏、错误日期、更新失败回退、分页去重、中文来源与英文回退，以及桌面和移动端交互。统计检验不能证明随机源的物理随机性；实现直接使用系统随机源，而不是手写伪随机公式。
 
+## 数据来源与重建
+
+当前片库与摘要快照日期、条目数量、抓取命令和许可证边界见 [docs/data-provenance.md](docs/data-provenance.md)。运行 `python scripts/validate_catalog.py` 会在不联网的情况下检查重复 ID、重复 Wikipedia 页面 ID、标题冲突、缺失摘要和来源链接。`data/runtime/` 与 SQLite 数据库属于本机运行数据，不应提交到 Git。
+
+## 参与开发与反馈
+
+- 开发、数据变更规范和测试命令见 [CONTRIBUTING.md](CONTRIBUTING.md)。
+- GitHub Issues：可复现 bug 与范围明确的功能请求。
+- Discord：[加入社区](https://discord.gg/wA2xy6VPK)，用于快速交流、设计讨论与早期反馈；不是 SLA 支持渠道。
+- Security：按 [SECURITY.md](SECURITY.md) 私下报告，不要开公开 Issue。
+- Release 使用与项目当前 CHANGELOG 兼容的 SemVer/tag 习惯；维护者负责发布与 Pages 部署。
+
 ## 许可
 
 程序代码为 [AGPL-3.0](LICENSE)。附带 Wikipedia 文字摘要按 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) 使用；为截短摘录，原条目和贡献者历史可通过每条 `intro_source` 链接访问。摘要数据文件包含许可说明。图片未打包下载，其各自许可、作者与使用条件见 `image_source` 文件页面，可能涉及非自由图片；代码许可不替代内容本身的许可。
