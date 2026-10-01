@@ -6,6 +6,8 @@
 
 **Discover one musical a day from a curated 2,650-title catalogue.**
 
+**Status:** ⚪ Experimental
+
 [Live Site](https://styayur.github.io/musical-spinningtop/) · [Documentation](docs/data-provenance.md) · [Releases](https://github.com/styayur/musical-spinningtop/releases) · [Issues](https://github.com/styayur/musical-spinningtop/issues)
 
 [![build](https://github.com/styayur/musical-spinningtop/actions/workflows/ci.yml/badge.svg)](https://github.com/styayur/musical-spinningtop/actions/workflows/ci.yml)
@@ -13,6 +15,8 @@
 [![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)]()
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-222222?logo=githubpages&logoColor=white)]()
 [![offline](https://img.shields.io/badge/offline-first-0f172a)]()
+
+![Daily musical card](docs/assets/daily-card.png)
 
 </div>
 
@@ -130,6 +134,24 @@ python tests/site_smoke.py
 ## 数据来源与重建
 
 当前片库与摘要快照日期、条目数量、抓取命令和许可证边界见 [docs/data-provenance.md](docs/data-provenance.md)。运行 `python scripts/validate_catalog.py` 会在不联网的情况下检查重复 ID、重复 Wikipedia 页面 ID、标题冲突、缺失摘要和来源链接。`data/runtime/` 与 SQLite 数据库属于本机运行数据，不应提交到 Git。
+
+## Roadmap
+
+### Current
+
+- One-musical-a-day draw over a 2,650-title catalogue with offline summaries.
+
+### Next
+
+- Refresh the catalogue pipeline and stabilise the static web edition.
+
+### Future
+
+- Additional discovery modes and metadata views.
+
+### Not planned
+
+- Audio streaming or downloading copyrighted recordings; user accounts.
 
 ## 参与开发与反馈
 
