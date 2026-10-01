@@ -1,10 +1,20 @@
+<div align="center">
+
+<img src="docs/assets/brand/logo-mark.svg" width="84" alt="Spinning Top logo" />
+
 # Spinning Top · 每日音乐剧
 
-从 **2,650 部**真实剧目中，每天随机遇见一部。无需账号或 API Key。
+**Discover one musical a day from a curated 2,650-title catalogue.**
 
-**[在线使用](https://styayur.github.io/musical-spinningtop/)** · **[下载 v2.0.0](https://github.com/styayur/musical-spinningtop/releases/tag/v2.0.0)** · [更新记录](CHANGELOG.md)
+[Live Site](https://styayur.github.io/musical-spinningtop/) · [Documentation](docs/data-provenance.md) · [Releases](https://github.com/styayur/musical-spinningtop/releases) · [Issues](https://github.com/styayur/musical-spinningtop/issues)
 
-双击 `run.bat`，或运行 `python app.py`，打开程序给出的本地地址即可使用。
+[![build](https://github.com/styayur/musical-spinningtop/actions/workflows/ci.yml/badge.svg)](https://github.com/styayur/musical-spinningtop/actions/workflows/ci.yml)
+[![license: AGPL-3.0](https://img.shields.io/badge/license-AGPL--3.0-blue)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)]()
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-222222?logo=githubpages&logoColor=white)]()
+[![offline](https://img.shields.io/badge/offline-first-0f172a)]()
+
+</div>
 
 ## 已实现
 
