@@ -11,7 +11,7 @@
 [Live Site](https://styayur.github.io/musical-spinningtop/) · [Documentation](docs/data-provenance.md) · [Releases](https://github.com/styayur/musical-spinningtop/releases) · [Issues](https://github.com/styayur/musical-spinningtop/issues)
 
 [![build](https://github.com/styayur/musical-spinningtop/actions/workflows/ci.yml/badge.svg)](https://github.com/styayur/musical-spinningtop/actions/workflows/ci.yml)
-[![license: AGPL-3.0](https://img.shields.io/badge/license-AGPL--3.0-blue)](LICENSE)
+[![license: AGPL-3.0-only](https://img.shields.io/badge/license-AGPL--3.0--only-blue)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)]()
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-222222?logo=githubpages&logoColor=white)]()
 [![offline](https://img.shields.io/badge/offline-first-0f172a)]()
