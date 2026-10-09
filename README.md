@@ -1,7 +1,3 @@
-<div align="center">
-
-<img src="docs/assets/brand/logo-mark.svg" width="84" alt="Spinning Top logo" />
-
 # Spinning Top · 每日音乐剧
 
 **Discover one musical a day from a curated 2,650-title catalogue.**
@@ -12,13 +8,9 @@
 
 [![build](https://github.com/styayur/musical-spinningtop/actions/workflows/ci.yml/badge.svg)](https://github.com/styayur/musical-spinningtop/actions/workflows/ci.yml)
 [![license: AGPL-3.0-only](https://img.shields.io/badge/license-AGPL--3.0--only-blue)](LICENSE)
-[![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)]()
-[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-222222?logo=githubpages&logoColor=white)]()
-[![offline](https://img.shields.io/badge/offline-first-0f172a)]()
 
 ![Daily musical card](docs/assets/daily-card.png)
 
-</div>
 
 ## 已实现
 
