@@ -1,10 +1,16 @@
 # Spinning Top · 每日音乐剧
 
-从 **2,650 部**真实剧目中，每天随机遇见一部。无需账号或 API Key。
+**Discover one musical a day from a curated 2,650-title catalogue.**
 
-**[在线使用](https://styayur.github.io/musical-spinningtop/)** · **[下载 v2.0.0](https://github.com/styayur/musical-spinningtop/releases/tag/v2.0.0)** · [更新记录](CHANGELOG.md)
+**Status:** ⚪ Experimental
 
-双击 `run.bat`，或运行 `python app.py`，打开程序给出的本地地址即可使用。
+[Live Site](https://styayur.github.io/musical-spinningtop/) · [Documentation](docs/data-provenance.md) · [Releases](https://github.com/styayur/musical-spinningtop/releases) · [Issues](https://github.com/styayur/musical-spinningtop/issues)
+
+[![build](https://github.com/styayur/musical-spinningtop/actions/workflows/ci.yml/badge.svg)](https://github.com/styayur/musical-spinningtop/actions/workflows/ci.yml)
+[![license: AGPL-3.0-only](https://img.shields.io/badge/license-AGPL--3.0--only-blue)](LICENSE)
+
+![Daily musical card](docs/assets/daily-card.png)
+
 
 ## 已实现
 
@@ -120,6 +126,24 @@ python tests/site_smoke.py
 ## 数据来源与重建
 
 当前片库与摘要快照日期、条目数量、抓取命令和许可证边界见 [docs/data-provenance.md](docs/data-provenance.md)。运行 `python scripts/validate_catalog.py` 会在不联网的情况下检查重复 ID、重复 Wikipedia 页面 ID、标题冲突、缺失摘要和来源链接。`data/runtime/` 与 SQLite 数据库属于本机运行数据，不应提交到 Git。
+
+## Roadmap
+
+### Current
+
+- One-musical-a-day draw over a 2,650-title catalogue with offline summaries.
+
+### Next
+
+- Refresh the catalogue pipeline and stabilise the static web edition.
+
+### Future
+
+- Additional discovery modes and metadata views.
+
+### Not planned
+
+- Audio streaming or downloading copyrighted recordings; user accounts.
 
 ## 参与开发与反馈
 
