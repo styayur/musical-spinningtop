@@ -1,0 +1,14 @@
+[commands.lint]
+program = "python"
+args = ["scripts/validate_catalog.py"]
+timeout_secs = 300
+
+[commands.test]
+program = "python"
+args = ["-m", "unittest", "discover", "-s", "tests", "-v"]
+timeout_secs = 600
+
+[commands.build]
+program = "python"
+args = ["build_site.py"]
+timeout_secs = 600
