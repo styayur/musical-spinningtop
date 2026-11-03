@@ -9,6 +9,7 @@ import threading
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 from pathlib import Path
 from urllib.parse import quote
 
@@ -18,6 +19,35 @@ BASE = Path(__file__).resolve().parent
 USER_AGENT = "SpinningTop/2.0 (https://github.com/styayur; musical discovery)"
 API = "https://en.wikipedia.org/w/api.php"
 _local = threading.local()
+_request_lock = threading.Lock()
+_next_request = 0.0
+MAX_ATTEMPTS = 3
+MAX_RETRY_DELAY = 30
+REQUEST_BUDGET = 60
+
+
+def retry_delay(header, attempt):
+    """Honor delta-seconds/HTTP-date without retrying before a long cooldown."""
+    if header:
+        value = header.strip()
+        if value.isdigit():
+            return int(value)
+        try:
+            target = parsedate_to_datetime(value)
+            if target.tzinfo is None:
+                target = target.replace(tzinfo=timezone.utc)
+            return max(0, target.timestamp() - time.time())
+        except (ValueError, TypeError, OverflowError):
+            pass
+    return 2 ** (attempt + 1)
+
+
+def _wait_for_request(deadline):
+    delay = max(0, _next_request - time.monotonic())
+    if delay > MAX_RETRY_DELAY or time.monotonic() + delay >= deadline:
+        raise RuntimeError("Wikipedia cooldown exceeds request budget; previous snapshot retained")
+    if delay:
+        time.sleep(delay)
 
 
 def read_json(path, default):
@@ -41,24 +71,45 @@ def write_json(path, value):
 
 
 def wiki_query(params, language="en"):
+    global _next_request
     if not hasattr(_local, "session"):
         _local.session = requests.Session()
         _local.session.headers["User-Agent"] = USER_AGENT
     url = f"https://{language}.wikipedia.org/w/api.php"
-    for attempt in range(2):
-        try:
-            response = _local.session.get(url, params={
-                "format": "json", "formatversion": 2, "maxlag": 5, **params,
-            }, timeout=(5, 12))
-            response.raise_for_status()
-            result = response.json()
-            if "error" in result:
-                raise ValueError(result["error"].get("info", "Wikipedia API error"))
-            return result
-        except (requests.RequestException, ValueError):
-            if attempt:
-                raise
-            time.sleep(1)
+    # Discovery and article workers share one request/cooldown path. Serialize
+    # actual network traffic so a single 429 pauses all workers, not just one.
+    with _request_lock:
+        deadline = time.monotonic() + REQUEST_BUDGET
+        for attempt in range(MAX_ATTEMPTS):
+            _wait_for_request(deadline)
+            response = None
+            try:
+                response = _local.session.get(url, params={
+                    **params, "format": "json", "formatversion": 2, "maxlag": 5,
+                }, timeout=(5, 12))
+                if response.status_code in (429, 502, 503, 504):
+                    _next_request = time.monotonic() + max(0.5, retry_delay(response.headers.get("Retry-After"), attempt))
+                    if attempt + 1 == MAX_ATTEMPTS:
+                        response.raise_for_status()
+                    continue
+                response.raise_for_status()
+                result = response.json()
+                if "error" in result:
+                    error = result["error"]
+                    if error.get("code") == "maxlag":
+                        _next_request = time.monotonic() + max(0.5, retry_delay(response.headers.get("Retry-After"), attempt))
+                        if attempt + 1 < MAX_ATTEMPTS:
+                            continue
+                    raise ValueError(error.get("info", "Wikipedia API error"))
+                return result
+            except (requests.ConnectionError, requests.Timeout):
+                _next_request = time.monotonic() + retry_delay(None, attempt)
+                if attempt + 1 == MAX_ATTEMPTS:
+                    raise
+            finally:
+                _next_request = max(_next_request, time.monotonic() + 0.5)
+                if response is not None:
+                    response.close()
 
 
 def category_members(category, kind):
@@ -91,7 +142,7 @@ def discover(progress=lambda done, total: None):
         year = int(category[9:13])
         return year, list(category_members(category, "page"))
 
-    # Three connections at most; full continuation on every category.
+    # Three preparation workers; actual HTTP calls share a serial, paced gate.
     with ThreadPoolExecutor(max_workers=3) as pool:
         futures = [pool.submit(year_members, category) for category in categories]
         for done, future in enumerate(as_completed(futures), 1):
