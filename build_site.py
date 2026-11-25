@@ -54,7 +54,6 @@ def build(destination=None):
         shutil.copyfile(BASE / "static" / name, output / "static" / name)
     shutil.copyfile(BASE / "LICENSE", output / "LICENSE")
     (output / ".nojekyll").write_text("", encoding="utf-8")
-    print(f"Built {len(merged)} musicals into {output}")
     return output
 
 

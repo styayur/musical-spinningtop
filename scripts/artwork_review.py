@@ -127,7 +127,6 @@ def render_png(svg_path, png_path):
     try:
         from playwright.sync_api import sync_playwright
     except ImportError:
-        print(f"PNG skipped for {svg_path.name}: playwright is not installed")
         return False
     markup = svg_path.read_text(encoding="utf-8")
     html = "<!doctype html><meta charset='utf-8'><style>html,body{margin:0;background:#fff}</style>" + markup
@@ -215,9 +214,11 @@ def main():
         "budget_note": "Initial 5-25KB target was revised: these line plates are about 0.7-3KB. Padding to 5KB would add noise. The 60KB cap is enforced.",
     }
     (OUT / "stats.json").write_text(json.dumps(stats, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
-    render_png(OUT / "contact-sheet.svg", OUT / "contact-sheet.png")
-    render_png(OUT / "structure-sheet.svg", OUT / "structure-sheet.png")
-    print(json.dumps(stats, ensure_ascii=False, indent=2))
+    stats["png"] = {
+        "contact": render_png(OUT / "contact-sheet.svg", OUT / "contact-sheet.png"),
+        "structure": render_png(OUT / "structure-sheet.svg", OUT / "structure-sheet.png"),
+    }
+    (OUT / "stats.json").write_text(json.dumps(stats, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
 
 
 if __name__ == "__main__":

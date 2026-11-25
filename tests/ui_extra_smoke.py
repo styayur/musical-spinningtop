@@ -68,7 +68,6 @@ try:
         expect(sub.locator("#card")).to_have_attribute("aria-busy", "false")
         assert not any(urlparse(item).hostname == "upload.wikimedia.org" for item in external)
         browser.close()
-        print("Image states and subpath passed.")
 finally:
     root.shutdown()
     root.server_close()

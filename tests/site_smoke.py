@@ -122,7 +122,6 @@ try:
         assert used >= 1
 
         browser.close()
-        print('Static website passed: random cycles, concurrent draws, daily persistence, cross-tab consistency, cached-data fallback, mobile and license/source links.')
 finally:
     server.shutdown()
     server.server_close()
