@@ -7,6 +7,8 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright, expect
 
 BASE = Path(__file__).resolve().parents[1]
+ARTIFACTS = BASE / 'artifacts'
+ARTIFACTS.mkdir(exist_ok=True)
 
 class QuietHandler(SimpleHTTPRequestHandler):
     def log_message(self, *_):
@@ -29,7 +31,15 @@ try:
         page.wait_for_load_state('networkidle')
         expect(page.locator('#card')).to_have_attribute('aria-busy', 'false')
         assert page.locator('#title').inner_text() != '即将开场'
+        page.locator('#infoBtn').click()
+        page.locator('#tabAbout').click()
         expect(page.locator('#catalogCount')).to_contain_text('部可探索')
+        assert 'AGPL-3.0' in page.locator('#licenseNote').inner_text()
+        assert '下载本地版' not in page.content()
+        page.screenshot(path=str(ARTIFACTS / 'static-info.png'), full_page=True)
+        page.keyboard.press('Escape')
+        expect(page.locator('#infoBtn')).to_be_focused()
+        page.screenshot(path=str(ARTIFACTS / 'static-daily.png'), full_page=True)
         daily = page.evaluate("spinningTopStatic.request('/api/musical')")
         assert daily['total'] > 2000
         random = page.evaluate("async () => Promise.all(Array.from({length: 24}, () => spinningTopStatic.request('/api/random', {method: 'POST'})))")
@@ -57,7 +67,9 @@ try:
         for width in (390, 320):
             page.set_viewport_size({'width': width, 'height': 844})
             assert page.evaluate('document.documentElement.scrollWidth') == width
-        assert page.locator('.source-code').inner_text().find('AGPL-3.0') >= 0
+        assert page.locator('#repoLink').get_attribute('href') == 'https://github.com/styayur/musical-spinningtop'
+        src = page.locator('#artwork').get_attribute('src')
+        assert '/static/artwork/' in src and '.svg' in src
         assert not errors, errors
         context.close()
         # A small real-shaped catalogue lets us exhaust and restart a whole cycle.
@@ -75,6 +87,40 @@ try:
         assert drawn[6]['id'] != drawn[7]['id']
         invalid = page.evaluate("async () => { try { await spinningTopStatic.request('/api/musical?date=2026-02-30'); return false; } catch (_) { return true; } }")
         assert invalid
+        legacy_page = context.new_page()
+        legacy_page.goto(url)
+        legacy_page.wait_for_load_state('networkidle')
+        legacy_id = legacy_page.evaluate("""async () => {
+          const current = await spinningTopStatic.request('/api/musical?date=2031-05-05');
+          const db = await new Promise((resolve, reject) => {
+            const open = indexedDB.open('musical-spinningtop-v2', 1);
+            open.onsuccess = () => resolve(open.result);
+            open.onerror = () => reject(open.error);
+          });
+          await new Promise((resolve, reject) => {
+            const tx = db.transaction(['daily', 'cycles'], 'readwrite');
+            tx.objectStore('daily').put({id: current.id, title: 'OLD TITLE', intro_en: 'old text', image: 'https://upload.wikimedia.org/old.jpg'}, '2031-05-05');
+            tx.objectStore('daily').put({id: 'missing:removed', title: 'Gone Show', intro_en: 'kept'}, '2031-05-06');
+            tx.oncomplete = resolve;
+            tx.onabort = () => reject(tx.error);
+          });
+          return current.id;
+        }""")
+        legacy_page.reload()
+        legacy_page.wait_for_load_state('networkidle')
+        migrated = legacy_page.evaluate("spinningTopStatic.request('/api/musical?date=2031-05-05')")
+        assert migrated['id'] == legacy_id
+        assert migrated['title'] != 'OLD TITLE'
+        assert not migrated.get('display_image')
+        removed = legacy_page.evaluate("spinningTopStatic.request('/api/musical?date=2031-05-06')")
+        assert removed['title'] == 'Gone Show'
+        assert 'base.svg' in removed['artwork_url']
+        used = legacy_page.evaluate("""async () => {
+          const db = await new Promise(resolve => { const open = indexedDB.open('musical-spinningtop-v2', 1); open.onsuccess = () => resolve(open.result); });
+          return await new Promise(resolve => { const req = db.transaction('cycles').objectStore('cycles').get('daily'); req.onsuccess = () => resolve((req.result && req.result.used || []).length); });
+        }""")
+        assert used >= 1
+
         browser.close()
         print('Static website passed: random cycles, concurrent draws, daily persistence, cross-tab consistency, cached-data fallback, mobile and license/source links.')
 finally:

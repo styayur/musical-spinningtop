@@ -10,6 +10,8 @@ artifacts.mkdir(exist_ok=True)
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=True)
     page = browser.new_page(viewport={'width': 1440, 'height': 1000}, reduced_motion='reduce')
+    page.set_default_timeout(30000)
+    expect.set_options(timeout=30000)
     errors = []
     page.on('pageerror', lambda error: errors.append(str(error)))
     page.goto(url)
@@ -17,7 +19,11 @@ with sync_playwright() as p:
     expect(page.locator('#card')).to_have_attribute('aria-busy', 'false')
     today = page.locator('#dateInput').input_value()
     first = page.locator('#title').inner_text().split(' · ')[0]
+    page.locator('#infoBtn').click()
+    page.locator('#tabAbout').click()
     expect(page.locator('#catalogCount')).to_contain_text('部可探索')
+    page.screenshot(path=str(artifacts / 'info.png'), full_page=True)
+    page.keyboard.press('Escape')
     assert page.locator('#intro').inner_text()
     page.screenshot(path=str(artifacts / 'desktop.png'), full_page=True)
 
@@ -33,6 +39,7 @@ with sync_playwright() as p:
     page.locator('#randomBtn').click()
     expect(page.locator('#datePill')).to_have_text('自由探索')
     expect(page.locator('#card')).to_have_attribute('aria-busy', 'false')
+    page.screenshot(path=str(artifacts / 'random.png'), full_page=True)
     page.locator('#todayBtn').click()
     expect(page.locator('#datePill')).to_have_text('每日随机')
     expect(page.locator('#title')).to_contain_text(first)
@@ -41,6 +48,7 @@ with sync_playwright() as p:
     page.locator('#prevBtn').click()
     expect(page.locator('#dateInput')).not_to_have_value(today)
     expect(page.locator('#card')).to_have_attribute('aria-busy', 'false')
+    page.screenshot(path=str(artifacts / 'previous-date.png'), full_page=True)
     previous = page.locator('#title').inner_text().split(' · ')[0]
     page.locator('#nextBtn').click()
     expect(page.locator('#dateInput')).to_have_value(today)
@@ -64,6 +72,8 @@ with sync_playwright() as p:
     # Update states without starting another full remote crawl during a UI test.
     page.route('**/api/catalog/refresh', lambda route: route.fulfill(status=202, content_type='application/json', body='{"started":true,"sync":{"running":true}}'))
     page.route('**/api/catalog', lambda route: route.fulfill(content_type='application/json', body='{"total":2650,"updated_at":"2026-09-25T00:00:00Z","sync":{"running":true,"done":50,"total":156}}'))
+    page.locator('#infoBtn').click()
+    page.locator('#tabAbout').click()
     page.locator('#syncBtn').click()
     expect(page.locator('#catalogStatus')).to_contain_text('50 / 156')
     expect(page.locator('#syncBtn')).to_be_disabled()
@@ -73,6 +83,7 @@ with sync_playwright() as p:
     expect(page.locator('#syncBtn')).to_be_enabled()
     page.unroute('**/api/catalog')
     page.unroute('**/api/catalog/refresh')
+    page.locator('#infoClose').click()
 
     for width in (390, 320):
         page.set_viewport_size({'width': width, 'height': 844})

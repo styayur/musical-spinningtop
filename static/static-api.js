@@ -98,17 +98,32 @@
           chosen = pool[randomIndex(pool.length)];
           used.add(chosen.id);
           cycles.put({ used: Array.from(used), last: chosen.id }, kind);
-          if (day) tx.objectStore('daily').put(chosen, day);
+          if (day) tx.objectStore('daily').put({ id: chosen.id, v: 2 }, day);
         };
       }
       if (day) {
         const existing = tx.objectStore('daily').get(day);
-        existing.onsuccess = () => { if (existing.result) chosen = existing.result; else select(); };
+        existing.onsuccess = () => {
+          const stored = existing.result;
+          if (!stored) { select(); return; }
+          const id = typeof stored === 'string' ? stored : stored.id;
+          const latest = id ? entries.find(row => row.id === id) : null;
+          if (latest) {
+            chosen = latest;
+            if (!(stored && stored.v === 2 && Object.keys(stored).length <= 3)) {
+              tx.objectStore('daily').put({ id, v: 2 }, day);
+            }
+            return;
+          }
+          const legacy = stored && typeof stored === 'object' ? stored : { id: id || 'removed', title: '已移出目录的作品' };
+          chosen = { ...legacy, artwork_url: './static/artwork/base.svg', artwork_kind: 'fallback', artwork_reason: 'removed', display_image: null, removed: true };
+        };
       } else select();
     });
   }
   function payload(entry, day = null, mode = 'daily') {
     return { ...entry, date: day, mode, total: library.musicals.length, detail_status: 'ready',
+      display_image: entry.display_image || null,
       intro_zh: entry.intro_zh || entry.intro_en || '', translator: entry.translator || 'none',
       fever_url: 'https://www.google.com/search?q=' + encodeURIComponent(entry.title + ' musical site:feverup.com'),
       search_url: 'https://www.google.com/search?q=' + encodeURIComponent(entry.title + ' musical official') };
@@ -140,4 +155,10 @@
     throw new Error('不支持的请求。');
   }
   window.spinningTopStatic = { request: api };
+  document.addEventListener('DOMContentLoaded', () => {
+    const storage = document.getElementById('storageNote');
+    if (storage) storage.textContent = '每日结果保存在此浏览器。清除网站数据会重置记录，不会删除已发布的目录。';
+    const sync = document.getElementById('syncBtn');
+    if (sync) sync.textContent = '检查片库更新';
+  });
 })();

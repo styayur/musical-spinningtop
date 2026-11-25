@@ -16,8 +16,9 @@ from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import quote_plus
 
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, abort, jsonify, render_template, request, send_file
 
+from artwork.generate import annotate_display, ensure_artwork, ensure_base, resolve_artwork_path
 from catalog import BASE, discover, load_catalog, read_json, wiki_query, wiki_url, write_json
 
 LOG = logging.getLogger(__name__)
@@ -76,6 +77,31 @@ class Store:
         with self.connect() as db:
             db.execute('INSERT OR REPLACE INTO details VALUES (?, ?, ?)',
                        (identity, json.dumps(payload, ensure_ascii=False), time.time()))
+
+
+
+def resolve_saved(stored, entries):
+    """Keep the saved id, but show the current catalogue row when it still exists."""
+    if not isinstance(stored, dict):
+        return stored
+    identity = stored.get("id")
+    current = next((row for row in entries if row.get("id") == identity), None)
+    return current if current else stored
+
+
+def artwork_fields(entry, directory):
+    try:
+        artwork = ensure_artwork(entry, directory, "/artwork/")
+    except Exception:
+        LOG.exception("Artwork generation failed for %s", entry.get("id"))
+        artwork = {
+            "artwork_url": "/artwork/base.svg",
+            "artwork_kind": "fallback",
+            "artwork_family": "abstract",
+            "artwork_basis": [],
+            "artwork_reason": "error",
+        }
+    return annotate_display(entry, artwork)
 
 
 def fetch_details(entry):
@@ -196,13 +222,16 @@ def create_app(runtime_dir=None, background=True):
     application.extensions.update(store=store, library=library)
 
     def payload(entry, selected_date=None, mode='daily'):
-        bundled = read_json(BASE / 'data' / 'summaries_zh.json', {}).get(entry['title'], '')
+        title = entry.get('title', '')
+        bundled = read_json(BASE / 'data' / 'summaries_zh.json', {}).get(title, '')
         result = {**entry, 'intro_zh': bundled, 'intro_en': '', 'image': None,
                   'translator': 'bundled' if bundled else 'none', 'gallery': [],
-                  'fever_url': 'https://www.google.com/search?q=' + quote_plus(entry['title'] + ' musical site:feverup.com'),
-                  'search_url': 'https://www.google.com/search?q=' + quote_plus(entry['title'] + ' musical official'),
+                  'fever_url': 'https://www.google.com/search?q=' + quote_plus(title + ' musical site:feverup.com'),
+                  'search_url': 'https://www.google.com/search?q=' + quote_plus(title + ' musical official'),
                   'date': selected_date, 'mode': mode, 'total': len(library.snapshot())}
-        result.update(library.detail(entry))
+        if entry.get('id'):
+            result.update(library.detail(entry))
+        result.update(artwork_fields(result, store.directory / 'artwork'))
         if not result.get('title_zh'):
             result['title_zh'] = entry.get('title_zh', '')
         if bundled and result.get('translator') == 'none':
@@ -228,7 +257,7 @@ def create_app(runtime_dir=None, background=True):
         entries = library.snapshot()
         if not entries:
             return jsonify(error='片库为空，请恢复 data/catalog.json 或更新片库。'), 503
-        entry = store.pick(entries, selected.isoformat())
+        entry = resolve_saved(store.pick(entries, selected.isoformat()), entries)
         return jsonify(payload(entry, selected.isoformat()))
 
     @application.post('/api/random')
@@ -250,6 +279,18 @@ def create_app(runtime_dir=None, background=True):
         if not entry:
             return jsonify(error='剧目不存在。'), 404
         return jsonify(payload(entry))
+
+    @application.get('/artwork/<name>')
+    def artwork_file(name):
+        path = resolve_artwork_path(store.directory / 'artwork', name)
+        if path is None:
+            abort(404)
+        response = send_file(path, mimetype='image/svg+xml')
+        response.headers['X-Content-Type-Options'] = 'nosniff'
+        response.headers['Cache-Control'] = 'no-cache'
+        return response
+
+    ensure_base(store.directory / 'artwork')
 
     @application.get('/api/catalog')
     def catalog_status():

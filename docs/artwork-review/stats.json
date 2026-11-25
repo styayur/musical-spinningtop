@@ -1,0 +1,58 @@
+{
+  "seed": "spinningtop-artwork-sample-2026-11-25",
+  "sample_rule": "Fixed SHA-256 strata for empty text, remote image, length, year, and Chinese text, then abstract fillers replaced until each generated family is represented.",
+  "catalog_updated_at": "2026-09-24T16:36:48.116681+00:00",
+  "total": 2650,
+  "generated": 1212,
+  "abstract": 1438,
+  "fallback": 0,
+  "failed": 0,
+  "reasons": {
+    "insufficient": 1418,
+    "None": 1212,
+    "empty": 20
+  },
+  "families": {
+    "abstract": 1438,
+    "relation": 798,
+    "route": 91,
+    "city": 112,
+    "stage": 108,
+    "terrain": 43,
+    "portal": 17,
+    "still": 43
+  },
+  "unique_structural_signatures": 214,
+  "largest_signature": {
+    "count": 1408,
+    "family": "abstract",
+    "subjects": []
+  },
+  "sample_families": {
+    "abstract": 19,
+    "relation": 10,
+    "still": 1,
+    "terrain": 1,
+    "stage": 1,
+    "city": 2,
+    "portal": 1,
+    "route": 1
+  },
+  "sample_chinese": 5,
+  "sample_remote_image": 6,
+  "sample_empty": 3,
+  "bytes": {
+    "min": 696,
+    "p50": 779,
+    "p90": 1514,
+    "max": 5376,
+    "total": 2841921
+  },
+  "elapsed_seconds": 3.98,
+  "per_item_ms": 1.5,
+  "environment": {
+    "python": "3.14.7",
+    "platform": "Windows-11-10.0.26300-SP0"
+  },
+  "budget_note": "Initial 5-25KB target was revised: these line plates are about 0.7-3KB. Padding to 5KB would add noise. The 60KB cap is enforced."
+}

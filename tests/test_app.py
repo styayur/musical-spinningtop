@@ -133,6 +133,34 @@ class ApiTests(unittest.TestCase):
         self.assertEqual(self.client.get('/api/details', query_string={'id': selected['id']}).status_code, 200)
 
 
+
+    def test_saved_daily_uses_latest_fields_without_redrawing(self):
+        selected = self.client.get("/api/musical?date=2020-01-02").get_json()
+        store = self.app.extensions["store"]
+        frozen = {**selected, "title": "Frozen Old Title"}
+        with store.connect() as db:
+            db.execute("UPDATE daily SET musical=? WHERE day=?", (json.dumps(frozen), "2020-01-02"))
+        latest = self.client.get("/api/musical?date=2020-01-02").get_json()
+        self.assertEqual(latest["id"], selected["id"])
+        self.assertNotEqual(latest["title"], "Frozen Old Title")
+        self.assertTrue(latest["artwork_url"].startswith("/artwork/"))
+        self.assertIsNone(latest["display_image"])
+        self.assertNotEqual(latest.get("artwork_kind"), None)
+        with store.connect() as db:
+            raw = json.loads(db.execute("SELECT musical FROM daily WHERE day=?", ("2020-01-02",)).fetchone()[0])
+        self.assertEqual(raw["title"], "Frozen Old Title")
+        self.library.entries = [row for row in self.library.entries if row["id"] != selected["id"]]
+        removed = self.client.get("/api/musical?date=2020-01-02").get_json()
+        self.assertEqual(removed["id"], selected["id"])
+        self.assertEqual(removed["title"], "Frozen Old Title")
+        name = latest["artwork_url"].split("?", 1)[0].rsplit("/", 1)[-1]
+        image = self.client.get("/artwork/" + name)
+        self.assertEqual(image.status_code, 200)
+        self.assertIn("image/svg+xml", image.content_type)
+        image.close()
+        self.assertEqual(self.client.get("/artwork/../app.py").status_code, 404)
+        self.assertEqual(self.client.get("/artwork/not-safe.svg").status_code, 404)
+
 class SourceTests(unittest.TestCase):
     def test_category_continuation_including_empty_page(self):
         pages = [
