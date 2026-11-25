@@ -32,7 +32,7 @@ Screenshots from those browser runs are the `ui-flask-*.png` and `ui-static-*.pn
 
 ## Not verified
 
-- GitHub Actions on this branch. Local commands are not a CI result.
+- GitHub Pages deployment remains unverified as a published site. On commit 8a9e93c, Verify unit and browser checks passed. CodeQL failed on a URL substring in the smoke test and passed after the hostname parse fix. CodeForge failed on new print() findings; those calls were removed instead of being baselined. The follow-up head still needs its own completed check run.
 - GitHub Pages deployment. The live site is unchanged until a maintainer deploys `main`.
 - A browser that has never downloaded the site, opened with the network disabled. Generator offline is not a first-visit offline app.
 - A separate automated race that fires two image callbacks in a fixed order. The page uses a generation token and an image token; that race was not given its own stable test.
