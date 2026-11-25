@@ -1,6 +1,7 @@
 """Image-state and subpath checks for the built static site."""
 import json
 import threading
+from urllib.parse import urlparse
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -65,7 +66,7 @@ try:
         sub.context.on("request", lambda request: external.append(request.url) if request.url.startswith("http") and "127.0.0.1" not in request.url else None)
         sub.reload()
         expect(sub.locator("#card")).to_have_attribute("aria-busy", "false")
-        assert not any("upload.wikimedia.org" in item for item in external)
+        assert not any(urlparse(item).hostname == "upload.wikimedia.org" for item in external)
         browser.close()
         print("Image states and subpath passed.")
 finally:
