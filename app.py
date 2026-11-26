@@ -281,7 +281,7 @@ def create_app(runtime_dir=None, background=True):
         return render_template('index.html')
 
     def public_work(identity):
-        # Published catalogue only: local-only rows must never advertise localhost.
+        # Bundled candidates, not proof of an actual public deployment.
         entries, _ = load_catalog(BASE / 'data' / '_nonexistent_build_runtime')
         entry = next((row for row in entries if row['id'] == identity), None)
         if entry is None:
@@ -296,12 +296,22 @@ def create_app(runtime_dir=None, background=True):
         name = row['artwork_url'].split('?')[0].rsplit('/', 1)[-1]
         svg = (store.directory / 'artwork' / name).read_text(encoding='utf-8')
         card = ensure_card(row, svg, store.directory / 'share')
-        return {'url': public_url(row['id']), 'image': '/share-cards/' + card, 'available': True}, card
+        return {'url': public_url(row['id']), 'image': '/share-cards/' + card,
+                'available': True, 'publication': 'unverified'}, card
 
     @application.get('/api/share')
     def share_info():
         row = public_work(request.args.get('id', ''))
         if row is None:
+            # Local-only entries can still save original cards, entirely offline.
+            entry = next((item for item in library.snapshot() if item['id'] == request.args.get('id')), None)
+            if entry:
+                cached, _ = store.cached_details(entry['id'])
+                row = merge_publication(entry, cached or library.bundled_details.get(entry['id']),
+                                        read_json(BASE / 'data' / 'summaries_zh.json', {}).get(entry['title'], ''))
+                row.update(artwork_fields(row, store.directory / 'artwork'))
+                info, _ = share_details(row)
+                return jsonify(available=False, reason='not-public', publication='local-only', image=info['image'])
             return jsonify(available=False, reason='not-public')
         info, _ = share_details(row)
         return jsonify(info)

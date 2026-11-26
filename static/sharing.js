@@ -21,6 +21,9 @@
     imageFailed: '图片加载失败，请稍后重试保存。', cancelled: '已取消分享。',
     nativeFailed: '设备分享不可用，请使用平台链接或复制链接。',
     shared: '正在查看分享作品 · 只读。可主动返回今日或自由探索。',
+    unverified: '尚未在线确认此作品链接已发布；链接可能不可用。仍可离线保存卡片。',
+    published: '该作品已列入当前公开站点的分享目录。',
+    localOnly: '此作品仅在本地可用，没有公开分享链接；可以保存卡片。',
   } : {
     invitation: 'Give today to a good show.', share: 'Share this work', close: 'Close sharing',
     native: 'Share with your device', copy: 'Copy work link', save: 'Save share card', link: 'Current work link',
@@ -31,6 +34,9 @@
     imageFailed: 'Image could not load. Please try saving again later.', cancelled: 'Sharing cancelled.',
     nativeFailed: 'Device sharing is unavailable. Use a platform or copy the link.',
     shared: 'Shared work · read only. Return to today or explore when you choose.',
+    unverified: 'Publication of this work link has not been confirmed online; it may be unavailable. You can still save the card offline.',
+    published: 'This work is listed in the current public site’s sharing index.',
+    localOnly: 'This work is local only, with no public share link. You can save its card.',
   };
   $('invitation').textContent = words.invitation;
   $('invitation').lang = zh ? language : 'en';
@@ -58,11 +64,21 @@
         image.origin === location.origin && /\/[a-f0-9]{64}\.png$/.test(image.pathname);
     } catch (_) { return false; }
   }
+  function safeImage(value) {
+    try {
+      const image = new URL(value, document.baseURI);
+      return image.origin === location.origin && /\/[a-f0-9]{64}\.png$/.test(image.pathname);
+    } catch (_) { return false; }
+  }
   async function prepare(row) {
     if (window.spinningTopStatic) {
       const response = await fetch(new URL('./data/share-index.json', document.baseURI), {cache:'no-cache'});
       if (!response.ok) throw new Error('index');
-      return (await response.json())[row.id] || {available:false};
+      const info = (await response.json())[row.id] || {available:false};
+      // Only a fetched index from the real public deployment confirms listing.
+      // A bundled Flask catalogue or locally served static build cannot do so.
+      const published = response.url === 'https://styayur.github.io/musical-spinningtop/data/share-index.json';
+      return {...info, publication: published ? 'published' : 'unverified'};
     }
     const response = await fetch('/api/share?id=' + encodeURIComponent(row.id), {cache:'no-store'});
     if (!response.ok) throw new Error('share');
@@ -76,6 +92,7 @@
     enabled(false);
     $('nativeShare').hidden = true;
     $('shareLink').value = '';
+    $('sharePublication').hidden = true;
     $('shareWorkTitle').textContent = row.title_zh || row.title || '';
     status('loading');
     $('shareDialog').showModal();
@@ -83,9 +100,20 @@
     try {
       const info = await prepare(row);
       if (token !== epoch || !$('shareDialog').open) return;
-      if (!info.available) { status('unavailable'); return; }
+      if (!info.available) {
+        status('unavailable');
+        if (info.publication === 'local-only' && safeImage(info.image)) {
+          active = {image:info.image};
+          $('saveShare').disabled = false;
+          $('sharePublication').textContent = words.localOnly;
+          $('sharePublication').hidden = false;
+        }
+        return;
+      }
       if (!safeInfo(info)) throw new Error('invalid sharing data');
       active = {...info, title:row.title_zh || row.title || 'Spinning Top'};
+      $('sharePublication').textContent = words[info.publication === 'published' ? 'published' : 'unverified'];
+      $('sharePublication').hidden = false;
       $('shareLink').value = info.url;
       for (const [id, endpoint] of Object.entries(platforms)) {
         const url = new URL(endpoint);
@@ -102,13 +130,13 @@
     } catch (_) { if (token === epoch) status('failed'); }
   });
   $('nativeShare').addEventListener('click', async () => {
-    if (!active) return;
+    if (!active || !active.url) return;
     const token = epoch;
     try { await navigator.share({title:active.title, url:active.url}); }
     catch (error) { if (token === epoch) status(error.name === 'AbortError' ? 'cancelled' : 'nativeFailed'); }
   });
   $('copyShare').addEventListener('click', async () => {
-    if (!active) return;
+    if (!active || !active.url) return;
     const token = epoch;
     try { await navigator.clipboard.writeText(active.url); if (token === epoch) status('copied'); }
     catch (_) { if (token === epoch) { status('copyFailed'); $('shareLink').focus(); $('shareLink').select(); } }
@@ -125,7 +153,7 @@
       const url = URL.createObjectURL(blob);
       const anchor = document.createElement('a');
       anchor.href = url;
-      anchor.download = 'Spinning-Top-' + new URL(selected.url).pathname.split('/').pop().replace('.html', '.png');
+      anchor.download = 'Spinning-Top-' + (selected.url ? new URL(selected.url).pathname.split('/').pop().replace('.html', '.png') : 'local.png');
       anchor.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
       status('saved');

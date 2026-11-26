@@ -4,6 +4,7 @@
   const $ = id => document.getElementById(id);
   const state = { generation: 0, selected: null, controller: null, detailTimer: null, catalogTimer: null, busy: false, imageToken: 0, followToday: false };
   const controls = ['randomBtn', 'todayBtn', 'prevBtn', 'nextBtn', 'dateInput'];
+  let retrySelection = { mode: 'daily', selectedDate: '' };
   function text(id, value) { $(id).textContent = value || ''; }
   function fallbackArt() { return window.spinningTopStatic ? './static/artwork/base.svg' : '/artwork/base.svg'; }
   function isControlledArtwork(value) {
@@ -219,14 +220,19 @@
       if (generation === state.generation) text('techNote', '资料暂时无法加载。剧目已保留，可稍后回看。');
     }
   }
-  async function load(mode = 'daily', selectedDate = '') {
+  function leaveSharedPage() {
     if (document.getElementById('sharedWork')) {
       // Freeze the resolved base before changing the document URL; otherwise
       // "../" would escape the Pages subpath when leaving a work page.
       const base = document.querySelector('base');
       if (base) base.href = document.baseURI;
       history.replaceState(null, '', new URL('./', document.baseURI).pathname);
+      document.querySelectorAll('[data-work-meta]').forEach(node => node.remove());
+      document.getElementById('sharedWork').remove();
     }
+  }
+  async function load(mode = 'daily', selectedDate = '') {
+    retrySelection = { mode, selectedDate };
     $('shareBtn').disabled = true;
     const generation = ++state.generation;
     clearTimeout(state.detailTimer);
@@ -243,6 +249,7 @@
       const url = mode === 'random' ? '/api/random' : `/api/musical${selectedDate ? '?date=' + encodeURIComponent(selectedDate) : ''}`;
       const data = await api(url, { method: mode === 'random' ? 'POST' : 'GET', signal: state.controller.signal });
       if (generation !== state.generation) return;
+      leaveSharedPage();
       state.selected = data;
       state.followToday = mode === 'daily' && !selectedDate;
       $('original').open = false;
@@ -338,7 +345,7 @@
   $('prevBtn').addEventListener('click', () => moveDate(-1));
   $('nextBtn').addEventListener('click', () => moveDate(1));
   $('dateInput').addEventListener('change', () => { if ($('dateInput').value) load('daily', $('dateInput').value); });
-  $('retryBtn').addEventListener('click', () => load('daily', $('dateInput').value));
+  $('retryBtn').addEventListener('click', () => load(retrySelection.mode, retrySelection.selectedDate));
   $('flipBtn').addEventListener('click', () => flip(!$('card').classList.contains('flipped')));
   $('plate').addEventListener('click', () => flip(true));
   $('backFace').addEventListener('click', event => { if (!event.target.closest('a')) flip(false); });

@@ -28,6 +28,8 @@ Each published work has a stable `works/<encoded-id>.html` URL. Opening it shows
 
 The invitation and share controls follow the browser's preferred language: Chinese for `zh` variants, English otherwise. Work text and the rest of the interface are not automatically translated.
 
+Read-only pages include the year, source links and text attribution/license without JavaScript. Leaving a shared work changes its URL and removes its work-specific preview metadata only after a successful draw response; a failed request preserves the shared page. Flask's bundled catalogue identifies candidate public links, **not confirmed deployments**: the sharing panel labels them unverified without contacting the public site. Local-only entries can save cards offline without a public URL. Only an index fetched from the actual public site confirms that it lists the work; this does not certify platform previews or individual resource availability.
+
 Builds generate transparent version-5 artwork (extractor remains at version 4), work HTML and PNG cards offline. PNGs use content-hash filenames and a bundled SIL-OFL Noto Serif CJK font; no poster is copied. Pillow and resvg-py are installed by `requirements.txt`. The font stays in the source/build environment, not the deployed site. `build-metrics.json` records duration and output size. See [UI/sharing verification](docs/ui-sharing-review/verification.md) for measurements, screenshots and limitations; [v4 evidence](docs/artwork-review/) remains unchanged.
 
 ### Start Flask

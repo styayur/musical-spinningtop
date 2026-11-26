@@ -106,6 +106,7 @@ class SharingTests(unittest.TestCase):
                     self.assertIn(b'property="og:image" content="https://',response.data)
                     info = client.get('/api/share?id=en:42').get_json()
                     self.assertTrue(info['available'])
+                    self.assertEqual(info['publication'], 'unverified')
                     self.assertNotIn('localhost',info['url'])
                     with client.get(info['image']) as image:
                         self.assertEqual(image.status_code,200)
@@ -113,5 +114,50 @@ class SharingTests(unittest.TestCase):
                     self.assertEqual(client.get('/works/unknown.html').status_code,404)
                 with application.extensions['store'].connect() as db:
                     self.assertEqual(db.execute('SELECT count(*) FROM daily').fetchone()[0],0)
+            finally:
+                library.pool.shutdown()
+
+    def test_readonly_html_year_sources_and_text_license(self):
+        template = (Path(__file__).resolve().parents[1] / 'templates/index.html').read_text(encoding='utf-8')
+        row = {'id':'en:42', 'title':'Example', 'intro_en':'Excerpt', 'year':1925,
+               'intro_source':'https://zh.wikipedia.org/wiki/Example?a=1&b=2',
+               'wiki_url':'https://en.wikipedia.org/wiki/Example'}
+        result = work_html(template, row)
+        self.assertIn('id="yearChip" class="year">1925</p>', result)
+        self.assertIn('href="https://zh.wikipedia.org/wiki/Example?a=1&amp;b=2"', result)
+        credit = result.split('id="sharedTextCredit">')[1].split('</noscript>')[0]
+        self.assertIn(row['wiki_url'], credit)
+        self.assertIn('Wikipedia contributors', credit)
+        self.assertIn('https://creativecommons.org/licenses/by-sa/4.0/', credit)
+        self.assertIn('abridged or translated', credit)
+        for bad_year in (None, True, 'unknown', 0):
+            bad = work_html(template, {**row, 'year':bad_year, 'intro_source':'javascript:alert(1)', 'wiki_url':'https://['})
+            self.assertIn('id="yearChip" class="year" hidden></p>', bad)
+            self.assertNotIn('href="javascript:', bad)
+            self.assertNotIn('href="https://[', bad)
+            self.assertIn('Source unavailable', bad)
+
+    def test_local_only_card_and_bundled_candidates_need_no_network(self):
+        public = {'id':'en:42', 'title':'Candidate', 'intro_en':'Two sisters are reunited.'}
+        local = {'id':'local:new', 'title':'Local new work', 'intro_en':'A letter arrives.'}
+        with tempfile.TemporaryDirectory() as folder:
+            application = create_app(folder, background=False)
+            library = application.extensions['library']
+            library.entries = [local]
+            try:
+                with patch('app.load_catalog',return_value=([public],'')), patch('app.read_json',return_value={}), \
+                     patch('requests.sessions.Session.request', side_effect=AssertionError('network')), \
+                     patch.object(application.extensions['store'],'pick',side_effect=AssertionError('draw')):
+                    client = application.test_client()
+                    info = client.get('/api/share?id=en:42').get_json()
+                    self.assertEqual(info['publication'], 'unverified')
+                    local_info = client.get('/api/share?id=local:new').get_json()
+                    self.assertFalse(local_info['available'])
+                    self.assertNotIn('url', local_info)
+                    self.assertEqual(local_info['publication'], 'local-only')
+                    with client.get(local_info['image']) as image:
+                        self.assertEqual(image.status_code, 200)
+                        self.assertEqual(image.mimetype, 'image/png')
+                    self.assertEqual(client.get('/works/' + work_key(local['id']) + '.html').status_code, 404)
             finally:
                 library.pool.shutdown()

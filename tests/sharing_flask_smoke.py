@@ -34,6 +34,7 @@ with tempfile.TemporaryDirectory() as folder:
             expect(page.locator('#sharedNotice')).to_be_visible()
             page.locator('#shareBtn').click()
             expect(page.locator('#copyShare')).to_be_enabled()
+            expect(page.locator('#sharePublication')).to_contain_text('has not been confirmed online')
             assert page.locator('#shareLink').input_value()==info['url']
             public_image=page.locator('meta[property="og:image"]').get_attribute('content')
             assert public_image=='https://styayur.github.io/musical-spinningtop/'+info['image'][2:]
@@ -45,11 +46,47 @@ with tempfile.TemporaryDirectory() as folder:
                     assert db.execute('SELECT count(*) FROM '+table).fetchone()[0]==0
             page.keyboard.press('Escape')
             expect(page.locator('#shareBtn')).to_be_focused()
+            for button, endpoint in [('todayBtn','/api/musical'),('randomBtn','/api/random')]:
+                page.goto(url+route,wait_until='networkidle')
+                title=page.title()
+                metadata=page.locator('[data-work-meta]').evaluate_all('(nodes)=>nodes.map(n=>n.outerHTML)')
+                page.route('**'+endpoint,lambda request:request.fulfill(status=503,json={'error':'controlled failure'}))
+                page.locator('#'+button).click()
+                expect(page.locator('#retryBtn')).to_be_visible()
+                assert page.url==url+route and page.title()==title
+                assert page.locator('[data-work-meta]').evaluate_all('(nodes)=>nodes.map(n=>n.outerHTML)')==metadata
+                page.unroute('**'+endpoint)
+                page.locator('#retryBtn').click()
+                expect(page.locator('#sharedNotice')).to_be_hidden()
+                expect(page.locator('#card')).to_have_attribute('aria-busy','false')
+                assert page.url==url+'/'
+                assert page.title()==page.locator('#title').inner_text()+' · Spinning Top'
+                assert page.locator('[data-work-meta], #sharedWork').count()==0
+                expect(page.locator('#'+button)).to_have_attribute('aria-pressed','true')
             page.goto(url+'/works/unknown.html',wait_until='networkidle')
             expect(page.locator('#sharedNotice')).to_be_visible()
             expect(page.locator('#shareBtn')).to_be_disabled()
             assert context.request.get(url+'/api/share?id=local:only').json()=={'available':False,'reason':'not-public'}
+            application.extensions['library'].entries=[{'id':'local:only','title':'Local card','intro_en':'A letter arrives.'}]
+            page.goto(url+'/',wait_until='networkidle')
+            page.locator('#randomBtn').click()
+            expect(page.locator('#card')).to_have_attribute('data-id','local:only')
+            page.locator('#shareBtn').click()
+            expect(page.locator('#sharePublication')).to_contain_text('local only')
+            expect(page.locator('#copyShare')).to_be_disabled()
+            expect(page.locator('#sharePlatforms')).to_be_hidden()
+            expect(page.locator('#saveShare')).to_be_enabled()
+            with page.expect_download() as saved:
+                page.locator('#saveShare').click()
+            assert saved.value.suggested_filename=='Spinning-Top-local.png'
             assert not errors,errors
+            context.close()
+            context=browser.new_context(java_script_enabled=False)
+            page=context.new_page(); page.goto(url+route)
+            expect(page.locator('#introSource')).to_be_visible()
+            expect(page.locator('#sharedTextCredit')).to_be_visible()
+            expect(page.locator('#sharedTextCredit')).to_contain_text('CC BY-SA 4.0')
+            expect(page.locator('#yearChip')).to_be_visible()
             context.close(); browser.close()
     finally:
         server.shutdown(); server.server_close()

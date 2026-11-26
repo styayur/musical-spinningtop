@@ -63,6 +63,7 @@ try:
                 before = records(page)
                 page.locator('#shareBtn').click()
                 expect(page.locator('#copyShare')).to_be_enabled()
+                expect(page.locator('#sharePublication')).to_contain_text('尚未在线确认' if locale.startswith('zh') else 'has not been confirmed online')
                 expect(page.locator('#nativeShare')).to_be_hidden()
                 public = page.locator('#shareLink').input_value()
                 assert public.startswith('https://styayur.github.io/musical-spinningtop/works/')
@@ -150,6 +151,64 @@ try:
         # Crawler path: no JS needed for metadata, image dimensions, title or synopsis.
         index=json.loads((SITE/'data/share-index.json').read_text(encoding='utf-8'))
         info=next(iter(index.values()))
+        # Simulate the public origin with locally served bytes; no live deployment claim.
+        context=browser.new_context(locale='en-US')
+        page=context.new_page()
+        public_base='https://styayur.github.io/musical-spinningtop/'
+        def public_response(route):
+            if route.request.url.startswith(public_base):
+                route.fulfill(response=context.request.get(route.request.url.replace(public_base,url)))
+            else:
+                route.abort()
+        page.route('**/*',public_response)
+        page.goto(info['url'],wait_until='networkidle')
+        page.locator('#shareBtn').click()
+        expect(page.locator('#sharePublication')).to_contain_text('listed in the current public site')
+        expect(page.locator('#copyShare')).to_be_enabled()
+        context.close()
+        # Failed exits must keep the shared URL, title, metadata and draw stores.
+        for button, endpoint in [('todayBtn','/api/musical'), ('randomBtn','/api/random')]:
+            context=browser.new_context()
+            page=context.new_page()
+            page.goto(info['url'].replace('https://styayur.github.io/musical-spinningtop/',url),wait_until='networkidle')
+            before_url, before_title = page.url, page.title()
+            before_meta = page.locator('[data-work-meta]').evaluate_all('(nodes)=>nodes.map(n=>n.outerHTML)')
+            before_records = records(page)
+            page.evaluate("""() => {
+              const original = window.spinningTopStatic.request;
+              window.selectionCalls = []; window.holdSelection = true;
+              window.spinningTopStatic.request = (path, options) => {
+                if(path.startsWith('/api/musical') || path === '/api/random') {
+                  window.selectionCalls.push(path);
+                  if(window.holdSelection) return new Promise((resolve,reject)=>{window.rejectSelection=reject});
+                }
+                return original(path,options);
+              };
+            }""")
+            page.locator('#'+button).click()
+            expect(page.locator('#card')).to_have_attribute('aria-busy','true')
+            assert page.url==before_url and page.title()==before_title
+            page.evaluate("window.rejectSelection(new Error('controlled selection failure'))")
+            expect(page.locator('#retryBtn')).to_be_visible()
+            expect(page.locator('#card')).to_have_attribute('aria-busy','false')
+            expect(page.locator('#sharedNotice')).to_be_visible()
+            assert page.url==before_url and page.title()==before_title
+            assert page.locator('[data-work-meta]').evaluate_all('(nodes)=>nodes.map(n=>n.outerHTML)')==before_meta
+            assert records(page)==before_records
+            page.evaluate('window.holdSelection=false')
+            page.locator('#retryBtn').click()
+            expect(page.locator('#sharedNotice')).to_be_hidden()
+            expect(page.locator('#card')).to_have_attribute('aria-busy','false')
+            assert page.url==url
+            assert page.title()==page.locator('#title').inner_text()+' · Spinning Top'
+            assert page.locator('[data-work-meta], #sharedWork, link[rel="canonical"], meta[property^="og:"], meta[name^="twitter:"]').count()==0
+            assert page.evaluate('selectionCalls')==[endpoint,endpoint]
+            if button=='randomBtn':
+                expect(page.locator('#randomBtn')).to_have_attribute('aria-pressed','true')
+                assert records(page)['daily']==[]
+            else:
+                assert len(records(page)['daily'])==1
+            context.close()
         context=browser.new_context(java_script_enabled=False)
         page=context.new_page(); page.goto(info['url'].replace('https://styayur.github.io/musical-spinningtop/',url))
         assert page.locator('meta[property="og:url"]').get_attribute('content')==info['url']
@@ -158,6 +217,14 @@ try:
         assert context.request.get(image.replace('https://styayur.github.io/musical-spinningtop/',url)).status==200
         assert page.locator('meta[name="twitter:card"]').get_attribute('content')=='summary_large_image'
         assert page.locator('#title').inner_text()!='即将开场'
+        catalog=json.loads((SITE/'data/site-catalog.json').read_text(encoding='utf-8'))['musicals']
+        row=next(row for row in catalog if index[row['id']]==info)
+        expect(page.locator('#yearChip')).to_have_text(str(row['year']))
+        expect(page.locator('#introSource')).to_be_visible()
+        assert page.locator('#introSource').get_attribute('href')==(row.get('intro_source') or row['wiki_url'])
+        expect(page.locator('#sharedTextCredit')).to_be_visible()
+        expect(page.locator('#sharedTextCredit')).to_contain_text('Wikipedia contributors')
+        assert page.locator('#sharedTextCredit a[rel="license"]').get_attribute('href')=='https://creativecommons.org/licenses/by-sa/4.0/'
         context.close(); browser.close()
 finally:
     server.shutdown(); server.server_close()

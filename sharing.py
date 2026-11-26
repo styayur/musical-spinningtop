@@ -7,6 +7,7 @@ import json
 import re
 from functools import lru_cache
 from pathlib import Path
+from urllib.parse import urlsplit
 
 from PIL import Image, ImageDraw, ImageFont
 import resvg_py
@@ -133,11 +134,11 @@ def work_html(template, row=None, image_url=None, static=False, home='../'):
     valid = bool(row.get('id')) and not row.get('unavailable')
     title = row.get('title_zh') or row.get('title') or 'Work unavailable · 作品不可用'
     e = lambda value: html.escape(str(value), quote=True)
-    head = '<base href="' + e(home) + '">\n<meta name="robots" content="' + ('index,follow' if valid else 'noindex') + '">'
+    head = '<base href="' + e(home) + '">\n<meta data-work-meta name="robots" content="' + ('index,follow' if valid else 'noindex') + '">'
     if valid:
         url = public_url(row['id'])
         description = title + ' · Spinning Top'
-        head += '\n<link rel="canonical" href="' + e(url) + '">'
+        head += '\n<link data-work-meta rel="canonical" href="' + e(url) + '">'
         fields = {'og:type': 'website', 'og:site_name': 'Spinning Top', 'og:title': title,
                   'og:description': description, 'og:url': url, 'og:image': image_url,
                   'og:image:width': '1200', 'og:image:height': '630', 'og:image:type': 'image/png',
@@ -147,7 +148,7 @@ def work_html(template, row=None, image_url=None, static=False, home='../'):
         for key, value in fields.items():
             if value:
                 attr = 'name' if key.startswith('twitter:') else 'property'
-                head += f'\n<meta {attr}="{key}" content="{e(value)}">'
+                head += f'\n<meta data-work-meta {attr}="{key}" content="{e(value)}">'
     else:
         row.update(unavailable=True, title=title, intro_en='This work is unavailable. Return to today or explore explicitly. / 作品已移除或链接无效，请主动返回今日或自由探索。')
     row.update(mode='shared', date=None, detail_status='ready')
@@ -156,5 +157,31 @@ def work_html(template, row=None, image_url=None, static=False, home='../'):
     result = template.replace('<!-- SHARE_HEAD -->', head).replace('<title>Spinning Top</title>', '<title>' + e(title) + ' · Spinning Top</title>')
     result = result.replace('>即将开场</h2>', '>' + e(title) + '</h2>')
     result = result.replace('>请稍候。</p>', '>' + e(row.get('intro_zh') or row.get('intro_en') or '') + '</p>')
+    year = row.get('year')
+    if isinstance(year, int) and not isinstance(year, bool) and 1 <= year <= 9999:
+        result = result.replace('id="yearChip" class="year" hidden></p>', f'id="yearChip" class="year">{year}</p>')
+    sources = []
+    for source in (row.get('intro_source'), row.get('wiki_url')):
+        try:
+            parsed = urlsplit(source) if isinstance(source, str) else None
+            safe = parsed and parsed.scheme in ('https', 'http') and parsed.netloc
+        except ValueError:
+            safe = False
+        if safe and source not in sources:
+            sources.append(source)
+    if sources:
+        result = re.sub(r'(<a id="introSource"[^>]*?) hidden>',
+                        lambda match: match[1] + ' href="' + e(sources[0]) + '">', result, count=1)
+    if valid:
+        labels = ('Synopsis source / 简介来源', 'Work article / 作品条目')
+        links = ' · '.join('<a href="' + e(source) + '">' + labels[index] + '</a>' for index, source in enumerate(sources))
+        attribution = '<noscript><p class="share-help" id="sharedTextCredit">' + (links or 'Source unavailable / 暂无来源')
+        if sources:
+            attribution += ('<br>Wikipedia contributors / 维基百科贡献者 · '
+                            '<a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.'
+                            ' Excerpts may be abridged or translated / 摘要可能经过截取或翻译。')
+        attribution += '</p></noscript>'
+        result = result.replace('<details id="original"', attribution + '\n        <details id="original"', 1)
     result = result.replace('id="artwork" alt=', 'id="artwork" src="' + e(row.get('artwork_url') or ('./static/artwork/base.svg' if static else '/artwork/base.svg')) + '" alt=')
+    result = result.replace('id="card" aria-busy="true"', 'id="card" aria-busy="false"')
     return result
