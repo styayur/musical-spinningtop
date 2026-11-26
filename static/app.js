@@ -80,12 +80,16 @@
       img.src = base;
     };
     img.dataset.artworkState = 'loading';
-    img.src = url;
+    img.src = encodeURI(url);
   }
   function showImages(data, generation) {
     const token = ++state.imageToken;
     const art = isControlledArtwork(data.artwork_url) ? data.artwork_url : fallbackArt();
-    const plate = $('artwork').cloneNode(false);
+    const plate = document.createElement('img');
+    plate.id = 'artwork';
+    plate.alt = '原创节目册插画';
+    plate.width = 360;
+    plate.height = 480;
     $('artwork').replaceWith(plate);
     bindPlateImage(plate, art, generation, token);
     $('cover').hidden = true;

@@ -53,4 +53,6 @@ Desktop/mobile screenshots and synthetic CJK/unknown-year plus longest-catalogue
 
 ## Review status
 
+The first pushed commit (`03cd2b1`) passed all three Python jobs, browser verification and CodeForge. Its CodeQL result check flagged the shared JSON-to-image path as DOM text reinterpreted as HTML. The follow-up explicitly creates an `img` element instead of cloning a generically typed node, and URI-encodes the controlled artwork source. The existing resource allowlist, selection tokens and one-time fallback remain in place. After this change, `ui_extra_smoke.py`, `sharing_smoke.py` and `sharing_flask_smoke.py` were rerun successfully (including controlled callbacks, 404/base failure, static subpaths and Flask PNG parity). This JavaScript-only change does not change the reviewed SVGs or PNGs. Final-head remote results are recorded in the PR body after they finish; the initial failed CodeQL check is not reported as a pass.
+
 Local acceptance passes. The PR body records the actual final pushed HEAD and its remote CI results; earlier results are never substituted for a changed HEAD. The full v4 review evidence and catalogue remain unchanged. No production deployment is included. Remaining limitations are platform preview/OS-share/device assurance and the previously documented semantic/visual limits, not claims that simulated posting succeeded.
