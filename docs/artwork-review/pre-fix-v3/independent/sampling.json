@@ -1,0 +1,62 @@
+{
+  "seed": "spinningtop-artwork-independent-2026-11-26",
+  "rule": "First 36 ascending (SHA-256(seed|id), id) among catalogue rows excluding original HEAD sample; no strata or semantic replacement",
+  "eligible_count": 2614,
+  "excluded_ids": [
+    "en:82936081",
+    "en:78637520",
+    "en:84088806",
+    "en:59473231",
+    "en:74782111",
+    "en:6750389",
+    "en:9661942",
+    "en:82799699",
+    "en:19330545",
+    "en:14711047",
+    "en:52951040",
+    "en:215013",
+    "en:49079409",
+    "en:47260029",
+    "en:55469598",
+    "en:3245600",
+    "en:32728502",
+    "en:76128963",
+    "en:66370354",
+    "en:7212998",
+    "en:2779591",
+    "en:75654372",
+    "en:99017",
+    "en:35245152",
+    "en:55901560",
+    "en:1166071",
+    "en:52333166",
+    "en:4402844",
+    "en:3603386",
+    "en:74652697",
+    "en:58866406",
+    "en:61857884",
+    "en:33833786",
+    "en:15171202",
+    "en:5849980",
+    "en:7511653"
+  ],
+  "catalog_sha256": "9420a8fcff615b68dc019e683935a0392ef8d7154f8ae6177a710d859996f752",
+  "sample_overlap": 0,
+  "sample": {
+    "count": 36,
+    "families": {
+      "relation": 9,
+      "abstract": 19,
+      "route": 4,
+      "city": 2,
+      "terrain": 2
+    },
+    "chinese": 3,
+    "remote_image": 9,
+    "empty": 0,
+    "png": {
+      "contact": true,
+      "structure": true
+    }
+  }
+}

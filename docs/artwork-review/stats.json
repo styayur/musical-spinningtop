@@ -1,58 +1,662 @@
 {
-  "seed": "spinningtop-artwork-sample-2026-11-25",
-  "sample_rule": "Fixed SHA-256 strata for empty text, remote image, length, year, and Chinese text, then abstract fillers replaced until each generated family is represented.",
-  "catalog_updated_at": "2026-09-24T16:36:48.116681+00:00",
+  "metric_version": "emitted-svg-v1-occlusion-barriers",
+  "metric_definitions": {
+    "actual_svg_exact": "SHA-256 of emitted UTF-8 SVG bytes, including palette and serialization order; never a recipe hash.",
+    "decolored_svg_ordered": "Emitted SVG parsed and normalized: painted fills become white, painted strokes one dark ink; none, wash shapes, width, opacity, and paint order retained. Attribute order, whitespace and numeric spelling normalized.",
+    "canonical_geometry": "Same decolored emitted primitives, sorted only within contiguous opaque stroke-only runs. Filled shapes (including white washes) and other order-sensitive primitives remain ordered barriers. Primitive multiplicity retained; recipe parameters are not geometry.",
+    "max_duplicate_ratio": "Largest equivalence class / population size. Also reports duplicate excess / population; these are distinct measures.",
+    "limitations": "Not perceptual similarity or semantic correctness. Equivalent path commands, reversed lines, and mirrored geometry are not collapsed. Raster antialiasing may differ. Unsupported SVG constructs fail explicitly."
+  },
   "total": 2650,
-  "generated": 1212,
-  "abstract": 1438,
+  "generated": 1102,
+  "abstract": 1548,
   "fallback": 0,
   "failed": 0,
   "reasons": {
-    "insufficient": 1418,
-    "None": 1212,
-    "empty": 20
+    "insufficient": 1528,
+    "None": 1102,
+    "empty": 20,
+    "error": 0
   },
   "families": {
-    "abstract": 1438,
-    "relation": 798,
-    "route": 91,
-    "city": 112,
-    "stage": 108,
-    "terrain": 43,
-    "portal": 17,
-    "still": 43
+    "abstract": 1548,
+    "relation": 739,
+    "route": 88,
+    "city": 101,
+    "stage": 99,
+    "terrain": 29,
+    "portal": 15,
+    "still": 31
   },
-  "unique_structural_signatures": 214,
-  "largest_signature": {
-    "count": 1408,
-    "family": "abstract",
-    "subjects": []
+  "unique_structural_signatures": 182,
+  "unique_parameter_combinations": 1144,
+  "abstract_parameter_combinations": 159,
+  "parameter_fields": [
+    "family",
+    "subjects",
+    "arrangement",
+    "count",
+    "modifiers",
+    "palette",
+    "mirror",
+    "detail",
+    "abstract_layout"
+  ],
+  "parameter_note": "Recipe metadata combinations, including possibly unused modifiers/detail/mirror. These counts are not emitted drawing diversity.",
+  "signature_note": "Legacy family/subjects/count/arrangement metadata only; NOT drawing or geometry diversity.",
+  "drawings": {
+    "actual_svg_exact": {
+      "total": 2650,
+      "unique": 181,
+      "largest_duplicate_count": 58,
+      "max_duplicate_ratio": 0.02188679,
+      "duplicate_excess_ratio": 0.93169811,
+      "largest_groups": [
+        {
+          "sha256": "9120f84675156f035c1a4c66c7586b13164d337e9e550a8e031e99bb8779d23e",
+          "count": 58,
+          "example_ids": [
+            "en:20855240",
+            "en:12629963",
+            "en:78945655",
+            "en:940047",
+            "en:1230818",
+            "en:18767469",
+            "en:40489282",
+            "en:23619004"
+          ]
+        },
+        {
+          "sha256": "f66327a6718218fff3de9d590cb9846eca57318a5ee4e3b8f8c5a0262c91b040",
+          "count": 58,
+          "example_ids": [
+            "en:27721173",
+            "en:41777797",
+            "en:69118396",
+            "en:76129549",
+            "en:74544097",
+            "en:53897951",
+            "en:6419757",
+            "en:2589953"
+          ]
+        },
+        {
+          "sha256": "a6d02196e7728fa73d4cd8deef5d17f3101ca26e07f0b324be7b5238573b9ff8",
+          "count": 53,
+          "example_ids": [
+            "en:37670777",
+            "en:57154148",
+            "en:10344252",
+            "en:21792368",
+            "en:79994859",
+            "en:801880",
+            "en:328144",
+            "en:26706703"
+          ]
+        },
+        {
+          "sha256": "1206bdc7235c202d5869661859cfd8cd5dce2336e88b3e66e5306e2bf3869655",
+          "count": 48,
+          "example_ids": [
+            "en:6466712",
+            "en:2206538",
+            "en:44016741",
+            "en:47416483",
+            "en:8571860",
+            "en:7987353",
+            "en:42510443",
+            "en:26355730"
+          ]
+        },
+        {
+          "sha256": "238fc4f144ad75c0f8d9c6e786ae3093ad7c08550d3f5b690c3ca0a7702992db",
+          "count": 48,
+          "example_ids": [
+            "en:37791681",
+            "en:7639167",
+            "en:286348",
+            "en:72953503",
+            "en:41803498",
+            "en:13056311",
+            "en:23133893",
+            "en:75307154"
+          ]
+        }
+      ]
+    },
+    "decolored_svg_ordered": {
+      "total": 2650,
+      "unique": 79,
+      "largest_duplicate_count": 148,
+      "max_duplicate_ratio": 0.05584906,
+      "duplicate_excess_ratio": 0.97018868,
+      "largest_groups": [
+        {
+          "sha256": "765fee914ffbd531e5d80f6196c0614c12c67f0ac82db1f069c37d8fc2b19ce8",
+          "count": 148,
+          "example_ids": [
+            "en:37670777",
+            "en:57154148",
+            "en:8661992",
+            "en:10344252",
+            "en:37791681",
+            "en:7639167",
+            "en:21792368",
+            "en:286348"
+          ]
+        },
+        {
+          "sha256": "7e5c01137f018e11cc1ea09a204717aafb6d4263f2bf8094d0e126d58de61e3a",
+          "count": 147,
+          "example_ids": [
+            "en:9068605",
+            "en:20855240",
+            "en:43304543",
+            "en:12629963",
+            "en:78945655",
+            "en:22066588",
+            "en:940047",
+            "en:4257673"
+          ]
+        },
+        {
+          "sha256": "4e244d1036bed0b751b810caa1acec011298d11b68b8d1fdfdbebc0118405467",
+          "count": 137,
+          "example_ids": [
+            "en:59774999",
+            "en:27721173",
+            "en:41777797",
+            "en:69118396",
+            "en:6460433",
+            "en:76129549",
+            "en:74544097",
+            "en:9131390"
+          ]
+        },
+        {
+          "sha256": "41d9e510eccf0e04ee0c89bfc89dfe5e0943154221253bffa4f74ed6db44200f",
+          "count": 118,
+          "example_ids": [
+            "en:78767951",
+            "en:6466712",
+            "en:2206538",
+            "en:9897061",
+            "en:38965228",
+            "en:44016741",
+            "en:47416483",
+            "en:24423292"
+          ]
+        },
+        {
+          "sha256": "2a754514dc2e3145884c612eae89d2fdf92b42b442b0075ad77e03a79d100b4b",
+          "count": 114,
+          "example_ids": [
+            "en:9058934",
+            "en:60505162",
+            "en:32402649",
+            "en:23155565",
+            "en:74628377",
+            "en:22816904",
+            "en:9542615",
+            "en:58039656"
+          ]
+        }
+      ]
+    },
+    "canonical_geometry": {
+      "total": 2650,
+      "unique": 77,
+      "largest_duplicate_count": 148,
+      "max_duplicate_ratio": 0.05584906,
+      "duplicate_excess_ratio": 0.9709434,
+      "largest_groups": [
+        {
+          "sha256": "414665c35157dc9da7c08c4547ec9c8c1b2620d5802e4c8c634d904d6bd4a64a",
+          "count": 148,
+          "example_ids": [
+            "en:37670777",
+            "en:57154148",
+            "en:8661992",
+            "en:10344252",
+            "en:37791681",
+            "en:7639167",
+            "en:21792368",
+            "en:286348"
+          ]
+        },
+        {
+          "sha256": "18a577c9bfd05a98c2e1c626c8050cc234a75bdd65fe8ca60c2a561c20463bdb",
+          "count": 147,
+          "example_ids": [
+            "en:9068605",
+            "en:20855240",
+            "en:43304543",
+            "en:12629963",
+            "en:78945655",
+            "en:22066588",
+            "en:940047",
+            "en:4257673"
+          ]
+        },
+        {
+          "sha256": "249cc716fa1fc1139953705a0b58b704cdc1f8d3434ef62869d18b47c1a214a0",
+          "count": 137,
+          "example_ids": [
+            "en:59774999",
+            "en:27721173",
+            "en:41777797",
+            "en:69118396",
+            "en:6460433",
+            "en:76129549",
+            "en:74544097",
+            "en:9131390"
+          ]
+        },
+        {
+          "sha256": "7002c0d762c64357d49e3458351a4bfde0a7265581e39272e53b252dd1ae88c4",
+          "count": 118,
+          "example_ids": [
+            "en:78767951",
+            "en:6466712",
+            "en:2206538",
+            "en:9897061",
+            "en:38965228",
+            "en:44016741",
+            "en:47416483",
+            "en:24423292"
+          ]
+        },
+        {
+          "sha256": "7da25e00645b8cfa9328b9448c89ba2a58a9efd64a6bacd0408e1a1e230e3507",
+          "count": 114,
+          "example_ids": [
+            "en:9058934",
+            "en:60505162",
+            "en:32402649",
+            "en:23155565",
+            "en:74628377",
+            "en:22816904",
+            "en:9542615",
+            "en:58039656"
+          ]
+        }
+      ]
+    }
   },
-  "sample_families": {
-    "abstract": 19,
-    "relation": 10,
-    "still": 1,
-    "terrain": 1,
-    "stage": 1,
-    "city": 2,
-    "portal": 1,
-    "route": 1
+  "abstract_drawings": {
+    "actual_svg_exact": {
+      "total": 1548,
+      "unique": 48,
+      "largest_duplicate_count": 44,
+      "max_duplicate_ratio": 0.02842377,
+      "duplicate_excess_ratio": 0.96899225,
+      "largest_groups": [
+        {
+          "sha256": "b7691d676e56cbe5b238e038a1869c4d81567ac33324f3b93064f47d46ba2c21",
+          "count": 44,
+          "example_ids": [
+            "en:161607",
+            "en:14370868",
+            "en:48802100",
+            "en:73685598",
+            "en:73766959",
+            "en:14779860",
+            "en:81704432",
+            "en:19335209"
+          ]
+        },
+        {
+          "sha256": "efac88147f796f710e2fdc1df8bf3cf65207e712d7050e7318f8b032440fc1ad",
+          "count": 44,
+          "example_ids": [
+            "en:9058934",
+            "en:9542615",
+            "en:58039656",
+            "en:81154979",
+            "en:61286288",
+            "en:47807200",
+            "en:80141868",
+            "en:31056005"
+          ]
+        },
+        {
+          "sha256": "97e559d01796399d5cda560f68f33181f18aa5557fe4a4b105636b6e4267d62a",
+          "count": 42,
+          "example_ids": [
+            "en:9919932",
+            "en:15002878",
+            "en:6551374",
+            "en:9409602",
+            "en:60865086",
+            "en:76249756",
+            "en:33626101",
+            "en:1619940"
+          ]
+        },
+        {
+          "sha256": "14e6dd6616e1814974009026c861270336019457f851301d7c75112bd10d3af0",
+          "count": 40,
+          "example_ids": [
+            "en:16050580",
+            "en:24747148",
+            "en:41781211",
+            "en:6140662",
+            "en:65925001",
+            "en:37673959",
+            "en:28189628",
+            "en:10352853"
+          ]
+        },
+        {
+          "sha256": "4ff6b2b0599dc8e170ffb8a40f9f514737a4b64f3559c02ea3a5df4f28028c8e",
+          "count": 40,
+          "example_ids": [
+            "en:738198",
+            "en:6481523",
+            "en:2942",
+            "en:42059354",
+            "en:78563216",
+            "en:58655639",
+            "en:50376325",
+            "en:69094066"
+          ]
+        }
+      ]
+    },
+    "decolored_svg_ordered": {
+      "total": 1548,
+      "unique": 16,
+      "largest_duplicate_count": 114,
+      "max_duplicate_ratio": 0.07364341,
+      "duplicate_excess_ratio": 0.98966408,
+      "largest_groups": [
+        {
+          "sha256": "2a754514dc2e3145884c612eae89d2fdf92b42b442b0075ad77e03a79d100b4b",
+          "count": 114,
+          "example_ids": [
+            "en:9058934",
+            "en:60505162",
+            "en:32402649",
+            "en:23155565",
+            "en:74628377",
+            "en:22816904",
+            "en:9542615",
+            "en:58039656"
+          ]
+        },
+        {
+          "sha256": "1d13ae8439bb9cc5cc804ab5446abc5b7fa3aa2484a8a8624a2928123725eb3d",
+          "count": 107,
+          "example_ids": [
+            "en:80268078",
+            "en:738198",
+            "en:79948667",
+            "en:6481523",
+            "en:2942",
+            "en:42059354",
+            "en:77492208",
+            "en:12892500"
+          ]
+        },
+        {
+          "sha256": "4c0da7bf4de582d4e1466351021b2a7abeed5061141722269a19ae57507fdc48",
+          "count": 105,
+          "example_ids": [
+            "en:31034123",
+            "en:16050580",
+            "en:8286682",
+            "en:24747148",
+            "en:41781211",
+            "en:58689511",
+            "en:73923143",
+            "en:9994844"
+          ]
+        },
+        {
+          "sha256": "acc5db5e087f74c6776ba089015c5844863cbed3e1d41b8ec590b1c982b0a2fe",
+          "count": 105,
+          "example_ids": [
+            "en:48574674",
+            "en:81191567",
+            "en:45170719",
+            "en:7371111",
+            "en:62494495",
+            "en:63777150",
+            "en:73922640",
+            "en:72935575"
+          ]
+        },
+        {
+          "sha256": "deb54a7cc5226e049fca5a5d4e72a77cd49544fd74d5c210bed638ec929f685f",
+          "count": 105,
+          "example_ids": [
+            "en:161607",
+            "en:14370868",
+            "en:48802100",
+            "en:56925460",
+            "en:76543305",
+            "en:59754054",
+            "en:73685598",
+            "en:65736579"
+          ]
+        }
+      ]
+    },
+    "canonical_geometry": {
+      "total": 1548,
+      "unique": 16,
+      "largest_duplicate_count": 114,
+      "max_duplicate_ratio": 0.07364341,
+      "duplicate_excess_ratio": 0.98966408,
+      "largest_groups": [
+        {
+          "sha256": "7da25e00645b8cfa9328b9448c89ba2a58a9efd64a6bacd0408e1a1e230e3507",
+          "count": 114,
+          "example_ids": [
+            "en:9058934",
+            "en:60505162",
+            "en:32402649",
+            "en:23155565",
+            "en:74628377",
+            "en:22816904",
+            "en:9542615",
+            "en:58039656"
+          ]
+        },
+        {
+          "sha256": "280d8b31513919b4cab9b1bf66d58bad2b2bbee5e21b249f5aeb5128068cddf9",
+          "count": 107,
+          "example_ids": [
+            "en:80268078",
+            "en:738198",
+            "en:79948667",
+            "en:6481523",
+            "en:2942",
+            "en:42059354",
+            "en:77492208",
+            "en:12892500"
+          ]
+        },
+        {
+          "sha256": "78d0f41466e138c855ac46fc657aeb2b306168e8d010413b90fa9feb256cd4f4",
+          "count": 105,
+          "example_ids": [
+            "en:31034123",
+            "en:16050580",
+            "en:8286682",
+            "en:24747148",
+            "en:41781211",
+            "en:58689511",
+            "en:73923143",
+            "en:9994844"
+          ]
+        },
+        {
+          "sha256": "bcecbe333d6a1d280099363bd60bf8f69c45bc37c119eb40c200b0b30f64e2b2",
+          "count": 105,
+          "example_ids": [
+            "en:48574674",
+            "en:81191567",
+            "en:45170719",
+            "en:7371111",
+            "en:62494495",
+            "en:63777150",
+            "en:73922640",
+            "en:72935575"
+          ]
+        },
+        {
+          "sha256": "c0923bc95b952fca7ef90cb2a5f16b4f79765f514df5023a03ff7e5f8510ff66",
+          "count": 105,
+          "example_ids": [
+            "en:161607",
+            "en:14370868",
+            "en:48802100",
+            "en:56925460",
+            "en:76543305",
+            "en:59754054",
+            "en:73685598",
+            "en:65736579"
+          ]
+        }
+      ]
+    }
   },
-  "sample_chinese": 5,
-  "sample_remote_image": 6,
-  "sample_empty": 3,
+  "abstract_templates": {
+    "0": {
+      "count": 197,
+      "ratio_of_abstract": 0.12726098,
+      "unique_actual_svg": 6,
+      "unique_canonical_geometry": 2
+    },
+    "1": {
+      "count": 188,
+      "ratio_of_abstract": 0.12144703,
+      "unique_actual_svg": 6,
+      "unique_canonical_geometry": 2
+    },
+    "2": {
+      "count": 186,
+      "ratio_of_abstract": 0.12015504,
+      "unique_actual_svg": 6,
+      "unique_canonical_geometry": 2
+    },
+    "3": {
+      "count": 194,
+      "ratio_of_abstract": 0.125323,
+      "unique_actual_svg": 6,
+      "unique_canonical_geometry": 2
+    },
+    "4": {
+      "count": 221,
+      "ratio_of_abstract": 0.14276486,
+      "unique_actual_svg": 6,
+      "unique_canonical_geometry": 2
+    },
+    "5": {
+      "count": 196,
+      "ratio_of_abstract": 0.12661499,
+      "unique_actual_svg": 6,
+      "unique_canonical_geometry": 2
+    },
+    "6": {
+      "count": 174,
+      "ratio_of_abstract": 0.1124031,
+      "unique_actual_svg": 6,
+      "unique_canonical_geometry": 2
+    },
+    "7": {
+      "count": 192,
+      "ratio_of_abstract": 0.12403101,
+      "unique_actual_svg": 6,
+      "unique_canonical_geometry": 2
+    }
+  },
+  "abstract_template_note": "Selected recipe template distribution; actual emitted diversity measured separately. Historical recipes without a template field are unspecified.",
   "bytes": {
-    "min": 696,
-    "p50": 779,
+    "min": 708,
+    "p50": 933,
     "p90": 1514,
     "max": 5376,
-    "total": 2841921
+    "total": 3022300
   },
-  "elapsed_seconds": 3.98,
-  "per_item_ms": 1.5,
+  "seed": "spinningtop-artwork-sample-2026-11-25",
+  "sample_rule": "Original HEAD sample-ids.json preserved byte-for-byte, same IDs and positions; no family replacement",
+  "baseline_commit": "91d44bc3a81c805164376564e7c59547fb2661f6",
+  "catalog_updated_at": "2026-09-24T16:36:48.116681+00:00",
+  "source_sha256": {
+    "artwork/__init__.py": "28341140fb190ce9d2a3cc518a416baacbbc39a6c4264ea5a72941d272646f5b",
+    "artwork/compose.py": "28bb92f7f2c4e4a51fd1d7186f2b1e8b02c66e5b8742e0db1071685db45ec3c7",
+    "artwork/draw.py": "966c17e43406e9cb7c0014a85f65cae37603eb9611d02b470a37ace6e851411e",
+    "artwork/extract.py": "0f91658c0159608c9afae6622bdf68601db0db80079a956911aa7cef03bcf112",
+    "artwork/generate.py": "57d0ab4af50a27a1f20b5d519bf5f370e9366eeb9087c4fa2a8ffb1ea7955556",
+    "artwork/lexicon.py": "1609f1c3ba877bd072af1229d91f04b5225cc68d9bd95cbff8e2dbfd31a944c2",
+    "artwork/normalize.py": "05e0437f7538602240dc1c74f4e084f586738341a99522224ee396ed92504218",
+    "artwork/versions.py": "a620d723ed3f8702813ab6b17aaebbdbd08fa72818723dc5ab1d539d7088c126",
+    "data/catalog.json": "9420a8fcff615b68dc019e683935a0392ef8d7154f8ae6177a710d859996f752",
+    "data/articles.json": "54c07d11631d202f3281b148960460d5cf79eed7ad5a79aecf844a4fae049a1d",
+    "data/summaries_zh.json": "50ba4f7d8c20918ab29704265025148e7af92635ac0db24874e05d4c8f277226"
+  },
+  "review_script_sha256": "acb3829d2ca2173e3befa0083cff257494785420337c74feebccdd5d27bb1e21",
+  "art_versions": [
+    "4"
+  ],
+  "extractor_versions": [
+    "4"
+  ],
+  "elapsed_seconds": 5.3,
+  "per_item_ms": 2.0,
   "environment": {
     "python": "3.14.7",
     "platform": "Windows-11-10.0.26300-SP0"
   },
-  "budget_note": "Initial 5-25KB target was revised: these line plates are about 0.7-3KB. Padding to 5KB would add noise. The 60KB cap is enforced."
+  "sample": {
+    "count": 36,
+    "families": {
+      "abstract": 21,
+      "relation": 10,
+      "still": 1,
+      "stage": 1,
+      "city": 2,
+      "route": 1
+    },
+    "chinese": 5,
+    "remote_image": 6,
+    "empty": 3,
+    "png": {
+      "contact": true,
+      "structure": true
+    }
+  },
+  "independent_sample": {
+    "count": 36,
+    "families": {
+      "relation": 9,
+      "abstract": 21,
+      "route": 3,
+      "city": 2,
+      "terrain": 1
+    },
+    "chinese": 3,
+    "remote_image": 9,
+    "empty": 0,
+    "png": {
+      "contact": true,
+      "structure": true
+    }
+  },
+  "independent_sample_evidence_status": "Originally independent seeded sample; its three observed v3 creator/song-title/production-place failures drove generic v4 fixes. Reused unchanged as regression evidence, no longer blind or held-out accuracy evidence.",
+  "all_templates_sample": {
+    "count": 8,
+    "families": {
+      "abstract": 8
+    },
+    "chinese": 1,
+    "remote_image": 0,
+    "empty": 0,
+    "png": {
+      "contact": true,
+      "structure": true
+    }
+  }
 }

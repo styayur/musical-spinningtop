@@ -28,8 +28,9 @@
       <button type="button" class="icon-btn" id="prevBtn" aria-label="前一天" title="前一天">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6 L8 12 L14 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
-      <div class="date-cluster">
+      <div class="date-cluster" id="dateCluster" data-mode="daily">
         <svg class="calendar-mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 3.5v4M16 3.5v4M4 10h16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <svg class="mode-free" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h5l2 3M4 17h5l2-3M14 7h6M14 17h6M16 5l4 2-4 2M16 15l4 2-4 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <span id="datePill" class="sr-only">每日随机</span>
         <input id="dateInput" type="date" min="1900-01-01" max="2200-12-31" aria-label="选择日期">
       </div>
@@ -67,10 +68,10 @@
       </section>
     </article>
     <div class="actions">
-      <button type="button" class="icon-btn" id="randomBtn" aria-label="再抽一部" title="再抽一部">
+      <button type="button" class="icon-btn" id="randomBtn" aria-label="再抽一部" aria-pressed="false" title="再抽一部">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h5l2 3M4 17h5l2-3M14 7h6M14 17h6M16 5l4 2-4 2M16 15l4 2-4 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
-      <button type="button" class="icon-btn" id="todayBtn" aria-label="回到今日" title="回到今日">
+      <button type="button" class="icon-btn" id="todayBtn" aria-label="回到今日" aria-pressed="true" title="回到今日">
         <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 3.5v4M16 3.5v4M4 10h16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="15" r="1.5" fill="currentColor"/></svg>
       </button>
       <button type="button" class="icon-btn" id="flipBtn" aria-label="翻面" aria-pressed="false" title="翻面">
@@ -95,20 +96,20 @@
       <button type="button" id="tabUse" role="tab" aria-selected="false" aria-controls="panelUse" data-tab="use" tabindex="-1">使用</button>
       <button type="button" id="tabAbout" role="tab" aria-selected="false" aria-controls="panelAbout" data-tab="about" tabindex="-1">关于</button>
     </div>
-    <div id="panelWork" role="tabpanel" aria-labelledby="tabWork">
+    <div id="panelWork" role="tabpanel" aria-labelledby="tabWork" tabindex="0">
       <p id="workSource"></p>
       <p id="imageState" data-image-state="generated"></p>
-      <p id="imageCredit"></p>
+      <p class="credit-line"><span id="imageCredit"></span> <a id="imageSource" target="_blank" rel="noopener noreferrer" hidden>打开图片来源</a> <a id="imageLicense" target="_blank" rel="noopener noreferrer" hidden>阅读原图许可</a></p>
       <p id="artworkBasis"></p>
       <p id="creatorLine" hidden></p>
       <p id="techNote"></p>
     </div>
-    <div id="panelUse" role="tabpanel" aria-labelledby="tabUse" hidden>
+    <div id="panelUse" role="tabpanel" aria-labelledby="tabUse" tabindex="0" hidden>
       <p>每日第一次查看会保存该日作品。刷新、回看和更新目录都不会重抽。自由抽取单独记一轮；两种模式各自不放回，彼此可能遇到同一部。</p>
       <p id="storageNote">本地版的每日结果保存在本机数据目录。删除该目录中的数据库会重置抽取记录，不会删除程序。</p>
       <p>抽取或保存失败时，操作附近会给出可重试的短提示。详细原因在此查看。</p>
     </div>
-    <div id="panelAbout" role="tabpanel" aria-labelledby="tabAbout" hidden>
+    <div id="panelAbout" role="tabpanel" aria-labelledby="tabAbout" tabindex="0" hidden>
       <p id="catalogCount">正在读取片库…</p>
       <p id="catalogStatus" role="status">正在读取目录状态。</p>
       <button type="button" id="syncBtn" class="text-btn">更新片库</button>

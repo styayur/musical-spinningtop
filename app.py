@@ -19,9 +19,11 @@ from urllib.parse import quote_plus
 from flask import Flask, abort, jsonify, render_template, request, send_file
 
 from artwork.generate import annotate_display, ensure_artwork, ensure_base, resolve_artwork_path
+from artwork.normalize import merge_publication
 from catalog import BASE, discover, load_catalog, read_json, wiki_query, wiki_url, write_json
 
 LOG = logging.getLogger(__name__)
+ARCHIVE_FIELDS = ('title', 'title_zh', 'intro_en', 'intro_zh', 'intro_source', 'wiki_url', 'year', 'translator')
 
 
 class Store:
@@ -73,6 +75,22 @@ class Store:
             row = db.execute('SELECT payload, fetched FROM details WHERE id=?', (identity,)).fetchone()
         return (json.loads(row[0]), row[1]) if row else ({}, 0)
 
+    def archive_daily(self, payload, day=None):
+        """Fill missing saved text without replacing the original archive or draw."""
+        with self.connect() as db:
+            db.execute('BEGIN IMMEDIATE')
+            rows = db.execute('SELECT day, musical FROM daily WHERE day=?', (day,)).fetchall() if day else db.execute('SELECT day, musical FROM daily').fetchall()
+            for saved_day, encoded in rows:
+                saved = json.loads(encoded)
+                if saved.get('id') != payload.get('id'):
+                    continue
+                for key in ARCHIVE_FIELDS:
+                    if not saved.get(key) and payload.get(key):
+                        saved[key] = payload[key]
+                updated = json.dumps(saved, ensure_ascii=False)
+                if updated != encoded:
+                    db.execute('UPDATE daily SET musical=? WHERE day=?', (updated, saved_day))
+
     def save_details(self, identity, payload):
         with self.connect() as db:
             db.execute('INSERT OR REPLACE INTO details VALUES (?, ?, ?)',
@@ -86,10 +104,23 @@ def resolve_saved(stored, entries):
         return stored
     identity = stored.get("id")
     current = next((row for row in entries if row.get("id") == identity), None)
-    return current if current else stored
+    if current:
+        return current
+    return {**stored, "removed": True}
 
 
 def artwork_fields(entry, directory):
+    if entry.get("removed"):
+        artwork = {
+            "artwork_url": "/artwork/base.svg",
+            "artwork_kind": "fallback",
+            "artwork_family": "abstract",
+            "artwork_basis": [],
+            "artwork_reason": "removed",
+        }
+        row = annotate_display(entry, artwork)
+        row["display_image"] = None
+        return row
     try:
         artwork = ensure_artwork(entry, directory, "/artwork/")
     except Exception:
@@ -223,19 +254,25 @@ def create_app(runtime_dir=None, background=True):
 
     def payload(entry, selected_date=None, mode='daily'):
         title = entry.get('title', '')
-        bundled = read_json(BASE / 'data' / 'summaries_zh.json', {}).get(title, '')
-        result = {**entry, 'intro_zh': bundled, 'intro_en': '', 'image': None,
-                  'translator': 'bundled' if bundled else 'none', 'gallery': [],
+        bundled = '' if entry.get('removed') else read_json(BASE / 'data' / 'summaries_zh.json', {}).get(title, '')
+        result = {'intro_zh': '', 'intro_en': '', 'image': None,
+                  'translator': 'none', **entry, 'gallery': [],
                   'fever_url': 'https://www.google.com/search?q=' + quote_plus(title + ' musical site:feverup.com'),
                   'search_url': 'https://www.google.com/search?q=' + quote_plus(title + ' musical official'),
                   'date': selected_date, 'mode': mode, 'total': len(library.snapshot())}
-        if entry.get('id'):
-            result.update(library.detail(entry))
+        if entry.get('removed'):
+            cached, _ = store.cached_details(entry['id'])
+            cached = cached or library.bundled_details.get(entry['id'], {})
+            article = {key: cached[key] for key in ARCHIVE_FIELDS
+                       if not result.get(key) and cached.get(key)}
+            result.update(image=None, image_source=None, image_reuse='unverified', detail_status='ready')
+        else:
+            article = library.detail(entry) if entry.get('id') else {}
+        result = merge_publication(result, article, bundled)
+        result.update(date=selected_date, mode=mode, total=len(library.snapshot()), gallery=[])
         result.update(artwork_fields(result, store.directory / 'artwork'))
         if not result.get('title_zh'):
             result['title_zh'] = entry.get('title_zh', '')
-        if bundled and result.get('translator') == 'none':
-            result.update(intro_zh=bundled, translator='bundled')
         return result
 
     @application.get('/')
@@ -258,7 +295,9 @@ def create_app(runtime_dir=None, background=True):
         if not entries:
             return jsonify(error='片库为空，请恢复 data/catalog.json 或更新片库。'), 503
         entry = resolve_saved(store.pick(entries, selected.isoformat()), entries)
-        return jsonify(payload(entry, selected.isoformat()))
+        result = payload(entry, selected.isoformat())
+        store.archive_daily(result, selected.isoformat())
+        return jsonify(result)
 
     @application.post('/api/random')
     def random_musical():
@@ -276,9 +315,13 @@ def create_app(runtime_dir=None, background=True):
             with store.connect() as db:
                 entry = next((row for (encoded,) in db.execute('SELECT musical FROM daily')
                               if (row := json.loads(encoded))['id'] == identity), None)
+            if entry:
+                entry = {**entry, 'removed': True}
         if not entry:
             return jsonify(error='剧目不存在。'), 404
-        return jsonify(payload(entry))
+        result = payload(entry)
+        store.archive_daily(result)
+        return jsonify(result)
 
     @application.get('/artwork/<name>')
     def artwork_file(name):

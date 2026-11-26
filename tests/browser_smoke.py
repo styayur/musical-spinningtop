@@ -1,17 +1,44 @@
 """Browser regression checks against a running local application (real API + failure fixtures)."""
 import sys
+import tempfile
+import threading
+from contextlib import contextmanager
 from pathlib import Path
+from unittest.mock import patch
 from playwright.sync_api import sync_playwright, expect
 
-url = sys.argv[1] if len(sys.argv) > 1 else 'http://127.0.0.1:5000'
 artifacts = Path(__file__).resolve().parents[1] / 'artifacts'
 artifacts.mkdir(exist_ok=True)
 
-with sync_playwright() as p:
+def screenshot(page, name):
+    page.wait_for_function("document.querySelector('#artwork').complete && document.querySelector('#artwork').naturalWidth > 0")
+    page.screenshot(path=str(artifacts / name), full_page=True)
+
+@contextmanager
+def running_app():
+    if len(sys.argv) > 1:
+        yield sys.argv[1]
+        return
+    from werkzeug.serving import make_server
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+    with tempfile.TemporaryDirectory(prefix='spinningtop-browser-') as directory:
+        with patch.dict('os.environ', {'SPINNINGTOP_DATA_DIR': directory}):
+            from app import create_app
+            application = create_app(directory, background=False)
+        server = make_server('127.0.0.1', 0, application, threaded=True)
+        worker = threading.Thread(target=server.serve_forever, daemon=True)
+        worker.start()
+        try:
+            yield f'http://127.0.0.1:{server.server_port}'
+        finally:
+            server.shutdown()
+            worker.join()
+            server.server_close()
+            application.extensions['library'].pool.shutdown()
+
+with running_app() as url, sync_playwright() as p:
     browser = p.chromium.launch(headless=True)
     page = browser.new_page(viewport={'width': 1440, 'height': 1000}, reduced_motion='reduce')
-    page.set_default_timeout(30000)
-    expect.set_options(timeout=30000)
     errors = []
     page.on('pageerror', lambda error: errors.append(str(error)))
     page.goto(url)
@@ -22,33 +49,48 @@ with sync_playwright() as p:
     page.locator('#infoBtn').click()
     page.locator('#tabAbout').click()
     expect(page.locator('#catalogCount')).to_contain_text('部可探索')
-    page.screenshot(path=str(artifacts / 'info.png'), full_page=True)
+    page.keyboard.press('Home')
+    expect(page.locator('#tabWork')).to_be_focused()
+    page.keyboard.press('ArrowRight')
+    expect(page.locator('#tabUse')).to_be_focused()
+    page.keyboard.press('Tab')
+    expect(page.locator('#panelUse')).to_be_focused()
+    page.keyboard.press('Tab')
+    expect(page.locator('#infoClose')).to_be_focused()
+    page.keyboard.press('Shift+Tab')
+    expect(page.locator('#panelUse')).to_be_focused()
+    page.locator('#tabAbout').click()
+    screenshot(page, 'info.png')
     page.keyboard.press('Escape')
+    expect(page.locator('#infoBtn')).to_be_focused()
     assert page.locator('#intro').inner_text()
-    page.screenshot(path=str(artifacts / 'desktop.png'), full_page=True)
+    screenshot(page, 'desktop.png')
 
     page.locator('#flipBtn').click()
     expect(page.locator('#flipBtn')).to_have_attribute('aria-pressed', 'true')
     assert page.locator('#frontFace').evaluate('(node) => node.inert')
     assert not page.locator('#backFace').evaluate('(node) => node.inert')
     assert page.locator('#wikiBtn').get_attribute('href').startswith('https://en.wikipedia.org/')
-    page.screenshot(path=str(artifacts / 'back.png'), full_page=True)
+    screenshot(page, 'back.png')
     page.keyboard.press('Escape')
     expect(page.locator('#flipBtn')).to_have_attribute('aria-pressed', 'false')
 
     page.locator('#randomBtn').click()
     expect(page.locator('#datePill')).to_have_text('自由探索')
+    expect(page.locator('#randomBtn')).to_have_attribute('aria-pressed', 'true')
+    expect(page.locator('#todayBtn')).to_have_attribute('aria-pressed', 'false')
     expect(page.locator('#card')).to_have_attribute('aria-busy', 'false')
-    page.screenshot(path=str(artifacts / 'random.png'), full_page=True)
+    screenshot(page, 'random.png')
     page.locator('#todayBtn').click()
     expect(page.locator('#datePill')).to_have_text('每日随机')
+    expect(page.locator('#todayBtn')).to_have_attribute('aria-pressed', 'true')
     expect(page.locator('#title')).to_contain_text(first)
     expect(page.locator('#dateInput')).to_have_value(today)
 
     page.locator('#prevBtn').click()
     expect(page.locator('#dateInput')).not_to_have_value(today)
     expect(page.locator('#card')).to_have_attribute('aria-busy', 'false')
-    page.screenshot(path=str(artifacts / 'previous-date.png'), full_page=True)
+    screenshot(page, 'previous-date.png')
     previous = page.locator('#title').inner_text().split(' · ')[0]
     page.locator('#nextBtn').click()
     expect(page.locator('#dateInput')).to_have_value(today)
@@ -85,7 +127,7 @@ with sync_playwright() as p:
     page.unroute('**/api/catalog/refresh')
     page.locator('#infoClose').click()
 
-    for width in (390, 320):
+    for width in (390, 320, 768):
         page.set_viewport_size({'width': width, 'height': 844})
         assert page.evaluate('document.documentElement.scrollWidth') == width
         page.locator('#randomBtn').click()
@@ -94,7 +136,14 @@ with sync_playwright() as p:
         page.keyboard.press('Enter')
         expect(page.locator('#flipBtn')).to_have_attribute('aria-pressed', 'true')
         page.keyboard.press('Escape')
-        page.screenshot(path=str(artifacts / f'mobile-{width}.png'), full_page=True)
+        screenshot(page, f'mobile-{width}.png')
+    page.evaluate("document.documentElement.style.zoom = '1.5'")
+    assert page.evaluate('document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1')
+    page.locator('#infoBtn').click()
+    expect(page.locator('#tabWork')).to_be_focused()
+    screenshot(page, 'css-zoom-150.png')
+    page.keyboard.press('Escape')
+    expect(page.locator('#infoBtn')).to_be_focused()
+    page.evaluate("document.documentElement.style.zoom = '1'")
     assert not errors, errors
     browser.close()
-    print('Browser checks passed: desktop, mobile 390/320, keyboard, flip, daily persistence, random, dates, errors, update progress.')

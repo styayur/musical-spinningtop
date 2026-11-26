@@ -1,6 +1,8 @@
 """Draw a recipe as original line-engraving SVG. No catalogue text enters the markup."""
 from __future__ import annotations
 
+import math
+
 PALETTES = (
     {"bg": "#f4efe6", "ink": "#243044", "gold": "#a78462", "wash": "#e4d9c8"},
     {"bg": "#f7f1e8", "ink": "#2c3140", "gold": "#b08968", "wash": "#e8dece"},
@@ -16,6 +18,16 @@ SUBJECTS = {
     "river", "desert", "dream",
 }
 ARRANGEMENTS = {"", "together", "family", "apart", "reunion", "conflict", "power", "absence", "ghost"}
+_FAMILY_SUBJECTS = {
+    "portal": {"door", "search", "escape"},
+    "city": {"city", "street", "palace", "station", "bridge", "prison", "school"},
+    "relation": {"love", "family", "friendship", "separation", "reunion", "power", "conflict", "death", "child", "ghost"},
+    "still": {"letter", "clock", "crown", "mask", "plant", "mirror", "ring"},
+    "route": {"ship", "train", "island", "map", "travel"},
+    "stage": {"stage", "perform", "dance", "heaven"},
+    "terrain": {"forest", "ocean", "garden", "mountain", "river", "desert"},
+    "abstract": set(),
+}
 
 
 def _esc(value):
@@ -32,7 +44,7 @@ def _bounded(value, limit):
 
 def _safe_recipe(recipe):
     family = recipe.get("family") if recipe.get("family") in FAMILIES else "abstract"
-    subjects = [item for item in recipe.get("subjects") or [] if item in SUBJECTS][:6]
+    subjects = [item for item in recipe.get("subjects") or [] if item in _FAMILY_SUBJECTS[family]][:6]
     modifiers = [item for item in recipe.get("modifiers") or [] if item in SUBJECTS][:8]
     arrangement = recipe.get("arrangement") if recipe.get("arrangement") in ARRANGEMENTS else ""
     return {
@@ -40,12 +52,67 @@ def _safe_recipe(recipe):
         "subjects": subjects,
         "modifiers": modifiers,
         "arrangement": arrangement,
-        "count": _bounded(recipe.get("count"), 6),
+        "count": _bounded(recipe.get("count"), 8),
         "palette": _bounded(recipe.get("palette"), 2),
         "mirror": bool(recipe.get("mirror")),
         "detail": _bounded(recipe.get("detail"), 2),
-        "abstract_layout": _bounded(recipe.get("abstract_layout"), 2),
+        "abstract_layout": _bounded(recipe.get("abstract_layout"), 7),
     }
+
+
+def drawn_motifs(recipe):
+    """Motifs this plate actually paints. Abstract plates paint none of them."""
+    safe = _safe_recipe(recipe or {})
+    family = safe["family"]
+    if family == "abstract":
+        return []
+    motifs = []
+
+    def add(name):
+        if name and name not in motifs:
+            motifs.append(name)
+
+    if family == "portal":
+        add("door")
+        if safe["count"]:
+            add("search" if "search" in safe["subjects"] else ("escape" if "escape" in safe["subjects"] else None))
+        if "heaven" in safe["modifiers"]:
+            add("heaven")
+    elif family == "city":
+        add(safe["subjects"][0] if safe["subjects"] else "city")
+    elif family == "still":
+        add(safe["subjects"][0] if safe["subjects"] else "letter")
+    elif family == "route":
+        add(safe["subjects"][0] if safe["subjects"] else "travel")
+    elif family == "terrain":
+        add(safe["subjects"][0] if safe["subjects"] else "forest")
+    elif family == "stage":
+        add("stage")
+        if "heaven" in safe["modifiers"]:
+            add("heaven")
+        if "death" in safe["modifiers"]:
+            add("death")
+        if safe["count"] and "dance" in safe["subjects"]:
+            add("dance")
+        if safe["count"] and "perform" in safe["subjects"]:
+            add("perform")
+    elif family == "relation":
+        arrangement = safe["arrangement"] or "together"
+        mapped = {
+            "apart": "separation",
+            "reunion": "reunion",
+            "conflict": "conflict",
+            "power": "power",
+            "absence": "death",
+            "ghost": "ghost",
+            "family": "family",
+            "together": next((item for item in safe["subjects"] if item in {"love", "friendship"}), ""),
+        }[arrangement]
+        if safe["count"] or arrangement == "absence":
+            add(mapped)
+        if safe["count"] and arrangement == "family" and "child" in safe["modifiers"]:
+            add("child")
+    return motifs
 
 
 class Plate:
@@ -94,17 +161,22 @@ class Plate:
 
 
 def _spread(count, left, right):
-    if count <= 1:
+    if count <= 0:
+        return []
+    if count == 1:
         return [(left + right) // 2]
     return [left + (right - left) * index // (count - 1) for index in range(count)]
 
 
-def _figure(plate, x, y, short=False, role="ink"):
+def _figure(plate, x, y, short=False, role="ink", dancing=False):
     height = 58 if short else 78
     radius = 6 if short else 8
     head = y - height
     plate.circle(x, head, radius, role=role)
     plate.path(f"M {x} {head + radius} L {x - 14} {y} L {x + 14} {y} Z", role=role)
+    if dancing:
+        plate.path(f"M {x - 20} {head + 12} L {x} {head + 28} L {x + 20} {head + 8}", role=role)
+        plate.path(f"M {x - 6} {y} L {x - 18} {y + 10} M {x + 6} {y} L {x + 18} {y - 8}", role=role)
 
 
 def _frame(plate):
@@ -128,7 +200,8 @@ def _portal(plate, recipe):
     if "heaven" in recipe["modifiers"]:
         plate.rect(x + 44, 188, 36, 52, role="gold", width="1.25")
     if recipe["count"]:
-        _figure(plate, 78 if recipe["mirror"] else 282, 424, short=True)
+        for x in _spread(recipe["count"], 54, 306):
+            _figure(plate, x, 424, short=True)
 
 
 def _windows(plate, x, y, w, h):
@@ -186,53 +259,61 @@ def _city(plate, recipe):
 
 def _relation(plate, recipe):
     arrangement = recipe["arrangement"] or "together"
-    count = recipe["count"] or 2
+    count = recipe["count"]
     if arrangement == "apart":
         plate.line(40, 372, 150, 372)
         plate.line(210, 372, 320, 372)
-        _figure(plate, 92, 372)
-        _figure(plate, 268, 372)
+        left = (count + 1) // 2
+        right = count - left
+        for x in _spread(left, 64, 136):
+            _figure(plate, x, 372, short=left > 2)
+        for x in _spread(right, 224, 300):
+            _figure(plate, x, 372, short=right > 2)
     elif arrangement == "reunion":
         plate.line(48, 372, 312, 372, width="1")
-        _figure(plate, 78, 372, short=True)
-        _figure(plate, 122, 372)
-        _figure(plate, 238, 372)
-        _figure(plate, 282, 372, short=True)
+        for x in _spread(count, 86, 274):
+            _figure(plate, x, 372, short=count > 4)
         plate.circle(180, 250, 14, role="gold")
     elif arrangement == "conflict":
         plate.path("M 40 372 L 150 372 L 168 332 L 40 332 Z")
         plate.path("M 210 332 L 192 372 L 320 372 L 320 332 Z")
-        _figure(plate, 78, 332, short=True)
-        _figure(plate, 124, 332, short=True)
-        _figure(plate, 236, 332, short=True)
-        _figure(plate, 282, 332, short=True)
+        left = (count + 1) // 2
+        right = max(0, count - left)
+        for x in _spread(left, 54, 144):
+            _figure(plate, x, 332, short=True)
+        for x in _spread(right, 216, 306):
+            _figure(plate, x, 332, short=True)
         plate.path("M 156 250 L 180 214 L 204 250")
         plate.path("M 162 286 L 180 314 L 198 286")
     elif arrangement == "power":
         plate.rect(124, 300, 112, 92)
         plate.line(108, 392, 252, 392)
-        _figure(plate, 180, 300)
-        _figure(plate, 72, 392, short=True)
-        _figure(plate, 288, 392, short=True)
+        if count:
+            _figure(plate, 180, 300)
+        rest = max(0, count - 1)
+        for x in _spread(rest, 54, 306):
+            _figure(plate, x, 392, short=True)
     elif arrangement == "absence":
         plate.line(48, 372, 312, 372, width="1")
-        _figure(plate, 96, 372)
+        for x in _spread(count, 54, 306):
+            _figure(plate, x, 420, short=True)
         plate.rect(214, 286, 52, 86)
         plate.line(214, 286, 266, 266)
         plate.line(266, 266, 266, 372)
         plate.line(228, 318, 250, 318, width="1")
     elif arrangement == "ghost":
         plate.line(48, 372, 312, 372, width="1")
-        _figure(plate, 132, 372)
-        _figure(plate, 214, 356, role="gold")
+        xs = _spread(count, 54, 306)
+        for index, x in enumerate(xs):
+            _figure(plate, x, 372 if index else 356, role="gold" if index == len(xs) - 1 else "ink")
     elif arrangement == "family":
         plate.line(64, 378, 296, 378, width="1.25")
-        xs = _spread(count, 96, 264)
+        xs = _spread(count, 54, 306)
         for index, x in enumerate(xs):
             _figure(plate, x, 378, short=(index == len(xs) // 2 and "child" in recipe["modifiers"]))
     else:
         plate.line(108, 378, 252, 378, width="1.25")
-        xs = _spread(max(count, 2), 138, 222)
+        xs = _spread(count, 54, 306) if count > 3 else _spread(count, 138, 222)
         for x in xs:
             _figure(plate, x, 378)
 
@@ -287,7 +368,7 @@ def _still(plate, recipe):
 
 
 def _route(plate, recipe):
-    subject = next((item for item in ("ship", "train", "island", "map", "travel") if item in recipe["subjects"]), "travel")
+    subject = recipe["subjects"][0] if recipe["subjects"] else "travel"
     if subject == "ship":
         plate.poly("32,214 78,198 124,214 170,198 216,214 262,198 308,214 332,202")
         plate.poly("28,268 92,250 156,268 220,250 284,268 336,252")
@@ -317,7 +398,13 @@ def _route(plate, recipe):
         plate.poly("44,400 108,292 164,328 226,196 312,96", width="1.75")
         for x, y in ((44, 400), (108, 292), (164, 328), (226, 196), (312, 96)):
             plate.rect(x - 6, y - 6, 12, 12)
-        _figure(plate, 96, 400, short=True)
+        if subject == "map":
+            plate.path("M 30 104 L 130 76 L 230 104 L 330 76 L 330 404 L 230 432 L 130 404 L 30 432 Z")
+            plate.line(130, 76, 130, 404, width="1")
+            plate.line(230, 104, 230, 432, width="1")
+        else:
+            for x in _spread(recipe["count"], 54, 306):
+                _figure(plate, x, 424, short=True)
         plate.circle(312, 96, 10, role="gold")
 
 
@@ -329,7 +416,7 @@ def _stage(plate, recipe):
     plate.path("M 78 292 L 282 292 L 312 396 L 48 396 Z")
     plate.line(74, 176, 74, 292, width="1.1")
     plate.line(286, 176, 286, 292, width="1.1")
-    if "heaven" in recipe["modifiers"] or "death" in recipe["modifiers"]:
+    if "heaven" in recipe["modifiers"]:
         plate.line(146, 246, 214, 246)
         plate.line(136, 268, 224, 268)
         plate.line(126, 290, 234, 290)
@@ -337,9 +424,13 @@ def _stage(plate, recipe):
         plate.rect(152, 58, 56, 52, role="gold", width="1.25")
         plate.line(166, 110, 166, 156, role="gold", width="1.1")
         plate.line(194, 110, 194, 156, role="gold", width="1.1")
+    if "death" in recipe["modifiers"]:
+        plate.path("M 88 274 L 88 226 Q 106 204 124 226 L 124 274 Z")
+        plate.line(106, 228, 106, 258)
+        plate.line(96, 240, 116, 240)
     count = recipe["count"]
-    for x in _spread(count, 108, 252) if count else []:
-        _figure(plate, x, 388, short=count >= 5)
+    for x in _spread(count, 72, 288):
+        _figure(plate, x, 388, short=count >= 5, dancing="dance" in recipe["subjects"])
 
 
 def _terrain(plate, recipe):
@@ -381,12 +472,83 @@ def _terrain(plate, recipe):
             plate.path(f"M {x - 22} {372 - height + 58} L {x} {372 - height} L {x + 22} {372 - height + 58}")
 
 
+def _shift(recipe, value):
+    return 360 - value if recipe["mirror"] else value
+
+
+def _abs_threshold(plate, recipe):
+    plate.path("M 64 300 Q 180 248 296 300")
+    plate.line(48, 338, 312, 338)
+    plate.line(78, 358, 282, 358, width="1")
+    x = _shift(recipe, 154)
+    plate.path(f"M {x} 246 L {_shift(recipe, 180)} 108 L {_shift(recipe, 206)} 246 Z", role="gold", width="1.5")
+
+
+def _abs_occlude(plate, recipe):
+    plate.circle(_shift(recipe, 150), 214, 86)
+    plate.rect(_shift(recipe, 196) - (28 if recipe["mirror"] else 0), 118, 28, 214, width="1.75")
+    plate.rect(_shift(recipe, 214) - (70 if recipe["mirror"] else 0), 246, 70, 70, role="gold", width="1.5")
+
+
+def _abs_density(plate, recipe):
+    origin = 48 if not recipe["mirror"] else 188
+    for index in range(10):
+        plate.line(origin + index * 12, 92, origin + index * 12, 372, width="1")
+    plate.circle(_shift(recipe, 268), 214, 46)
+    plate.circle(_shift(recipe, 268), 214, 16, role="gold", width="1.25")
+
+
+def _abs_frames(plate, recipe):
+    plate.rect(62, 86, 168, 250)
+    plate.rect(98, 128, 150, 196)
+    plate.rect(132, 168, 132, 148)
+    plate.circle(_shift(recipe, 262), 292, 30, role="gold", width="1.5")
+
+
+def _abs_diagonal(plate, recipe):
+    plate.path(f"M {_shift(recipe, 72)} 340 L {_shift(recipe, 118)} 292 L {_shift(recipe, 86)} 236 Z")
+    plate.rect(_shift(recipe, 148) - (48 if recipe["mirror"] else 0), 188, 48, 48)
+    plate.circle(_shift(recipe, 258), 122, 34, role="gold")
+
+
+def _abs_bridge(plate, recipe):
+    plate.circle(_shift(recipe, 86), 312, 30)
+    plate.circle(_shift(recipe, 86), 252, 10, role="gold", width="1.25")
+    plate.rect(_shift(recipe, 246) - (72 if recipe["mirror"] else 0), 112, 72, 92)
+    plate.line(_shift(recipe, 116), 300, _shift(recipe, 246), 168, width="1.25")
+    plate.line(_shift(recipe, 116), 324, _shift(recipe, 270), 196, width="1")
+
+
+def _abs_radial(plate, recipe):
+    cx, cy = _shift(recipe, 214), 196
+    plate.circle(cx, cy, 20, role="gold", width="1.5")
+    plate.circle(cx, cy, 72)
+    for angle in (18, 58, 98, 138, 178, 218, 258, 298, 338):
+        rad = math.radians(angle)
+        plate.line(cx, cy, round(cx + math.cos(rad) * 112), round(cy + math.sin(rad) * 112), width="1.1")
+
+
+def _abs_terrace(plate, recipe):
+    plate.line(44, 132, 316, 132)
+    plate.line(64, 196, 296, 196, width="1.5")
+    plate.line(84, 260, 276, 260)
+    plate.line(104, 324, 256, 324, width="1")
+    plate.line(48, 388, 312, 388, width="1.25")
+    x = _shift(recipe, 156)
+    plate.path(f"M {x} 96 L {_shift(recipe, 180)} 220 L {_shift(recipe, 204)} 96 Z", role="gold", width="1.5")
+
+
 def _abstract(plate, recipe):
-    plate.path("M 64 286 Q 180 236 296 286")
-    plate.line(52, 330, 308, 330)
-    plate.line(78, 348, 282, 348, width="1")
-    x = (86, 152, 218)[recipe["abstract_layout"]]
-    plate.path(f"M {x} 250 L {x + 26} 108 L {x + 52} 250 Z", role="gold", width="1.5")
+    (
+        _abs_threshold,
+        _abs_occlude,
+        _abs_density,
+        _abs_frames,
+        _abs_diagonal,
+        _abs_bridge,
+        _abs_radial,
+        _abs_terrace,
+    )[recipe["abstract_layout"]](plate, recipe)
 
 
 

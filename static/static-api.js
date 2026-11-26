@@ -66,6 +66,21 @@
     const now = new Date();
     return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
   }
+  const ARCHIVE_TEXT = ['title', 'title_zh', 'intro_en', 'intro_zh', 'intro_source', 'wiki_url', 'translator'];
+  function archiveFrom(row) {
+    const snap = { v: 2, id: row && row.id };
+    if (!snap.id) return snap;
+    for (const key of ARCHIVE_TEXT) {
+      if (row && typeof row[key] === 'string' && row[key]) snap[key] = row[key];
+    }
+    if (row && Number.isInteger(row.year)) snap.year = row.year;
+    return snap;
+  }
+  function sameArchive(stored, snap) {
+    if (!stored || stored.v !== 2) return false;
+    const keys = ['v', 'id', ...ARCHIVE_TEXT, 'year'];
+    return Object.keys(stored).every(key => keys.includes(key)) && keys.every(key => (stored[key] ?? null) === (snap[key] ?? null));
+  }
   function randomIndex(length) {
     if (!Number.isSafeInteger(length) || length < 1 || length > 0x100000000) throw new Error('片库为空或过大。');
     const bound = Math.floor(0x100000000 / length) * length;
@@ -98,7 +113,7 @@
           chosen = pool[randomIndex(pool.length)];
           used.add(chosen.id);
           cycles.put({ used: Array.from(used), last: chosen.id }, kind);
-          if (day) tx.objectStore('daily').put({ id: chosen.id, v: 2 }, day);
+          if (day) tx.objectStore('daily').put(archiveFrom(chosen), day);
         };
       }
       if (day) {
@@ -110,13 +125,31 @@
           const latest = id ? entries.find(row => row.id === id) : null;
           if (latest) {
             chosen = latest;
-            if (!(stored && stored.v === 2 && Object.keys(stored).length <= 3)) {
-              tx.objectStore('daily').put({ id, v: 2 }, day);
-            }
+            const preserved = archiveFrom(typeof stored === 'object' && stored ? stored : { id });
+            const filled = archiveFrom({ ...latest, ...preserved, id });
+            if (!sameArchive(stored, filled)) tx.objectStore('daily').put(filled, day);
             return;
           }
           const legacy = stored && typeof stored === 'object' ? stored : { id: id || 'removed', title: '已移出目录的作品' };
-          chosen = { ...legacy, artwork_url: './static/artwork/base.svg', artwork_kind: 'fallback', artwork_reason: 'removed', display_image: null, removed: true };
+          chosen = {
+            id: legacy.id || id || 'removed',
+            title: legacy.title || '已移出目录的作品',
+            title_zh: legacy.title_zh || '',
+            intro_en: legacy.intro_en || '',
+            intro_zh: legacy.intro_zh || '',
+            intro_source: legacy.intro_source || '',
+            translator: legacy.translator || 'none',
+            wiki_url: legacy.wiki_url || '',
+            year: Number.isInteger(legacy.year) ? legacy.year : undefined,
+            artwork_url: './static/artwork/base.svg',
+            artwork_kind: 'fallback',
+            artwork_family: 'abstract',
+            artwork_basis: [],
+            artwork_reason: 'removed',
+            display_image: null,
+            image: null,
+            removed: true,
+          };
         };
       } else select();
     });

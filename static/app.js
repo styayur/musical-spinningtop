@@ -11,7 +11,7 @@
     const path = value.split('?')[0];
     if (/^[a-z][a-z0-9+.-]*:/i.test(path)) return false;
     if (path.includes('\\') || path.includes('..')) return false;
-    return /^(?:\.\/static\/artwork\/|\/artwork\/|\/static\/artwork\/)(?:[a-f0-9]{20}|base)\.svg$/.test(path);
+    return /^(?:\.\/static\/artwork\/|\/artwork\/|\/static\/artwork\/)(?:[a-f0-9]{20}|base|[0-9A-Za-z]+-[0-9A-Za-z]+-[a-f0-9]{16}-[a-f0-9]{12})\.svg$/.test(path);
   }
   function isRemoteImage(value) {
     try {
@@ -56,10 +56,38 @@
     $('imageState').dataset.imageState = name;
     text('imageState', message);
   }
+  function artworkPath(value) {
+    return (value || '').split('?')[0];
+  }
+  function bindPlateImage(img, url, generation, token) {
+    let triedFallback = false;
+    const base = fallbackArt();
+    img.onload = () => {
+      if (token !== state.imageToken || generation !== state.generation) return;
+      const current = artworkPath(img.getAttribute('src'));
+      img.dataset.artworkState = current.endsWith('base.svg') && !artworkPath(url).endsWith('base.svg') ? 'fallback' : 'ready';
+    };
+    img.onerror = () => {
+      if (token !== state.imageToken || generation !== state.generation) return;
+      const current = artworkPath(img.getAttribute('src'));
+      if (triedFallback || current.endsWith('base.svg') || artworkPath(url).endsWith('base.svg')) {
+        triedFallback = true;
+        img.dataset.artworkState = 'failed';
+        return;
+      }
+      triedFallback = true;
+      img.dataset.artworkState = 'fallback';
+      img.src = base;
+    };
+    img.dataset.artworkState = 'loading';
+    img.src = url;
+  }
   function showImages(data, generation) {
     const token = ++state.imageToken;
     const art = isControlledArtwork(data.artwork_url) ? data.artwork_url : fallbackArt();
-    $('artwork').src = art;
+    const plate = $('artwork').cloneNode(false);
+    $('artwork').replaceWith(plate);
+    bindPlateImage(plate, art, generation, token);
     $('cover').hidden = true;
     $('cover').removeAttribute('src');
     const original = data.display_image;
@@ -73,20 +101,26 @@
     }
     setImageState('loading', '原图加载中，主画面仍为生成图。');
     const img = new Image();
+    let settled = false;
+    const active = () => !settled && token === state.imageToken && generation === state.generation;
     const timer = setTimeout(() => {
-      if (token !== state.imageToken || generation !== state.generation) return;
+      if (!active()) return;
+      settled = true;
       setImageState('failed', '原图加载超时，已保留生成图。');
     }, 8000);
     img.onload = () => {
       clearTimeout(timer);
-      if (token !== state.imageToken || generation !== state.generation) return;
-      $('cover').src = original;
-      $('cover').hidden = false;
+      if (!active()) return;
+      settled = true;
+      img.id = 'cover';
+      img.alt = $('cover').alt;
+      $('cover').replaceWith(img);
       setImageState('loaded', '原图加载成功。');
     };
     img.onerror = () => {
       clearTimeout(timer);
-      if (token !== state.imageToken || generation !== state.generation) return;
+      if (!active()) return;
+      settled = true;
       setImageState('failed', '原图加载失败，已保留生成图。');
     };
     img.src = original;
@@ -94,9 +128,10 @@
   function basisText(data) {
     const rows = Array.isArray(data.artwork_basis) ? data.artwork_basis : [];
     if (data.artwork_reason === 'removed') return '该作品已不在当前目录。已保留当时的记录，并使用安全的本地基础图。';
+    if (data.artwork_reason === 'error') return '插画生成失败，已改用基础图。这与简介线索不足不是同一种情况。';
     if (data.artwork_kind === 'abstract' || data.artwork_kind === 'fallback') {
       const reason = data.artwork_reason === 'empty' ? '简介为空，使用抽象剧场构图。' : '简介线索不足或无法可靠判断，使用抽象剧场构图。';
-      return reason + '这是原创概念插画，不是剧照或海报。';
+      return reason + '这是原创抽象构图，不表示剧情中的人物、地点或事件，也不是剧照或海报。';
     }
     if (!rows.length) return '原创概念插画。没有足够的可展示依据，不把它说成剧情理解。';
     const bits = rows.map(row => `${row.label || row.motif}（${row.phrase}）`).join('、');
@@ -124,7 +159,11 @@
     const year = Number.isInteger(data.year) ? String(data.year) : '';
     text('yearChip', year);
     $('yearChip').hidden = !year;
-    text('datePill', data.mode === 'random' ? '自由探索' : '每日随机');
+    const exploring = data.mode === 'random';
+    text('datePill', exploring ? '自由探索' : '每日随机');
+    $('dateCluster').dataset.mode = exploring ? 'random' : 'daily';
+    $('randomBtn').setAttribute('aria-pressed', String(exploring));
+    $('todayBtn').setAttribute('aria-pressed', String(!exploring));
     if (data.date) $('dateInput').value = data.date;
     applySynopsis(data.intro_zh || data.intro_en || (data.detail_status === 'loading' ? '已抽到这部剧，正在加载百科简介。' : ''));
     text('introEn', data.intro_en);
@@ -138,10 +177,16 @@
     $('card').dataset.artwork = data.artwork_url || '';
     showImages(data, state.generation);
     text('workSource', data.intro_source || data.wiki_url ? '简介来自该作品对应的百科条目。' : '没有可用的简介来源。');
-    const credit = data.image_source
-      ? '原图来源已记录。许可未核实的原图不作为主画面。'
-      : '条目没有可显示的原图。主画面为原创插画。';
+    const metadata = ['image_credit', 'image_attribution', 'image_artist', 'image_license']
+      .map(key => typeof data[key] === 'string' ? data[key].trim() : '')
+      .filter((value, index, values) => value && values.indexOf(value) === index);
+    const credit = (metadata.length ? metadata.join(' · ') + '。' : '') + (data.image_reuse === 'verified'
+      ? '原图已标记可复用；许可与署名见来源。'
+      : data.image_source ? '原图来源已记录。许可未核实的原图不作为主画面。'
+      : '条目没有可显示的原图。主画面为原创插画。');
     text('imageCredit', credit);
+    link('imageSource', data.image_source, '打开图片来源');
+    link('imageLicense', data.image_license_url, '阅读原图许可');
     text('artworkBasis', basisText(data));
     $('creatorLine').hidden = !data.composer;
     text('creatorLine', data.composer ? `创作者：${data.composer}` : '');
@@ -248,10 +293,23 @@
   $('infoDialog').addEventListener('click', event => { if (event.target === $('infoDialog')) closeInfo(); });
   $('infoDialog').querySelectorAll('[role="tab"]').forEach(tab => {
     tab.addEventListener('click', () => selectTab(tab.dataset.tab));
+    tab.addEventListener('keydown', event => {
+      const tabs = [...$('infoDialog').querySelectorAll('[role="tab"]')];
+      const index = tabs.indexOf(tab);
+      let next = index;
+      if (event.key === 'ArrowRight' || event.key === 'ArrowDown') next = (index + 1) % tabs.length;
+      else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') next = (index - 1 + tabs.length) % tabs.length;
+      else if (event.key === 'Home') next = 0;
+      else if (event.key === 'End') next = tabs.length - 1;
+      else return;
+      event.preventDefault();
+      selectTab(tabs[next].dataset.tab);
+      tabs[next].focus();
+    });
   });
   $('infoDialog').addEventListener('keydown', event => {
     if (event.key !== 'Tab' || !$('infoDialog').open) return;
-    const items = [...$('infoDialog').querySelectorAll('button, a[href], input')].filter(el => !el.disabled && !el.closest('[hidden]'));
+    const items = [...$('infoDialog').querySelectorAll('button, a[href], input, [tabindex]')].filter(el => el.tabIndex >= 0 && !el.disabled && !el.closest('[hidden]'));
     if (!items.length) return;
     const first = items[0];
     const last = items[items.length - 1];

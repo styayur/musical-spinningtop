@@ -43,9 +43,14 @@ def _arrangement(scores):
     return "together"
 
 
-def _count_for(family, arrangement, explicit, scores):
+def _count_for(family, arrangement, explicit, scores, subjects=()):
+    """Count figures drawn by the selected subject, not all mentioned people."""
+    if family not in {"stage", "portal", "relation"} and not (family == "route" and subjects[:1] == ["travel"]):
+        return 0
     if explicit:
-        return max(1, min(6, explicit))
+        return max(1, min(8, explicit))
+    if family == "route":
+        return 1
     if family == "stage":
         return 3 if scores.get("perform", 0) >= 1.6 or scores.get("dance", 0) >= 1.6 else 0
     if family == "portal":
@@ -103,7 +108,7 @@ def compose(normalized, extraction, art_version=ART_VERSION, extractor_version=E
         name for name in ("heaven", "death", "separation", "reunion", "ship", "ocean", "station", "palace", "child", "ghost", "conflict", "dream")
         if scores.get(name, 0) >= 0.8
     )
-    count = _count_for(family, arrangement, extraction["count"], scores)
+    count = _count_for(family, arrangement, extraction["count"], scores, subjects)
     identity = normalized["id"] or "missing"
     recipe = {
         "family": family,
@@ -114,7 +119,7 @@ def compose(normalized, extraction, art_version=ART_VERSION, extractor_version=E
         "palette": derived_int(identity, "palette", art_version) % 3,
         "mirror": bool(derived_int(identity, "mirror", art_version) % 2),
         "detail": derived_int(identity, "detail", art_version) % 3,
-        "abstract_layout": derived_int(identity, "abstract-layout", art_version) % 3,
+        "abstract_layout": derived_int(identity, "abstract-layout", art_version) % 8,
         "kind": kind,
         "reason": reason,
         "art_version": art_version,
