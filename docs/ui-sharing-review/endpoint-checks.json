@@ -1,0 +1,54 @@
+{
+  "X": {
+    "requested": "https://twitter.com/intent/tweet?text=Spinning+Top&url=https%3A%2F%2Fstyayur.github.io%2Fmusical-spinningtop%2F",
+    "status": 200,
+    "final_url": "https://x.com/i/jf/onboarding/web?redirect_after_login=%2Fintent%2Ftweet%3Ftext%3DSpinning%2BTop%26url%3Dhttps%253A%252F%252Fstyayur.github.io%252Fmusical-spinningtop%252F&mode=login",
+    "redirects": [
+      [
+        301,
+        "https://twitter.com/intent/tweet?text=Spinning+Top&url=https%3A%2F%2Fstyayur.github.io%2Fmusical-spinningtop%2F"
+      ],
+      [
+        307,
+        "https://x.com/intent/tweet?text=Spinning+Top&url=https%3A%2F%2Fstyayur.github.io%2Fmusical-spinningtop%2F"
+      ]
+    ]
+  },
+  "Facebook": {
+    "requested": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fstyayur.github.io%2Fmusical-spinningtop%2F",
+    "status": 200,
+    "final_url": "https://www.facebook.com/login/?next=https%3A%2F%2Fwww.facebook.com%2Fshare_channel%2F%3Ftype%3Dreshare%26link%3Dhttps%253A%252F%252Fstyayur.github.io%252Fmusical-spinningtop%252F%26app_id%3D966242223397117%26source_surface%3Dexternal_reshare%26display%26hashtag",
+    "redirects": [
+      [
+        302,
+        "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fstyayur.github.io%2Fmusical-spinningtop%2F"
+      ],
+      [
+        302,
+        "https://www.facebook.com/share_channel/?type=reshare&link=https%3A%2F%2Fstyayur.github.io%2Fmusical-spinningtop%2F&app_id=966242223397117&source_surface=external_reshare&display&hashtag"
+      ]
+    ]
+  },
+  "WhatsApp": {
+    "requested": "https://wa.me/?text=Spinning+Top+https%3A%2F%2Fstyayur.github.io%2Fmusical-spinningtop%2F",
+    "status": 200,
+    "final_url": "https://api.whatsapp.com/send/?text=Spinning+Top+https%3A%2F%2Fstyayur.github.io%2Fmusical-spinningtop%2F&type=custom_url&app_absent=0",
+    "redirects": [
+      [
+        302,
+        "https://wa.me/?text=Spinning+Top+https%3A%2F%2Fstyayur.github.io%2Fmusical-spinningtop%2F"
+      ]
+    ]
+  },
+  "Threads": {
+    "requested": "https://www.threads.com/intent/post?text=Spinning+Top&url=https%3A%2F%2Fstyayur.github.io%2Fmusical-spinningtop%2F",
+    "status": 200,
+    "final_url": "https://www.threads.com/login?next=https%3A%2F%2Fwww.threads.com%2Fintent%2Fpost%3Ftext%3DSpinning%2BTop%26url%3Dhttps%253A%252F%252Fstyayur.github.io%252Fmusical-spinningtop%252F%26__coig_login%3D1",
+    "redirects": [
+      [
+        302,
+        "https://www.threads.com/intent/post?text=Spinning+Top&url=https%3A%2F%2Fstyayur.github.io%2Fmusical-spinningtop%2F"
+      ]
+    ]
+  }
+}

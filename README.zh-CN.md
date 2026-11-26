@@ -39,6 +39,18 @@ python -m http.server 8080 --directory _site
 
 ## 运行
 
+### 分享作品
+
+卡片操作区下方的单一分享图标提供设备原生分享（浏览器支持时）、X、Facebook、WhatsApp、Threads、复制链接及保存卡片。所有分享均需主动点击，不自动发布。平台预览可能不同；无法直接附加图片时，可保存 1200 × 630 PNG 后手动附加。
+
+每部公开作品都有基于稳定 ID 的 `works/<编码ID>.html` 链接。接收者进入只读作品模式，不消耗轮次、不修改每日结果，只有主动选择“回到今日”或“再抽一部”才恢复探索。未知或移除的作品显示不可用页面，不静默替换。本地独有作品不提供虚假的公开链接；Flask 分享公开 HTTPS 地址，不分享 localhost。Open Graph 和 X Card 元数据直接写入 HTML，爬虫无需执行 JavaScript。
+
+首页邀请语和分享组件读取浏览器首选语言：`zh` 及其变体使用中文，其余或缺失时使用英文。不翻译作品原文，也不扩大为全站国际化。
+
+构建离线生成 v5 透明插画、作品页和 PNG 分享卡片，提取器仍为 v4。分享卡片只使用原创插画、标题、可用年份和品牌；按内容摘要缓存，使用随仓库附带的 SIL-OFL Noto Serif CJK 字体处理中日韩文字。`requirements.txt` 包含 Pillow 和 resvg-py；字体只用于构建，不随网站部署。`build-metrics.json` 记录耗时和产物体积。详见[本轮验收与截图](docs/ui-sharing-review/verification.md)；[既有 v4 证据](docs/artwork-review/)保持不变。
+
+### 启动 Flask
+
 需要 **Python 3.9+**（本次在 Windows / Python 3.14 验证）。
 
 ```powershell

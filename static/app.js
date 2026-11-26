@@ -153,6 +153,10 @@
     } else if (/[A-Za-z]/.test(first)) node.lang = 'en';
   }
   function render(data) {
+    if (window.spinningTopSharing) window.spinningTopSharing.setWork(data);
+    const shared = data.mode === 'shared';
+    $('sharedNotice').hidden = !shared;
+    document.querySelector('.date-nav').hidden = shared;
     const title = data.title_zh && data.title_zh !== data.title ? `${data.title} · ${data.title_zh}` : (data.title || '未命名作品');
     text('title', title);
     text('backTitle', title);
@@ -163,7 +167,7 @@
     text('datePill', exploring ? '自由探索' : '每日随机');
     $('dateCluster').dataset.mode = exploring ? 'random' : 'daily';
     $('randomBtn').setAttribute('aria-pressed', String(exploring));
-    $('todayBtn').setAttribute('aria-pressed', String(!exploring));
+    $('todayBtn').setAttribute('aria-pressed', String(!exploring && !shared));
     if (data.date) $('dateInput').value = data.date;
     applySynopsis(data.intro_zh || data.intro_en || (data.detail_status === 'loading' ? '已抽到这部剧，正在加载百科简介。' : ''));
     text('introEn', data.intro_en);
@@ -212,6 +216,14 @@
     }
   }
   async function load(mode = 'daily', selectedDate = '') {
+    if (document.getElementById('sharedWork')) {
+      // Freeze the resolved base before changing the document URL; otherwise
+      // "../" would escape the Pages subpath when leaving a work page.
+      const base = document.querySelector('base');
+      if (base) base.href = document.baseURI;
+      history.replaceState(null, '', new URL('./', document.baseURI).pathname);
+    }
+    $('shareBtn').disabled = true;
     const generation = ++state.generation;
     clearTimeout(state.detailTimer);
     if (state.controller) state.controller.abort();
@@ -244,6 +256,7 @@
         controls.forEach(id => $(id).disabled = false);
         $('card').classList.remove('loading');
         $('card').setAttribute('aria-busy', 'false');
+        if (window.spinningTopSharing) window.spinningTopSharing.setWork(state.selected);
       }
     }
   }
@@ -343,6 +356,16 @@
     } catch (_) { /* The visible card remains usable when the server is temporarily unavailable. */ }
   }, 60000);
   window.spinningTopMedia = { isControlledArtwork, isRemoteImage };
-  load();
-  catalogStatus();
+  const sharedNode = document.getElementById('sharedWork');
+  if (sharedNode) {
+    const data = JSON.parse(sharedNode.textContent);
+    state.selected = data;
+    state.generation++;
+    render(data);
+    $('card').setAttribute('aria-busy', 'false');
+    text('catalogCount', data.total ? `${data.total.toLocaleString('zh-CN')} 部可探索` : '分享作品 · 只读');
+  } else {
+    load();
+    catalogStatus();
+  }
 })();

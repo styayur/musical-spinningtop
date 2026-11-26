@@ -8,7 +8,7 @@ Discover one musical a day from a sourced catalogue, with persistent draws and W
 
 Each show has an original offline SVG plate derived from its local title and summary. That plate is a conceptual drawing, not a plot reading, poster, or Wikipedia image. See [docs/artwork.md](docs/artwork.md).
 
-![Existing daily musical card showing the selected title and source links](docs/assets/daily-card.png)
+![Borderless artwork, programme synopsis and sharing action](docs/ui-sharing-review/desktop-en.png)
 
 ## Use the web edition
 
@@ -19,6 +19,18 @@ Dates follow the browser timezone. An unopened past/future date gets its draw wh
 The site caches catalogue data after its first download and uses summaries from its published snapshot. It has no offline app shell: reopening without a network depends on the browser's page cache. Algorithm plates are part of the published files. Unverified remote covers are retained as source data and are not the main image. “Check catalogue updates” downloads a published snapshot; it does not crawl Wikipedia in the browser.
 
 ## Run locally
+
+### Share a work
+
+The share icon below the card actions opens device sharing (when supported), X, Facebook, WhatsApp, Threads, copy-link and save-card options. Sharing is always initiated by you; nothing is posted automatically. Platform previews may differ. Save the 1200 × 630 original-art PNG and attach it manually when a platform cannot attach an image from a link.
+
+Each published work has a stable `works/<encoded-id>.html` URL. Opening it shows that work in a read-only mode, without drawing, consuming a cycle or changing a saved day. Choose **today** or **explore** explicitly to leave this mode. Unknown/removed works show an unavailable page; local-only works cannot advertise a public share link. Flask shares the published HTTPS URL, never localhost. Work pages contain Open Graph/X Card metadata directly in HTML.
+
+The invitation and share controls follow the browser's preferred language: Chinese for `zh` variants, English otherwise. Work text and the rest of the interface are not automatically translated.
+
+Builds generate transparent version-5 artwork (extractor remains at version 4), work HTML and PNG cards offline. PNGs use content-hash filenames and a bundled SIL-OFL Noto Serif CJK font; no poster is copied. Pillow and resvg-py are installed by `requirements.txt`. The font stays in the source/build environment, not the deployed site. `build-metrics.json` records duration and output size. See [UI/sharing verification](docs/ui-sharing-review/verification.md) for measurements, screenshots and limitations; [v4 evidence](docs/artwork-review/) remains unchanged.
+
+### Start Flask
 
 Requires Python 3.9+; recorded maintainer validation used Windows/Python 3.14. macOS/Linux use `.venv/bin/python` in place of the Windows venv path.
 

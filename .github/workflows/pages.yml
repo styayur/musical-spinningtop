@@ -49,6 +49,10 @@ jobs:
         run: python tests/site_smoke.py
       - name: Image state and subpath checks
         run: python tests/ui_extra_smoke.py
+      - name: Read-only work pages and sharing checks
+        run: |
+          python tests/sharing_smoke.py
+          python tests/sharing_flask_smoke.py
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:

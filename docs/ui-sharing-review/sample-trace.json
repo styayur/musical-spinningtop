@@ -1,0 +1,945 @@
+[
+  {
+    "id": "en:82936081",
+    "basis": [],
+    "recipe": {
+      "family": "abstract",
+      "subjects": [],
+      "arrangement": "",
+      "count": 0,
+      "modifiers": [],
+      "palette": 0,
+      "mirror": false,
+      "detail": 1,
+      "abstract_layout": 4,
+      "kind": "abstract",
+      "reason": "empty",
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "fd761440e61c21b9d5cd11bb6c5d32c15911294c0d288fbe9e6b98fee0289866"
+    },
+    "source_digest": "4c419d3cc2c8c8f6711fd08edcb1a16d88ac8d97c525b500f5865a48aa8bd01c"
+  },
+  {
+    "id": "en:78637520",
+    "basis": [],
+    "recipe": {
+      "family": "abstract",
+      "subjects": [],
+      "arrangement": "",
+      "count": 0,
+      "modifiers": [],
+      "palette": 0,
+      "mirror": true,
+      "detail": 1,
+      "abstract_layout": 6,
+      "kind": "abstract",
+      "reason": "empty",
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "8963f537a7eae752a6924d3d75baec7342b9f9a3ef526a3af5dd5e107289ee82"
+    },
+    "source_digest": "305a0fadc19366668cee9c0e30a261397456a121bd0aa995ac90f4277f30f4d0"
+  },
+  {
+    "id": "en:84088806",
+    "basis": [],
+    "recipe": {
+      "family": "abstract",
+      "subjects": [],
+      "arrangement": "",
+      "count": 0,
+      "modifiers": [],
+      "palette": 1,
+      "mirror": false,
+      "detail": 1,
+      "abstract_layout": 7,
+      "kind": "abstract",
+      "reason": "empty",
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "1496ee11809efe5e105b518d49dd1f5e90aed73b8eb5291f62ae719ca3b273b9"
+    },
+    "source_digest": "36d70a9cc350ccf061bc916feca539e09816ba46fe3f5e9cf09f706d19e04596"
+  },
+  {
+    "id": "en:59473231",
+    "basis": [
+      {
+        "motif": "death",
+        "label": "死亡",
+        "phrase": "died",
+        "source_field": "intro_en",
+        "rule_id": "en:died",
+        "score": 1.7
+      }
+    ],
+    "recipe": {
+      "family": "relation",
+      "subjects": [
+        "death"
+      ],
+      "arrangement": "absence",
+      "count": 1,
+      "modifiers": [
+        "death"
+      ],
+      "palette": 1,
+      "mirror": true,
+      "detail": 2,
+      "abstract_layout": 2,
+      "kind": "generated",
+      "reason": null,
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "41e47cdfa72c6662e39aebc89e8d342cd82db9d7430a0b12d172f5ff95fa86f9"
+    },
+    "source_digest": "a3ba4506e605d2fac44e9551249e2b17d93ac2cb6d53c1940a5198cf93787e6b"
+  },
+  {
+    "id": "en:74782111",
+    "basis": [],
+    "recipe": {
+      "family": "abstract",
+      "subjects": [],
+      "arrangement": "",
+      "count": 0,
+      "modifiers": [],
+      "palette": 2,
+      "mirror": true,
+      "detail": 0,
+      "abstract_layout": 4,
+      "kind": "abstract",
+      "reason": "insufficient",
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "a79d491504ed6f492403b01b29c4fac37c4048bf6829c44eb367cd71d29b4723"
+    },
+    "source_digest": "48ad11d3ebd7d7316bad5168ea0873c9d425dd857abbf42f5a25104a79e7dbae"
+  },
+  {
+    "id": "en:6750389",
+    "basis": [
+      {
+        "motif": "power",
+        "label": "权力",
+        "phrase": "King",
+        "source_field": "intro_en",
+        "rule_id": "en:king",
+        "score": 1.6
+      }
+    ],
+    "recipe": {
+      "family": "relation",
+      "subjects": [
+        "power"
+      ],
+      "arrangement": "power",
+      "count": 3,
+      "modifiers": [],
+      "palette": 0,
+      "mirror": true,
+      "detail": 1,
+      "abstract_layout": 7,
+      "kind": "generated",
+      "reason": null,
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "8e3ab36c80815153049fa19a6b42c18fa761ec8301f01e7f88df29aa201e44e3"
+    },
+    "source_digest": "71386feb27227d551d4e90e6a504df7f05b63ae89fb81ca00646501b7def8a81"
+  },
+  {
+    "id": "en:9661942",
+    "basis": [
+      {
+        "motif": "letter",
+        "label": "信件",
+        "phrase": "letter",
+        "source_field": "intro_en",
+        "rule_id": "en:letter",
+        "score": 1.8
+      }
+    ],
+    "recipe": {
+      "family": "still",
+      "subjects": [
+        "letter"
+      ],
+      "arrangement": "",
+      "count": 0,
+      "modifiers": [],
+      "palette": 0,
+      "mirror": false,
+      "detail": 0,
+      "abstract_layout": 7,
+      "kind": "generated",
+      "reason": null,
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "b2c328de8df872bc26ffcd9f51bb1f8e44f477449e9b39c62e752963a5ef33ef"
+    },
+    "source_digest": "3efa1a6910b78afc7220f9de6717fda8011ee7f30d3157c903c79e4a6bcf14b8"
+  },
+  {
+    "id": "en:82799699",
+    "basis": [],
+    "recipe": {
+      "family": "abstract",
+      "subjects": [],
+      "arrangement": "",
+      "count": 0,
+      "modifiers": [],
+      "palette": 0,
+      "mirror": true,
+      "detail": 1,
+      "abstract_layout": 2,
+      "kind": "abstract",
+      "reason": "insufficient",
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "383683ca0adab52747ca518e86ecebd425c418e478c4ad7ff3f1f8569373b55c"
+    },
+    "source_digest": "31f303bba4f0aa9c7c2ba2ce968ed81d0ed59a0464e5fb408dedb2c273cdf8ac"
+  },
+  {
+    "id": "en:19330545",
+    "basis": [],
+    "recipe": {
+      "family": "abstract",
+      "subjects": [],
+      "arrangement": "",
+      "count": 0,
+      "modifiers": [],
+      "palette": 1,
+      "mirror": true,
+      "detail": 0,
+      "abstract_layout": 3,
+      "kind": "abstract",
+      "reason": "insufficient",
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "5beada40657393f3bbaf5fdaf214a4a18c594c1094d63793d54b69b0efd870e8"
+    },
+    "source_digest": "1e5a21e26094b1e54f9e6a7ebab1ffb7595022ca4ffa4b617e78f66d20344473"
+  },
+  {
+    "id": "en:14711047",
+    "basis": [],
+    "recipe": {
+      "family": "abstract",
+      "subjects": [],
+      "arrangement": "",
+      "count": 0,
+      "modifiers": [],
+      "palette": 0,
+      "mirror": false,
+      "detail": 1,
+      "abstract_layout": 7,
+      "kind": "abstract",
+      "reason": "insufficient",
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "43488924f6ff3a0c83eb515236f02ec07e21443d8d3e3f27e2a611c06d4b725b"
+    },
+    "source_digest": "e3c0cf42b8d2b3eff7765103257a510c26808b419f19851c61bfea4dbec02a9e"
+  },
+  {
+    "id": "en:52951040",
+    "basis": [],
+    "recipe": {
+      "family": "abstract",
+      "subjects": [],
+      "arrangement": "",
+      "count": 0,
+      "modifiers": [],
+      "palette": 2,
+      "mirror": true,
+      "detail": 0,
+      "abstract_layout": 2,
+      "kind": "abstract",
+      "reason": "insufficient",
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "38fe4ef99cd7c38523006901c38a92c4552f70e3bad00f2c9acf8e61e9c72650"
+    },
+    "source_digest": "640a8da56459b28df349bb5737b4617c3b4f4b8af46c931ceb152eb1bdb90590"
+  },
+  {
+    "id": "en:215013",
+    "basis": [],
+    "recipe": {
+      "family": "abstract",
+      "subjects": [],
+      "arrangement": "",
+      "count": 0,
+      "modifiers": [],
+      "palette": 0,
+      "mirror": true,
+      "detail": 2,
+      "abstract_layout": 6,
+      "kind": "abstract",
+      "reason": "insufficient",
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "7862f35f4982836929663d10308fad5e6dca7cc39eaf29ad475cdac8f93f9305"
+    },
+    "source_digest": "8c353a01c2b68fc8ba1be11336b0b907f87a02afea23fc0bbdb3a6c72158e67f"
+  },
+  {
+    "id": "en:49079409",
+    "basis": [
+      {
+        "motif": "child",
+        "label": "孩子",
+        "phrase": "child",
+        "source_field": "intro_en",
+        "rule_id": "en:child",
+        "score": 1.4
+      }
+    ],
+    "recipe": {
+      "family": "relation",
+      "subjects": [
+        "friendship",
+        "child"
+      ],
+      "arrangement": "family",
+      "count": 3,
+      "modifiers": [
+        "child"
+      ],
+      "palette": 2,
+      "mirror": true,
+      "detail": 1,
+      "abstract_layout": 2,
+      "kind": "generated",
+      "reason": null,
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "1771c9bf25dbb450adfe14f0bff393af0dfd59350461da4790eba4869eca9902"
+    },
+    "source_digest": "60773f5ccf437b5c6e0f52a0f71e590e11db40582dcab386692e4a32c23e43d6"
+  },
+  {
+    "id": "en:47260029",
+    "basis": [],
+    "recipe": {
+      "family": "abstract",
+      "subjects": [],
+      "arrangement": "",
+      "count": 0,
+      "modifiers": [],
+      "palette": 2,
+      "mirror": true,
+      "detail": 1,
+      "abstract_layout": 6,
+      "kind": "abstract",
+      "reason": "insufficient",
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "e1da82812bba2e0dfa66fe8baf139b6e52b2e3f2820df348255d97d6a343c316"
+    },
+    "source_digest": "20ec6ce3e0e5c0b2b5d4caa32fca37fbb05e53cad9c8b50828158ee25c3e3312"
+  },
+  {
+    "id": "en:55469598",
+    "basis": [
+      {
+        "motif": "child",
+        "label": "孩子",
+        "phrase": "children",
+        "source_field": "intro_en",
+        "rule_id": "en:children",
+        "score": 1.6
+      }
+    ],
+    "recipe": {
+      "family": "relation",
+      "subjects": [
+        "child"
+      ],
+      "arrangement": "family",
+      "count": 3,
+      "modifiers": [
+        "child"
+      ],
+      "palette": 1,
+      "mirror": true,
+      "detail": 1,
+      "abstract_layout": 2,
+      "kind": "generated",
+      "reason": null,
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "43076600ad5a3fff8f6e78c9ba989a991b9e857dfe6a11257a58773742bf74e4"
+    },
+    "source_digest": "a666ebb0b8611595cda4576f73f5cdd18a733a7113188247539a41b71ac0333a"
+  },
+  {
+    "id": "en:3245600",
+    "basis": [
+      {
+        "motif": "dance",
+        "label": "舞蹈",
+        "phrase": "dancer",
+        "source_field": "intro_en",
+        "rule_id": "en:dancer",
+        "score": 1.6
+      },
+      {
+        "motif": "perform",
+        "label": "演出",
+        "phrase": "Performing",
+        "source_field": "intro_en",
+        "rule_id": "en:performing",
+        "score": 1.7
+      }
+    ],
+    "recipe": {
+      "family": "stage",
+      "subjects": [
+        "dance",
+        "perform"
+      ],
+      "arrangement": "",
+      "count": 3,
+      "modifiers": [],
+      "palette": 0,
+      "mirror": false,
+      "detail": 1,
+      "abstract_layout": 3,
+      "kind": "generated",
+      "reason": null,
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "08302cd889eb5030ba34b147f4b9b5d43b0f8e1a83c296b98e8eb11eb919d494"
+    },
+    "source_digest": "bf6e03993211eefff01fc786fe548ce3bd04f56eedf778ebebe9f1e64ff0ff93"
+  },
+  {
+    "id": "en:32728502",
+    "basis": [
+      {
+        "motif": "conflict",
+        "label": "冲突",
+        "phrase": "war",
+        "source_field": "intro_en",
+        "rule_id": "en:war",
+        "score": 1.8
+      }
+    ],
+    "recipe": {
+      "family": "relation",
+      "subjects": [
+        "conflict"
+      ],
+      "arrangement": "conflict",
+      "count": 4,
+      "modifiers": [
+        "conflict"
+      ],
+      "palette": 1,
+      "mirror": true,
+      "detail": 1,
+      "abstract_layout": 5,
+      "kind": "generated",
+      "reason": null,
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "f90157754cb840489949c850bf2936b3c69fcf6c0eaff3f3d940051c97f26b0b"
+    },
+    "source_digest": "9d72998b7f90532262403f563f91757ac0dfb897d6b5959a9493f870aa632930"
+  },
+  {
+    "id": "en:76128963",
+    "basis": [
+      {
+        "motif": "family",
+        "label": "家庭",
+        "phrase": "sister",
+        "source_field": "intro_en",
+        "rule_id": "en:sister",
+        "score": 1.6
+      }
+    ],
+    "recipe": {
+      "family": "relation",
+      "subjects": [
+        "family"
+      ],
+      "arrangement": "family",
+      "count": 3,
+      "modifiers": [],
+      "palette": 1,
+      "mirror": true,
+      "detail": 2,
+      "abstract_layout": 1,
+      "kind": "generated",
+      "reason": null,
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "8fc0b1d3c6ee68facfe2baf386c63f5c3e3fa9938c49c90d827f6462a7e4e66f"
+    },
+    "source_digest": "6cec88d3e7588c5c074dcb9dc1f8f456abadb9867516ee4283339918d7b9ec41"
+  },
+  {
+    "id": "en:66370354",
+    "basis": [
+      {
+        "motif": "palace",
+        "label": "宫殿",
+        "phrase": "Palace",
+        "source_field": "intro_en",
+        "rule_id": "en:palace",
+        "score": 2.0
+      }
+    ],
+    "recipe": {
+      "family": "city",
+      "subjects": [
+        "palace"
+      ],
+      "arrangement": "",
+      "count": 0,
+      "modifiers": [
+        "palace"
+      ],
+      "palette": 2,
+      "mirror": false,
+      "detail": 1,
+      "abstract_layout": 3,
+      "kind": "generated",
+      "reason": null,
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "887e69eb5ae8a0d81a69b70c73a8a16f7201f5c3891ec58f88bea32670f4de23"
+    },
+    "source_digest": "279ee2acdd725ae629d628c313ec947daa479fc5534858226f4d70b7ab109efe"
+  },
+  {
+    "id": "en:7212998",
+    "basis": [
+      {
+        "motif": "street",
+        "label": "街道",
+        "phrase": "Street",
+        "source_field": "intro_en",
+        "rule_id": "en:street",
+        "score": 1.7
+      }
+    ],
+    "recipe": {
+      "family": "city",
+      "subjects": [
+        "street"
+      ],
+      "arrangement": "",
+      "count": 0,
+      "modifiers": [],
+      "palette": 0,
+      "mirror": false,
+      "detail": 0,
+      "abstract_layout": 1,
+      "kind": "generated",
+      "reason": null,
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "130c420a245b099132cee00abc221b3e377c27911973942940ee35e6e192b9ba"
+    },
+    "source_digest": "dbf474db4960ed8bcdf8a46fa2aed20598c54d1febe40b11194c4241c0652c3f"
+  },
+  {
+    "id": "en:2779591",
+    "basis": [],
+    "recipe": {
+      "family": "abstract",
+      "subjects": [],
+      "arrangement": "",
+      "count": 0,
+      "modifiers": [],
+      "palette": 0,
+      "mirror": true,
+      "detail": 1,
+      "abstract_layout": 4,
+      "kind": "abstract",
+      "reason": "insufficient",
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "76860e2a55d4c2610519dcd591b8d4509dea993490dffd2c42050a077986efb4"
+    },
+    "source_digest": "055a346eaeddb8783ed9506c1cc36415501361437bf53bd0e3b3ff97f5a3507d"
+  },
+  {
+    "id": "en:75654372",
+    "basis": [],
+    "recipe": {
+      "family": "abstract",
+      "subjects": [],
+      "arrangement": "",
+      "count": 0,
+      "modifiers": [],
+      "palette": 1,
+      "mirror": true,
+      "detail": 0,
+      "abstract_layout": 3,
+      "kind": "abstract",
+      "reason": "insufficient",
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "5beada40657393f3bbaf5fdaf214a4a18c594c1094d63793d54b69b0efd870e8"
+    },
+    "source_digest": "70fcca38eb0df32a3557ff32b166c5238c93ba7dca07dfda3e46d1cba0904eb3"
+  },
+  {
+    "id": "en:99017",
+    "basis": [],
+    "recipe": {
+      "family": "abstract",
+      "subjects": [],
+      "arrangement": "",
+      "count": 0,
+      "modifiers": [],
+      "palette": 0,
+      "mirror": false,
+      "detail": 0,
+      "abstract_layout": 4,
+      "kind": "abstract",
+      "reason": "insufficient",
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "a1e4ff1b2b9097750ffc8eca6a8636a17f2558f5c9cf26922fab7def1fc7c8d3"
+    },
+    "source_digest": "f4161f83d62e27849621601e1b7d134adb3cbb4d6d5a41007140430918c8042a"
+  },
+  {
+    "id": "en:35245152",
+    "basis": [
+      {
+        "motif": "friendship",
+        "label": "友谊",
+        "phrase": "Friendship",
+        "source_field": "intro_en",
+        "rule_id": "en:friendship",
+        "score": 1.8
+      }
+    ],
+    "recipe": {
+      "family": "relation",
+      "subjects": [
+        "friendship"
+      ],
+      "arrangement": "together",
+      "count": 2,
+      "modifiers": [],
+      "palette": 2,
+      "mirror": false,
+      "detail": 0,
+      "abstract_layout": 5,
+      "kind": "generated",
+      "reason": null,
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "cfa8ada9c531d990b663eb518977da335ed1020339df1e5b6fd9f77921c1976f"
+    },
+    "source_digest": "6847cc0463b30ac69b32a4a9db46a150e8bfb2673cba432cbf2fa8209c7d4b60"
+  },
+  {
+    "id": "en:55901560",
+    "basis": [],
+    "recipe": {
+      "family": "abstract",
+      "subjects": [],
+      "arrangement": "",
+      "count": 0,
+      "modifiers": [],
+      "palette": 0,
+      "mirror": false,
+      "detail": 2,
+      "abstract_layout": 1,
+      "kind": "abstract",
+      "reason": "insufficient",
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "2f68e92a32d7007cb6a779e13b8471f8af96c6bf197a41b4fc5eb1c607ca4183"
+    },
+    "source_digest": "7188094abaf14957f270d27152feaf8da8548f25fa375d2a866736eb0145d62e"
+  },
+  {
+    "id": "en:1166071",
+    "basis": [],
+    "recipe": {
+      "family": "abstract",
+      "subjects": [],
+      "arrangement": "",
+      "count": 0,
+      "modifiers": [],
+      "palette": 2,
+      "mirror": true,
+      "detail": 0,
+      "abstract_layout": 6,
+      "kind": "abstract",
+      "reason": "insufficient",
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "b033c0a35660bb557c2862ac5f1cb53c327d333a16b6ed48a4efb064cb98767a"
+    },
+    "source_digest": "c53d6ae4eac53e0ed839da02fa01fabfdef3a35bfee39bde83ccdd483292b653"
+  },
+  {
+    "id": "en:52333166",
+    "basis": [],
+    "recipe": {
+      "family": "abstract",
+      "subjects": [],
+      "arrangement": "",
+      "count": 0,
+      "modifiers": [],
+      "palette": 1,
+      "mirror": false,
+      "detail": 0,
+      "abstract_layout": 0,
+      "kind": "abstract",
+      "reason": "insufficient",
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "3ee8aaf81e601dfd5ae68b7daf0472b4ae5872181b8f67c79b21c6f21309db13"
+    },
+    "source_digest": "ce253e8f11e569ea2721c14ccb44be42bc3262760ccd9992ba006722e1047e90"
+  },
+  {
+    "id": "en:4402844",
+    "basis": [
+      {
+        "motif": "love",
+        "label": "相爱",
+        "phrase": "love",
+        "source_field": "intro_en",
+        "rule_id": "en:love",
+        "score": 1.6
+      }
+    ],
+    "recipe": {
+      "family": "relation",
+      "subjects": [
+        "love"
+      ],
+      "arrangement": "together",
+      "count": 2,
+      "modifiers": [],
+      "palette": 1,
+      "mirror": true,
+      "detail": 1,
+      "abstract_layout": 0,
+      "kind": "generated",
+      "reason": null,
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "d25d112719cb512940e8d78c159a5688e94efad6b1c2831fb01c0221ecf4aba9"
+    },
+    "source_digest": "b5ba42d8094cc42683522d7da1829b4983e6f256bc312fb20ce00b13858ba12c"
+  },
+  {
+    "id": "en:3603386",
+    "basis": [],
+    "recipe": {
+      "family": "abstract",
+      "subjects": [],
+      "arrangement": "",
+      "count": 0,
+      "modifiers": [],
+      "palette": 2,
+      "mirror": false,
+      "detail": 1,
+      "abstract_layout": 6,
+      "kind": "abstract",
+      "reason": "insufficient",
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "c9df6c074876269630eda85623d0ce5185418fd52e5ac23eda125a55a0f0a786"
+    },
+    "source_digest": "40e7bfb713428094b848fa2b8ce1afd7f69087d68bc84dee9efb9acfbd3d4f5f"
+  },
+  {
+    "id": "en:74652697",
+    "basis": [],
+    "recipe": {
+      "family": "abstract",
+      "subjects": [],
+      "arrangement": "",
+      "count": 0,
+      "modifiers": [],
+      "palette": 0,
+      "mirror": false,
+      "detail": 1,
+      "abstract_layout": 0,
+      "kind": "abstract",
+      "reason": "insufficient",
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "4cf20e4617c5dce81cfd20ee18c3989fdeea04b9f05f87379c767fc98d922d7e"
+    },
+    "source_digest": "e4ba35fc3fc061f6ead031cb989494e32f3bfb2478d87789bda2da84d7076eda"
+  },
+  {
+    "id": "en:58866406",
+    "basis": [],
+    "recipe": {
+      "family": "abstract",
+      "subjects": [],
+      "arrangement": "",
+      "count": 0,
+      "modifiers": [],
+      "palette": 1,
+      "mirror": true,
+      "detail": 1,
+      "abstract_layout": 5,
+      "kind": "abstract",
+      "reason": "insufficient",
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "e20f5b9834ed0ad7a4dcbb4d5e6261417196261bee36283b516a2befd31de5cc"
+    },
+    "source_digest": "bac967c9a7a46097afb72a3bd5fb083a597bf083fead18aef71487ba05edabd3"
+  },
+  {
+    "id": "en:61857884",
+    "basis": [],
+    "recipe": {
+      "family": "abstract",
+      "subjects": [],
+      "arrangement": "",
+      "count": 0,
+      "modifiers": [],
+      "palette": 2,
+      "mirror": true,
+      "detail": 1,
+      "abstract_layout": 7,
+      "kind": "abstract",
+      "reason": "insufficient",
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "f9ddf9af1d4386bbc40ab2862463ca52b980e7378cf3f71851e5f06a243481ee"
+    },
+    "source_digest": "6349c5ae9084a479e54aaf547ddf352f712f2814c605aee883ba2a205337afd6"
+  },
+  {
+    "id": "en:33833786",
+    "basis": [],
+    "recipe": {
+      "family": "abstract",
+      "subjects": [],
+      "arrangement": "",
+      "count": 0,
+      "modifiers": [],
+      "palette": 2,
+      "mirror": true,
+      "detail": 0,
+      "abstract_layout": 4,
+      "kind": "abstract",
+      "reason": "insufficient",
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "a79d491504ed6f492403b01b29c4fac37c4048bf6829c44eb367cd71d29b4723"
+    },
+    "source_digest": "5d1ab26e745b23400124d30590fd86736a719ed84d6e25466a7a34ea53e8dd0d"
+  },
+  {
+    "id": "en:15171202",
+    "basis": [
+      {
+        "motif": "friendship",
+        "label": "友谊",
+        "phrase": "friendship",
+        "source_field": "intro_en",
+        "rule_id": "en:friendship",
+        "score": 1.8
+      }
+    ],
+    "recipe": {
+      "family": "relation",
+      "subjects": [
+        "friendship"
+      ],
+      "arrangement": "together",
+      "count": 2,
+      "modifiers": [],
+      "palette": 0,
+      "mirror": false,
+      "detail": 1,
+      "abstract_layout": 0,
+      "kind": "generated",
+      "reason": null,
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "e3f475212494fba6d289ec11d9acdcd5a73d9f61f79a9ac02bb352e30733b9c0"
+    },
+    "source_digest": "e8b449ad5e3b5b60cfc71648972211e242885c0fcd7f45fcd8734e59d343366f"
+  },
+  {
+    "id": "en:5849980",
+    "basis": [
+      {
+        "motif": "child",
+        "label": "孩子",
+        "phrase": "children",
+        "source_field": "intro_en",
+        "rule_id": "en:children",
+        "score": 1.6
+      }
+    ],
+    "recipe": {
+      "family": "relation",
+      "subjects": [
+        "child"
+      ],
+      "arrangement": "family",
+      "count": 3,
+      "modifiers": [
+        "child"
+      ],
+      "palette": 0,
+      "mirror": true,
+      "detail": 0,
+      "abstract_layout": 0,
+      "kind": "generated",
+      "reason": null,
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "1ecf2ba6562fad9780b3c9397860f040a3fc94a5eca4c702a0cd6602eb3fc487"
+    },
+    "source_digest": "daa237f2ce1ec45da0fbe62636e4a28c7b861a739411c74657b920492b3920e5"
+  },
+  {
+    "id": "en:7511653",
+    "basis": [
+      {
+        "motif": "travel",
+        "label": "旅行",
+        "phrase": "journey",
+        "source_field": "intro_en",
+        "rule_id": "en:journey",
+        "score": 1.8
+      }
+    ],
+    "recipe": {
+      "family": "route",
+      "subjects": [
+        "travel"
+      ],
+      "arrangement": "",
+      "count": 1,
+      "modifiers": [],
+      "palette": 1,
+      "mirror": true,
+      "detail": 1,
+      "abstract_layout": 3,
+      "kind": "generated",
+      "reason": null,
+      "art_version": "5",
+      "extractor_version": "4",
+      "recipe_digest": "fea47938523cde040c6bef7a331fd4bb7cfde7eda63fa860cf2cf97b27643dc1"
+    },
+    "source_digest": "bfb65fc2617402dcb16bccf72b34969ccc5cbbce7ff357c7d0769f7cf0dbd997"
+  }
+]

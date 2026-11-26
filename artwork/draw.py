@@ -4,9 +4,9 @@ from __future__ import annotations
 import math
 
 PALETTES = (
-    {"bg": "#f4efe6", "ink": "#243044", "gold": "#a78462", "wash": "#e4d9c8"},
-    {"bg": "#f7f1e8", "ink": "#2c3140", "gold": "#b08968", "wash": "#e8dece"},
-    {"bg": "#f3eee4", "ink": "#1e2a36", "gold": "#9c7d5c", "wash": "#e6dccb"},
+    {"bg": "none", "ink": "#f5f0e8", "gold": "#c4a574", "wash": "#c4a574"},
+    {"bg": "none", "ink": "#eee8df", "gold": "#bba585", "wash": "#bba585"},
+    {"bg": "none", "ink": "#f3eee5", "gold": "#baa17b", "wash": "#baa17b"},
 )
 STRUCTURE = {"bg": "#ffffff", "ink": "#243044", "gold": "#243044", "wash": "#ffffff"}
 FAMILIES = {"portal", "city", "relation", "still", "route", "stage", "terrain", "abstract"}
@@ -555,7 +555,6 @@ def _abstract(plate, recipe):
 def render_svg(recipe, structure=False):
     safe = _safe_recipe(recipe or {})
     plate = Plate()
-    plate.rect(0, 0, 360, 480, role="bg", width="0")
     {
         "portal": _portal,
         "city": _city,
@@ -566,13 +565,14 @@ def render_svg(recipe, structure=False):
         "terrain": _terrain,
         "abstract": _abstract,
     }[safe["family"]](plate, safe)
-    _frame(plate)
     palette = STRUCTURE if structure else PALETTES[safe["palette"]]
     body = []
     for role, markup in plate.marks:
         if structure and role == "wash":
             continue
         colored = markup.replace("@ink", palette["ink"]).replace("@gold", palette["gold"]).replace("@wash", palette["wash"]).replace("@bg", palette["bg"])
+        if role == "wash" and not structure:
+            colored = colored.replace('/>', ' fill-opacity="0.16"/>')
         body.append(colored)
     if structure:
         body.insert(0, '<rect x="0" y="0" width="360" height="480" fill="#ffffff" stroke="none"/>')

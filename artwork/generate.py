@@ -281,8 +281,10 @@ def plan_artwork(entry, art_version=ART_VERSION, extractor_version=EXTRACTOR_VER
 
 def _ensure_base_locked(directory):
     path = directory / "base.svg"
-    if not path.is_file():
+    version = directory / "base.version"
+    if not path.is_file() or not version.is_file() or version.read_text(encoding="utf-8") != ART_VERSION:
         _atomic_text(path, render_base())
+        _atomic_text(version, ART_VERSION)
     return path
 
 

@@ -21,6 +21,7 @@ from flask import Flask, abort, jsonify, render_template, request, send_file
 from artwork.generate import annotate_display, ensure_artwork, ensure_base, resolve_artwork_path
 from artwork.normalize import merge_publication
 from catalog import BASE, discover, load_catalog, read_json, wiki_query, wiki_url, write_json
+from sharing import PUBLIC_BASE, ensure_card, public_url, work_html, work_id
 
 LOG = logging.getLogger(__name__)
 ARCHIVE_FIELDS = ('title', 'title_zh', 'intro_en', 'intro_zh', 'intro_source', 'wiki_url', 'year', 'translator')
@@ -278,6 +279,51 @@ def create_app(runtime_dir=None, background=True):
     @application.get('/')
     def index():
         return render_template('index.html')
+
+    def public_work(identity):
+        # Published catalogue only: local-only rows must never advertise localhost.
+        entries, _ = load_catalog(BASE / 'data' / '_nonexistent_build_runtime')
+        entry = next((row for row in entries if row['id'] == identity), None)
+        if entry is None:
+            return None
+        article = read_json(BASE / 'data' / 'articles.json', {}).get('articles', {}).get(identity)
+        summary = read_json(BASE / 'data' / 'summaries_zh.json', {}).get(entry['title'], '')
+        row = merge_publication(entry, article, summary)
+        row.update(artwork_fields(row, store.directory / 'artwork'), total=len(entries))
+        return row
+
+    def share_details(row):
+        name = row['artwork_url'].split('?')[0].rsplit('/', 1)[-1]
+        svg = (store.directory / 'artwork' / name).read_text(encoding='utf-8')
+        card = ensure_card(row, svg, store.directory / 'share')
+        return {'url': public_url(row['id']), 'image': '/share-cards/' + card, 'available': True}, card
+
+    @application.get('/api/share')
+    def share_info():
+        row = public_work(request.args.get('id', ''))
+        if row is None:
+            return jsonify(available=False, reason='not-public')
+        info, _ = share_details(row)
+        return jsonify(info)
+
+    @application.get('/works/<key>.html')
+    def shared_work(key):
+        row = public_work(work_id(key))
+        template = (BASE / 'templates' / 'index.html').read_text(encoding='utf-8-sig')
+        if row is None:
+            return work_html(template), 404
+        _, card = share_details(row)
+        return work_html(template, row, PUBLIC_BASE + 'static/share/' + card)
+
+    @application.get('/share-cards/<name>')
+    def share_card(name):
+        import re
+        if not re.fullmatch(r'[a-f0-9]{64}\.png', name):
+            abort(404)
+        path = store.directory / 'share' / name
+        if not path.is_file():
+            abort(404)
+        return send_file(path, mimetype='image/png', conditional=True)
 
     @application.get('/api/musical')
     def musical():

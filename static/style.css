@@ -75,12 +75,15 @@ a { color: inherit; }
   height: 44px;
   border: 0;
   border-radius: 50%;
-  background: var(--info);
+  background: transparent;
   color: var(--info-ink);
   font-family: var(--serif);
   font-size: 1.35rem;
   line-height: 1;
+  display: inline-grid;
+  place-items: center;
 }
+.info-btn span { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--info); font-size: 17px; }
 
 main {
   width: min(100% - 32px, 42rem);
@@ -162,10 +165,10 @@ input[type=date] {
 }
 
 .plate {
-  width: min(100%, 26rem);
+  width: min(100%, 18rem);
   margin: 0 auto;
   aspect-ratio: 3 / 4;
-  background: var(--plate);
+  background: transparent;
   position: relative;
   border-radius: 2px;
 }
@@ -181,7 +184,16 @@ input[type=date] {
 
 .identity, .face, .back-note { width: min(100%, 40rem); margin-left: auto; margin-right: auto; }
 
-.identity { margin-top: 18px; }
+.identity { margin-top: 8px; }
+
+.share-action { text-align: center; margin: 14px 0 0; }
+#shareWorkTitle { overflow-wrap: anywhere; }
+.share-action .icon-btn { border-color: transparent; color: var(--muted); }
+.shared-notice { text-align: center; color: var(--muted); font-size: .85rem; }
+.share-platforms, .share-tools { display: flex; flex-wrap: wrap; gap: 12px 20px; margin: 20px 0; }
+.share-platforms a { min-height: 44px; display: inline-flex; align-items: center; text-underline-offset: 4px; }
+#shareLink { width: 100%; margin-top: 8px; background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 4px; padding: 10px; }
+#shareLinkLabel, .share-help { font-size: .875rem; color: var(--muted); line-height: 1.6; }
 
 .year {
   font-family: var(--serif);
@@ -265,7 +277,7 @@ summary { cursor: pointer; min-height: 44px; display: flex; align-items: center;
 .source-code { text-align: center; padding: 8px 16px 28px; }
 .source-code a { display: inline-flex; width: 44px; height: 44px; align-items: center; justify-content: center; color: var(--muted); }
 
-#infoDialog {
+#infoDialog, #shareDialog {
   width: min(36rem, calc(100vw - 24px));
   max-height: min(82vh, 42rem);
   overflow: auto;
@@ -275,7 +287,7 @@ summary { cursor: pointer; min-height: 44px; display: flex; align-items: center;
   color: var(--ink);
   padding: 18px 18px 22px;
 }
-#infoDialog::backdrop { background: #0d1218cc; }
+#infoDialog::backdrop, #shareDialog::backdrop { background: #0d1218cc; }
 .dialog-head, .tabs { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .dialog-head h2 { font-family: var(--serif); font-weight: normal; margin: 0; font-size: 1.4rem; }
 .tabs { justify-content: flex-start; margin: 12px 0; flex-wrap: wrap; }
