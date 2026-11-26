@@ -1,0 +1,31 @@
+{
+  "art_versions": [
+    "3"
+  ],
+  "extractor_versions": [
+    "3"
+  ],
+  "method": "Byte-preserving copy of observed v3 review PNG/SVG/JSON before v4 fixes; original HEAD baseline remains separate",
+  "files": {
+    "contact-sheet.png": "f76ca3e3303d329ae25bdcb99ce85936b1c4809ad4f1893d3ec02511dd2816e5",
+    "contact-sheet.svg": "6864d0459dd8a992581748c969fca042b30b3ab80e78671d5c9db176d7e9ad90",
+    "structure-sheet.png": "94d230ac5fbd8d59992575d6097f80e16855cd3728da2e39d69017124ecfb727",
+    "structure-sheet.svg": "67667e574b0fa0f742b03f58eff2810e3c348b7190b885a7b020eb9fb0ea3faa",
+    "sample-ids.json": "01abf1a87e11988dcf5bebc7f691ca03a640e551d127c16b1052a68c8b18e59a",
+    "sample-trace.json": "9e9e63e1dc63902a912abc912e75aaa9e76d180a73a3ed41725a689cee670a47",
+    "stats.json": "eb54dcc2f690c4ab2a978020065f02bebd7863cd01325bc0e1c5b099c2d4cc2f",
+    "independent/contact-sheet.png": "05aac87601ac19ed0d77724a9dd6e4d76122ef6343db9ca268a570643fa28ce5",
+    "independent/contact-sheet.svg": "72ff0af8bac979a153b9e8c322f0c52ebfd5cdccb76ce115c9b4ed497b1f5fbe",
+    "independent/sample-ids.json": "3e3091ab24407945e375e3e10d7fc8995bd41359b183027292e8209e04a17e7d",
+    "independent/sample-trace.json": "7490d72ee9ca8a8bd599ea3119f4dff650decdc9735f06e3ad00c4f0ac25de52",
+    "independent/sampling.json": "f37bd7eaff72e23aabf8369089e4f2fafebc086659cfffbb6ffa6ba19199ee18",
+    "independent/structure-sheet.png": "6047e0d086319a5845383e66f43ebe58bf08eb429fad8ab07542ddb480075323",
+    "independent/structure-sheet.svg": "966f4fca84d3c1bed1707785c7474822a0a0f6d3c5f9f39cbd585562a5adc223",
+    "abstract-templates/contact-sheet.png": "afd763b3b25069a7fba491918584d881264cc1129a98f0058cd6b4041f319b6a",
+    "abstract-templates/contact-sheet.svg": "f05cfadf9bfc3db9b7a172b07d7c188a9b6a425e86055d41e23109a5618269ec",
+    "abstract-templates/sample-ids.json": "e104928a142b604793cfb592a248d548faf141dbdc3cf6d76fb4545f6b58a080",
+    "abstract-templates/sample-trace.json": "7b0d07efbd9966af48bc795db7a0a28596f65f648d43bd48446aedb20712d042",
+    "abstract-templates/structure-sheet.png": "3bfd7502e6c249d40ad10962a6be05db797edd05d3a9c268e20b8f5a629a4711",
+    "abstract-templates/structure-sheet.svg": "5855bd894b48926a31dc630816611b0fb40dd75ce2c049661051bfa734640490"
+  }
+}

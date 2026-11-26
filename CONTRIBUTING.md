@@ -14,6 +14,12 @@ python -m venv .venv
 .venv\Scripts\python.exe app.py
 ```
 
+Artwork rules live in `artwork/` and are shared by both surfaces. Read [docs/artwork.md](docs/artwork.md) before changing imagery, composition, or SVG output. Bump `artwork/versions.py` when a change must invalidate cached plates. Regenerate the fixed review sample with:
+
+```powershell
+python scripts/artwork_review.py
+```
+
 For the static site:
 
 ```powershell
@@ -30,6 +36,8 @@ python tests/site_smoke.py
 - Keep article attribution and `intro_source` intact.
 - Do not commit `data/runtime/`, SQLite databases, caches, generated `_site/`, or private draw history.
 - Images remain externally hosted and have individual licenses; code licensing does not replace content licensing.
+- Do not describe algorithm plates as Wikipedia images, official posters, or proof of plot understanding.
+- Do not add a per-show artwork override to make one title look better. Extend a generic rule or record an abstract fallback.
 
 ## Pull requests
 

@@ -8,6 +8,8 @@ from unittest.mock import patch
 
 from app import Library, Store, create_app, fetch_details
 from catalog import BASE, category_members, discover, load_catalog, read_json
+from artwork.generate import plan_artwork
+from artwork.normalize import merge_publication
 
 
 class DrawTests(unittest.TestCase):
@@ -94,6 +96,37 @@ class ApiTests(unittest.TestCase):
         self.assertEqual(result['intro_zh'], 'Cached introduction')
         self.assertEqual(result['detail_status'], 'ready')
 
+    def test_old_english_cache_merges_later_bundled_summary_before_artwork(self):
+        row = self.library.entries[0]
+        cached = {'intro_en': 'A note about the company.', 'intro_zh': '', 'translator': 'none', 'detail_status': 'ready'}
+        self.app.extensions['store'].save_details(row['id'], cached)
+        summary = '两位姐妹重逢。'
+        real = read_json
+
+        def routed(path, default=None):
+            if str(path).endswith('summaries_zh.json'):
+                return {row['title']: summary}
+            return real(path, default)
+
+        with patch('app.read_json', side_effect=routed):
+            shown = self.client.get('/api/details', query_string={'id': row['id']}).get_json()
+        self.assertEqual(shown['intro_zh'], summary)
+        self.assertEqual(shown['translator'], 'bundled')
+        planned = plan_artwork(merge_publication(row, cached, summary))
+        self.assertEqual(shown['artwork_family'], planned['family'])
+        self.assertIn(planned['filename'], shown['artwork_url'])
+        before = (Path(self.temporary.name) / 'artwork' / planned['filename']).read_bytes()
+
+        def changed(path, default=None):
+            if str(path).endswith('summaries_zh.json'):
+                return {row['title']: '一封信件藏在门后。'}
+            return real(path, default)
+
+        with patch('app.read_json', side_effect=changed):
+            later = self.client.get('/api/details', query_string={'id': row['id']}).get_json()
+        self.assertNotEqual(later['artwork_url'].split('?', 1)[0], shown['artwork_url'].split('?', 1)[0])
+        self.assertEqual((Path(self.temporary.name) / 'artwork' / planned['filename']).read_bytes(), before)
+
     def test_empty_library_returns_useful_error(self):
         self.library.entries = []
         self.assertEqual(self.client.get('/api/musical').status_code, 503)
@@ -132,6 +165,86 @@ class ApiTests(unittest.TestCase):
         self.library.entries = [row for row in self.library.entries if row['id'] != selected['id']]
         self.assertEqual(self.client.get('/api/details', query_string={'id': selected['id']}).status_code, 200)
 
+    def test_daily_archive_roundtrip_after_restart_and_removal(self):
+        row = {'id': 'archive:1', 'title': 'Archive Show', 'wiki_url': 'https://en.wikipedia.org/wiki/Archive', 'year': 1961}
+        self.library.entries = [row]
+        self.app.extensions['store'].save_details(row['id'], {
+            'intro_en': 'Two sisters reunite.', 'intro_zh': '两位姐妹重逢。',
+            'intro_source': row['wiki_url'], 'translator': 'wikipedia_zh', 'detail_status': 'ready',
+            'image': 'https://example.test/old.png', 'image_reuse': 'verified',
+        })
+        original = self.client.get('/api/musical?date=2031-05-05').get_json()
+        self.assertTrue(original['intro_en'])
+        store = self.app.extensions['store']
+        with store.connect() as db:
+            seen = db.execute('SELECT * FROM seen').fetchall()
+            archived = json.loads(db.execute('SELECT musical FROM daily').fetchone()[0])
+            self.assertEqual(archived['intro_en'], original['intro_en'])
+        restarted = create_app(self.temporary.name, background=False)
+        self.addCleanup(restarted.extensions['library'].pool.shutdown)
+        restarted.extensions['library'].entries = [{'id': 'other', 'title': 'Other'}]
+        with store.connect() as db:
+            db.execute('DELETE FROM details')
+        with patch.object(restarted.extensions['library'], 'detail', side_effect=AssertionError('removed detail fetch')):
+            client = restarted.test_client()
+            for endpoint in ('/api/musical?date=2031-05-05', '/api/details?id=archive:1'):
+                removed = client.get(endpoint).get_json()
+                for key in ('id', 'title', 'intro_en', 'intro_zh', 'intro_source', 'wiki_url', 'year'):
+                    self.assertEqual(removed[key], original[key], key)
+                self.assertTrue(removed['removed'])
+                self.assertEqual(removed['detail_status'], 'ready')
+                self.assertEqual(removed['artwork_reason'], 'removed')
+                self.assertEqual(removed['artwork_url'], '/artwork/base.svg')
+                self.assertIsNone(removed['display_image'])
+                self.assertIsNone(removed['image'])
+        with store.connect() as db:
+            self.assertEqual(db.execute('SELECT * FROM seen').fetchall(), seen)
+
+    def test_id_only_archive_is_enriched_before_removal(self):
+        row = {'id': 'archive:2', 'title': 'Entry Summary', 'intro_en': 'A letter behind a door.',
+               'intro_source': 'https://en.wikipedia.org/wiki/Entry', 'wiki_url': 'https://en.wikipedia.org/wiki/Entry'}
+        self.library.entries = [row]
+        store = self.app.extensions['store']
+        with store.connect() as db:
+            db.execute('INSERT INTO daily VALUES (?, ?)', ('2031-05-06', json.dumps({'id': row['id'], 'v': 2})))
+        shown = self.client.get('/api/musical?date=2031-05-06').get_json()
+        self.assertEqual(shown['intro_en'], row['intro_en'])
+        self.library.entries = [{'id': 'other', 'title': 'Other'}]
+        removed = self.client.get('/api/details?id=archive:2').get_json()
+        self.assertEqual(removed['intro_en'], row['intro_en'])
+        self.assertEqual(removed['title'], row['title'])
+        self.assertEqual(removed['intro_source'], row['intro_source'])
+        self.assertTrue(removed['removed'])
+        self.assertEqual(removed['artwork_url'], '/artwork/base.svg')
+
+
+
+    def test_saved_daily_uses_latest_fields_without_redrawing(self):
+        selected = self.client.get("/api/musical?date=2020-01-02").get_json()
+        store = self.app.extensions["store"]
+        frozen = {**selected, "title": "Frozen Old Title"}
+        with store.connect() as db:
+            db.execute("UPDATE daily SET musical=? WHERE day=?", (json.dumps(frozen), "2020-01-02"))
+        latest = self.client.get("/api/musical?date=2020-01-02").get_json()
+        self.assertEqual(latest["id"], selected["id"])
+        self.assertNotEqual(latest["title"], "Frozen Old Title")
+        self.assertTrue(latest["artwork_url"].startswith("/artwork/"))
+        self.assertIsNone(latest["display_image"])
+        self.assertNotEqual(latest.get("artwork_kind"), None)
+        with store.connect() as db:
+            raw = json.loads(db.execute("SELECT musical FROM daily WHERE day=?", ("2020-01-02",)).fetchone()[0])
+        self.assertEqual(raw["title"], "Frozen Old Title")
+        self.library.entries = [row for row in self.library.entries if row["id"] != selected["id"]]
+        removed = self.client.get("/api/musical?date=2020-01-02").get_json()
+        self.assertEqual(removed["id"], selected["id"])
+        self.assertEqual(removed["title"], "Frozen Old Title")
+        name = latest["artwork_url"].split("?", 1)[0].rsplit("/", 1)[-1]
+        image = self.client.get("/artwork/" + name)
+        self.assertEqual(image.status_code, 200)
+        self.assertIn("image/svg+xml", image.content_type)
+        image.close()
+        self.assertEqual(self.client.get("/artwork/../app.py").status_code, 404)
+        self.assertEqual(self.client.get("/artwork/not-safe.svg").status_code, 404)
 
 class SourceTests(unittest.TestCase):
     def test_category_continuation_including_empty_page(self):

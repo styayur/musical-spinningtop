@@ -43,3 +43,4 @@ jobs:
       - run: python build_site.py
       - run: python -m playwright install --with-deps chromium
       - run: python tests/site_smoke.py
+      - run: python tests/ui_extra_smoke.py

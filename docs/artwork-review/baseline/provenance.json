@@ -1,0 +1,22 @@
+{
+  "commit": "91d44bc3a81c805164376564e7c59547fb2661f6",
+  "method": "git show <commit>:<path> via subprocess bytes + Path.write_bytes; original PNG/SVG/JSON only",
+  "files": {
+    "contact-sheet.png": "d03a7e820560df0447050ac17662539cb87a89d697dc7c23f697c9c6e762b25a",
+    "contact-sheet.svg": "94bc542daf7a8981ebf29961dfb9c2a5a7f1f51b5b6bcd31dd62aa898ac399e0",
+    "sample-ids.json": "01abf1a87e11988dcf5bebc7f691ca03a640e551d127c16b1052a68c8b18e59a",
+    "sample-trace.json": "780154fb54791065e3723d06b58c3e6cc4f0f815cc8db3bd0e2e08363907d153",
+    "stats.json": "9666575e41a24d3ba3ebd1bb3eaf7b01ad76dab0da54551cbd169d4dc25430ff",
+    "structure-sheet.png": "90be53f2b642e4eb3707f739f4e9dae6eabb130fbf79b26cb7d3d2b3b6d4091e",
+    "structure-sheet.svg": "6ac1c1a46e7bddb9e1a72c5e1135c2911a7fc6997afb889f1816639bc8e0387e",
+    "ui-flask-back.png": "c7a23e7b5eb6abcfa0bb174c07549a7b759cb5674f974dd7498f97b51ef138e3",
+    "ui-flask-daily.png": "1664b15a03ad4f14fbfc75d8c698a3907f08abb894092b7510afad53d7ad0ffe",
+    "ui-flask-info.png": "d583e1f3cccc758635eb70ce2cdb1f0aac659e9bf19c9e9a1d328e81d86405ed",
+    "ui-flask-mobile-320.png": "76ef8f1cb16b71a677c6d7efaaf9729c87f1503f5f7f2d5caabc7fba982270af",
+    "ui-flask-mobile-390.png": "1bccab0fe7ede3aad73f0541f0531ca5da650a780bd2c3e4dc597892ab07422d",
+    "ui-flask-previous-date.png": "1e52f12dc00718b9f5e40cb9a26c8f99038d8024e997e6ae034a3564a5a93005",
+    "ui-flask-random.png": "5ed0a0c210ce2859fb547c3429209576c7e55de0705e4f9b1d27e97f0216a485",
+    "ui-static-daily.png": "85e3f5f3c33c765c3542ae96327c69d86a0f7b3973c56564665fcd2ca7a43db5",
+    "ui-static-info.png": "a04c5e0a68db390d156fa6c466d51a8e0cde54259b89bfe0f501c63255e15f46"
+  }
+}

@@ -1,0 +1,813 @@
+[
+  {
+    "id": "en:82936081",
+    "title": "Ziegfeld Follies of 1913",
+    "title_zh": "",
+    "year": 1913,
+    "has_remote_image": false,
+    "has_chinese": false,
+    "text_length": 0,
+    "family": "abstract",
+    "kind": "abstract",
+    "reason": "empty",
+    "subjects": [],
+    "count": 0,
+    "basis": []
+  },
+  {
+    "id": "en:78637520",
+    "title": "Raygun: The Musical",
+    "title_zh": "",
+    "year": 2024,
+    "has_remote_image": false,
+    "has_chinese": false,
+    "text_length": 0,
+    "family": "abstract",
+    "kind": "abstract",
+    "reason": "empty",
+    "subjects": [],
+    "count": 0,
+    "basis": []
+  },
+  {
+    "id": "en:84088806",
+    "title": "My Left / Right Foot - the Musical",
+    "title_zh": "",
+    "year": 2018,
+    "has_remote_image": false,
+    "has_chinese": false,
+    "text_length": 0,
+    "family": "abstract",
+    "kind": "abstract",
+    "reason": "empty",
+    "subjects": [],
+    "count": 0,
+    "basis": []
+  },
+  {
+    "id": "en:59473231",
+    "title": "Bandanna Land",
+    "title_zh": "",
+    "year": 1908,
+    "has_remote_image": true,
+    "has_chinese": false,
+    "text_length": 525,
+    "family": "relation",
+    "kind": "generated",
+    "reason": null,
+    "subjects": [
+      "death"
+    ],
+    "count": 1,
+    "basis": [
+      {
+        "motif": "death",
+        "label": "死亡",
+        "phrase": "died",
+        "source_field": "intro_en",
+        "rule_id": "en:died",
+        "score": 1.7
+      }
+    ]
+  },
+  {
+    "id": "en:74782111",
+    "title": "Potty the Plant",
+    "title_zh": "",
+    "year": 2023,
+    "has_remote_image": true,
+    "has_chinese": false,
+    "text_length": 120,
+    "family": "abstract",
+    "kind": "abstract",
+    "reason": "insufficient",
+    "subjects": [],
+    "count": 0,
+    "basis": []
+  },
+  {
+    "id": "en:6750389",
+    "title": "The Balkan Princess",
+    "title_zh": "",
+    "year": 1910,
+    "has_remote_image": true,
+    "has_chinese": false,
+    "text_length": 750,
+    "family": "relation",
+    "kind": "generated",
+    "reason": null,
+    "subjects": [
+      "power"
+    ],
+    "count": 3,
+    "basis": [
+      {
+        "motif": "power",
+        "label": "权力",
+        "phrase": "Princess",
+        "source_field": "intro_en",
+        "rule_id": "en:princess",
+        "score": 1.6
+      }
+    ]
+  },
+  {
+    "id": "en:9661942",
+    "title": "A Very Merry Unauthorized Children's Scientology Pageant",
+    "title_zh": "",
+    "year": 2003,
+    "has_remote_image": true,
+    "has_chinese": false,
+    "text_length": 1208,
+    "family": "still",
+    "kind": "generated",
+    "reason": null,
+    "subjects": [
+      "letter"
+    ],
+    "count": 0,
+    "basis": [
+      {
+        "motif": "letter",
+        "label": "信件",
+        "phrase": "letter",
+        "source_field": "intro_en",
+        "rule_id": "en:letter",
+        "score": 1.8
+      },
+      {
+        "motif": "child",
+        "label": "孩子",
+        "phrase": "Children",
+        "source_field": "intro_en",
+        "rule_id": "en:children",
+        "score": 1.6
+      }
+    ]
+  },
+  {
+    "id": "en:82799699",
+    "title": "Trainspotting",
+    "title_zh": "",
+    "year": 2026,
+    "has_remote_image": false,
+    "has_chinese": false,
+    "text_length": 238,
+    "family": "abstract",
+    "kind": "abstract",
+    "reason": "insufficient",
+    "subjects": [],
+    "count": 0,
+    "basis": []
+  },
+  {
+    "id": "en:19330545",
+    "title": "Second Chance",
+    "title_zh": "",
+    "year": 2008,
+    "has_remote_image": false,
+    "has_chinese": false,
+    "text_length": 841,
+    "family": "abstract",
+    "kind": "abstract",
+    "reason": "insufficient",
+    "subjects": [],
+    "count": 0,
+    "basis": []
+  },
+  {
+    "id": "en:14711047",
+    "title": "Iron Curtain",
+    "title_zh": "",
+    "year": 2006,
+    "has_remote_image": false,
+    "has_chinese": false,
+    "text_length": 138,
+    "family": "abstract",
+    "kind": "abstract",
+    "reason": "insufficient",
+    "subjects": [],
+    "count": 0,
+    "basis": []
+  },
+  {
+    "id": "en:52951040",
+    "title": "Doctor Dolittle",
+    "title_zh": "",
+    "year": 1998,
+    "has_remote_image": false,
+    "has_chinese": false,
+    "text_length": 591,
+    "family": "abstract",
+    "kind": "abstract",
+    "reason": "insufficient",
+    "subjects": [],
+    "count": 0,
+    "basis": []
+  },
+  {
+    "id": "en:215013",
+    "title": "Cats",
+    "title_zh": "猫 (音乐剧)",
+    "year": 1981,
+    "has_remote_image": false,
+    "has_chinese": true,
+    "text_length": 74,
+    "family": "terrain",
+    "kind": "generated",
+    "reason": null,
+    "subjects": [
+      "garden"
+    ],
+    "count": 0,
+    "basis": [
+      {
+        "motif": "garden",
+        "label": "花园",
+        "phrase": "Garden",
+        "source_field": "intro_en",
+        "rule_id": "en:garden",
+        "score": 1.7
+      }
+    ]
+  },
+  {
+    "id": "en:49079409",
+    "title": "Waitress",
+    "title_zh": "",
+    "year": 2015,
+    "has_remote_image": false,
+    "has_chinese": true,
+    "text_length": 72,
+    "family": "relation",
+    "kind": "generated",
+    "reason": null,
+    "subjects": [
+      "friendship",
+      "child"
+    ],
+    "count": 3,
+    "basis": [
+      {
+        "motif": "search",
+        "label": "寻找",
+        "phrase": "寻找",
+        "source_field": "intro_zh",
+        "rule_id": "zh:search",
+        "score": 1.8
+      },
+      {
+        "motif": "friendship",
+        "label": "友谊",
+        "phrase": "friends",
+        "source_field": "intro_en",
+        "rule_id": "en:friends",
+        "score": 1.5
+      },
+      {
+        "motif": "child",
+        "label": "孩子",
+        "phrase": "child",
+        "source_field": "intro_en",
+        "rule_id": "en:child",
+        "score": 1.4
+      }
+    ]
+  },
+  {
+    "id": "en:47260029",
+    "title": "Ladies in Black",
+    "title_zh": "",
+    "year": 2015,
+    "has_remote_image": false,
+    "has_chinese": false,
+    "text_length": 166,
+    "family": "abstract",
+    "kind": "abstract",
+    "reason": "insufficient",
+    "subjects": [],
+    "count": 0,
+    "basis": []
+  },
+  {
+    "id": "en:55469598",
+    "title": "James and the Giant Peach",
+    "title_zh": "",
+    "year": 2010,
+    "has_remote_image": false,
+    "has_chinese": false,
+    "text_length": 1204,
+    "family": "relation",
+    "kind": "generated",
+    "reason": null,
+    "subjects": [
+      "child"
+    ],
+    "count": 3,
+    "basis": [
+      {
+        "motif": "child",
+        "label": "孩子",
+        "phrase": "children",
+        "source_field": "intro_en",
+        "rule_id": "en:children",
+        "score": 1.6
+      }
+    ]
+  },
+  {
+    "id": "en:3245600",
+    "title": "Fame",
+    "title_zh": "",
+    "year": 1988,
+    "has_remote_image": false,
+    "has_chinese": false,
+    "text_length": 1163,
+    "family": "stage",
+    "kind": "generated",
+    "reason": null,
+    "subjects": [
+      "dance",
+      "perform"
+    ],
+    "count": 3,
+    "basis": [
+      {
+        "motif": "family",
+        "label": "家庭",
+        "phrase": "family",
+        "source_field": "intro_en",
+        "rule_id": "en:family",
+        "score": 1.8
+      },
+      {
+        "motif": "street",
+        "label": "街道",
+        "phrase": "Street",
+        "source_field": "intro_en",
+        "rule_id": "en:street",
+        "score": 1.7
+      },
+      {
+        "motif": "perform",
+        "label": "演出",
+        "phrase": "Performing",
+        "source_field": "intro_en",
+        "rule_id": "en:performing",
+        "score": 1.7
+      },
+      {
+        "motif": "dance",
+        "label": "舞蹈",
+        "phrase": "dancer",
+        "source_field": "intro_en",
+        "rule_id": "en:dancer",
+        "score": 1.6
+      }
+    ]
+  },
+  {
+    "id": "en:32728502",
+    "title": "Jalta, Jalta",
+    "title_zh": "",
+    "year": 1971,
+    "has_remote_image": false,
+    "has_chinese": false,
+    "text_length": 1205,
+    "family": "relation",
+    "kind": "generated",
+    "reason": null,
+    "subjects": [
+      "conflict"
+    ],
+    "count": 4,
+    "basis": [
+      {
+        "motif": "conflict",
+        "label": "冲突",
+        "phrase": "war",
+        "source_field": "intro_en",
+        "rule_id": "en:war",
+        "score": 1.8
+      }
+    ]
+  },
+  {
+    "id": "en:76128963",
+    "title": "Mrs. Delaney of Newport",
+    "title_zh": "",
+    "year": 1903,
+    "has_remote_image": false,
+    "has_chinese": false,
+    "text_length": 929,
+    "family": "relation",
+    "kind": "generated",
+    "reason": null,
+    "subjects": [
+      "family"
+    ],
+    "count": 3,
+    "basis": [
+      {
+        "motif": "family",
+        "label": "家庭",
+        "phrase": "sister",
+        "source_field": "intro_en",
+        "rule_id": "en:sister",
+        "score": 1.6
+      },
+      {
+        "motif": "ring",
+        "label": "戒指",
+        "phrase": "Ring",
+        "source_field": "intro_en",
+        "rule_id": "en:ring",
+        "score": 1.4
+      }
+    ]
+  },
+  {
+    "id": "en:66370354",
+    "title": "This'll Make You Whistle",
+    "title_zh": "",
+    "year": 1935,
+    "has_remote_image": false,
+    "has_chinese": false,
+    "text_length": 701,
+    "family": "city",
+    "kind": "generated",
+    "reason": null,
+    "subjects": [
+      "palace"
+    ],
+    "count": 0,
+    "basis": [
+      {
+        "motif": "palace",
+        "label": "宫殿",
+        "phrase": "Palace",
+        "source_field": "intro_en",
+        "rule_id": "en:palace",
+        "score": 2.0
+      }
+    ]
+  },
+  {
+    "id": "en:7212998",
+    "title": "The Girl from Kays",
+    "title_zh": "",
+    "year": 1902,
+    "has_remote_image": true,
+    "has_chinese": false,
+    "text_length": 547,
+    "family": "city",
+    "kind": "generated",
+    "reason": null,
+    "subjects": [
+      "street"
+    ],
+    "count": 0,
+    "basis": [
+      {
+        "motif": "street",
+        "label": "街道",
+        "phrase": "Street",
+        "source_field": "intro_en",
+        "rule_id": "en:street",
+        "score": 1.7
+      }
+    ]
+  },
+  {
+    "id": "en:2779591",
+    "title": "Tenderloin",
+    "title_zh": "",
+    "year": 1960,
+    "has_remote_image": false,
+    "has_chinese": false,
+    "text_length": 479,
+    "family": "abstract",
+    "kind": "abstract",
+    "reason": "insufficient",
+    "subjects": [],
+    "count": 0,
+    "basis": []
+  },
+  {
+    "id": "en:75654372",
+    "title": "Half in Earnest",
+    "title_zh": "",
+    "year": 1957,
+    "has_remote_image": false,
+    "has_chinese": false,
+    "text_length": 344,
+    "family": "abstract",
+    "kind": "abstract",
+    "reason": "insufficient",
+    "subjects": [],
+    "count": 0,
+    "basis": []
+  },
+  {
+    "id": "en:99017",
+    "title": "Oliver!",
+    "title_zh": "孤雛淚 (音樂劇)",
+    "year": 1960,
+    "has_remote_image": false,
+    "has_chinese": true,
+    "text_length": 902,
+    "family": "abstract",
+    "kind": "abstract",
+    "reason": "insufficient",
+    "subjects": [],
+    "count": 0,
+    "basis": [
+      {
+        "motif": "school",
+        "label": "学校",
+        "phrase": "school",
+        "source_field": "intro_en",
+        "rule_id": "en:school",
+        "score": 1.5
+      }
+    ]
+  },
+  {
+    "id": "en:35245152",
+    "title": "Little by Little",
+    "title_zh": "",
+    "year": 1999,
+    "has_remote_image": false,
+    "has_chinese": false,
+    "text_length": 373,
+    "family": "relation",
+    "kind": "generated",
+    "reason": null,
+    "subjects": [
+      "friendship"
+    ],
+    "count": 2,
+    "basis": [
+      {
+        "motif": "friendship",
+        "label": "友谊",
+        "phrase": "Friendship",
+        "source_field": "intro_en",
+        "rule_id": "en:friendship",
+        "score": 1.8
+      }
+    ]
+  },
+  {
+    "id": "en:55901560",
+    "title": "The Ministry of Biscuits",
+    "title_zh": "",
+    "year": 1998,
+    "has_remote_image": false,
+    "has_chinese": false,
+    "text_length": 332,
+    "family": "abstract",
+    "kind": "abstract",
+    "reason": "insufficient",
+    "subjects": [],
+    "count": 0,
+    "basis": []
+  },
+  {
+    "id": "en:1166071",
+    "title": "Little Tramp",
+    "title_zh": "",
+    "year": 1992,
+    "has_remote_image": false,
+    "has_chinese": false,
+    "text_length": 1213,
+    "family": "abstract",
+    "kind": "abstract",
+    "reason": "insufficient",
+    "subjects": [],
+    "count": 0,
+    "basis": []
+  },
+  {
+    "id": "en:52333166",
+    "title": "In Transit",
+    "title_zh": "",
+    "year": 2010,
+    "has_remote_image": false,
+    "has_chinese": false,
+    "text_length": 232,
+    "family": "abstract",
+    "kind": "abstract",
+    "reason": "insufficient",
+    "subjects": [],
+    "count": 0,
+    "basis": []
+  },
+  {
+    "id": "en:4402844",
+    "title": "Tarzan",
+    "title_zh": "",
+    "year": 2006,
+    "has_remote_image": false,
+    "has_chinese": false,
+    "text_length": 625,
+    "family": "relation",
+    "kind": "generated",
+    "reason": null,
+    "subjects": [
+      "love"
+    ],
+    "count": 2,
+    "basis": [
+      {
+        "motif": "love",
+        "label": "相爱",
+        "phrase": "love",
+        "source_field": "intro_en",
+        "rule_id": "en:love",
+        "score": 1.6
+      }
+    ]
+  },
+  {
+    "id": "en:3603386",
+    "title": "Thou Shalt Not",
+    "title_zh": "",
+    "year": 2001,
+    "has_remote_image": false,
+    "has_chinese": false,
+    "text_length": 313,
+    "family": "abstract",
+    "kind": "abstract",
+    "reason": "insufficient",
+    "subjects": [],
+    "count": 0,
+    "basis": []
+  },
+  {
+    "id": "en:74652697",
+    "title": "White Girl in Danger",
+    "title_zh": "",
+    "year": 2023,
+    "has_remote_image": false,
+    "has_chinese": false,
+    "text_length": 808,
+    "family": "abstract",
+    "kind": "abstract",
+    "reason": "insufficient",
+    "subjects": [],
+    "count": 0,
+    "basis": []
+  },
+  {
+    "id": "en:58866406",
+    "title": "All Out of Love",
+    "title_zh": "",
+    "year": 2018,
+    "has_remote_image": false,
+    "has_chinese": false,
+    "text_length": 423,
+    "family": "relation",
+    "kind": "generated",
+    "reason": null,
+    "subjects": [
+      "love"
+    ],
+    "count": 2,
+    "basis": [
+      {
+        "motif": "love",
+        "label": "相爱",
+        "phrase": "Love",
+        "source_field": "intro_en",
+        "rule_id": "en:love",
+        "score": 1.6
+      }
+    ]
+  },
+  {
+    "id": "en:61857884",
+    "title": "The Guy Who Didn't Like Musicals",
+    "title_zh": "",
+    "year": 2018,
+    "has_remote_image": false,
+    "has_chinese": false,
+    "text_length": 1208,
+    "family": "abstract",
+    "kind": "abstract",
+    "reason": "insufficient",
+    "subjects": [],
+    "count": 0,
+    "basis": [
+      {
+        "motif": "dance",
+        "label": "舞蹈",
+        "phrase": "dance",
+        "source_field": "intro_en",
+        "rule_id": "en:dance",
+        "score": 1.4
+      }
+    ]
+  },
+  {
+    "id": "en:33833786",
+    "title": "My Little Pony Live: The World's Biggest Tea Party",
+    "title_zh": "彩虹小马直播：世界上最大的茶话会",
+    "year": 2006,
+    "has_remote_image": false,
+    "has_chinese": true,
+    "text_length": 632,
+    "family": "abstract",
+    "kind": "abstract",
+    "reason": "insufficient",
+    "subjects": [],
+    "count": 0,
+    "basis": []
+  },
+  {
+    "id": "en:15171202",
+    "title": "Next Door's Baby",
+    "title_zh": "",
+    "year": 2008,
+    "has_remote_image": true,
+    "has_chinese": false,
+    "text_length": 523,
+    "family": "portal",
+    "kind": "generated",
+    "reason": null,
+    "subjects": [
+      "door"
+    ],
+    "count": 0,
+    "basis": [
+      {
+        "motif": "door",
+        "label": "门",
+        "phrase": "Door",
+        "source_field": "intro_en",
+        "rule_id": "en:door",
+        "score": 1.8
+      },
+      {
+        "motif": "friendship",
+        "label": "友谊",
+        "phrase": "friendship",
+        "source_field": "intro_en",
+        "rule_id": "en:friendship",
+        "score": 1.8
+      }
+    ]
+  },
+  {
+    "id": "en:5849980",
+    "title": "The Likes of Us",
+    "title_zh": "孤海浮灯",
+    "year": 2005,
+    "has_remote_image": false,
+    "has_chinese": true,
+    "text_length": 219,
+    "family": "relation",
+    "kind": "generated",
+    "reason": null,
+    "subjects": [
+      "child"
+    ],
+    "count": 3,
+    "basis": [
+      {
+        "motif": "child",
+        "label": "孩子",
+        "phrase": "children",
+        "source_field": "intro_en",
+        "rule_id": "en:children",
+        "score": 1.6
+      }
+    ]
+  },
+  {
+    "id": "en:7511653",
+    "title": "The Color Purple",
+    "title_zh": "",
+    "year": 2005,
+    "has_remote_image": false,
+    "has_chinese": false,
+    "text_length": 674,
+    "family": "route",
+    "kind": "generated",
+    "reason": null,
+    "subjects": [
+      "travel"
+    ],
+    "count": 0,
+    "basis": [
+      {
+        "motif": "travel",
+        "label": "旅行",
+        "phrase": "journey",
+        "source_field": "intro_en",
+        "rule_id": "en:journey",
+        "score": 1.8
+      }
+    ]
+  }
+]

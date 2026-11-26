@@ -1,0 +1,514 @@
+{
+  "metric_version": "emitted-svg-v1-occlusion-barriers",
+  "metric_definitions": {
+    "actual_svg_exact": "SHA-256 of emitted UTF-8 SVG bytes, including palette and serialization order; never a recipe hash.",
+    "decolored_svg_ordered": "Emitted SVG parsed and normalized: painted fills become white, painted strokes one dark ink; none, wash shapes, width, opacity, and paint order retained. Attribute order, whitespace and numeric spelling normalized.",
+    "canonical_geometry": "Same decolored emitted primitives, sorted only within contiguous opaque stroke-only runs. Filled shapes (including white washes) and other order-sensitive primitives remain ordered barriers. Primitive multiplicity retained; recipe parameters are not geometry.",
+    "max_duplicate_ratio": "Largest equivalence class / population size. Also reports duplicate excess / population; these are distinct measures.",
+    "limitations": "Not perceptual similarity or semantic correctness. Equivalent path commands, reversed lines, and mirrored geometry are not collapsed. Raster antialiasing may differ. Unsupported SVG constructs fail explicitly."
+  },
+  "total": 2650,
+  "generated": 1212,
+  "abstract": 1438,
+  "fallback": 0,
+  "failed": 0,
+  "reasons": {
+    "insufficient": 1418,
+    "None": 1212,
+    "empty": 20,
+    "error": 0
+  },
+  "families": {
+    "abstract": 1438,
+    "relation": 798,
+    "route": 91,
+    "city": 112,
+    "stage": 108,
+    "terrain": 43,
+    "portal": 17,
+    "still": 43
+  },
+  "unique_structural_signatures": 214,
+  "unique_parameter_combinations": 993,
+  "abstract_parameter_combinations": 96,
+  "parameter_fields": [
+    "family",
+    "subjects",
+    "arrangement",
+    "count",
+    "modifiers",
+    "palette",
+    "mirror",
+    "detail",
+    "abstract_layout"
+  ],
+  "parameter_note": "Recipe metadata combinations, including possibly unused modifiers/detail/mirror. These counts are not emitted drawing diversity.",
+  "signature_note": "Legacy family/subjects/count/arrangement metadata only; NOT drawing or geometry diversity.",
+  "drawings": {
+    "actual_svg_exact": {
+      "total": 2650,
+      "unique": 132,
+      "largest_duplicate_count": 179,
+      "max_duplicate_ratio": 0.06754717,
+      "duplicate_excess_ratio": 0.95018868,
+      "largest_groups": [
+        {
+          "sha256": "7bea97e4a8f1d808680a4a4b1a76e9f76fad43e6e7b7ade54af5c454dcc8bf5f",
+          "count": 179,
+          "example_ids": [
+            "en:69817162",
+            "en:81191567",
+            "en:50394077",
+            "en:8130676",
+            "en:10577467",
+            "en:42059354",
+            "en:9753058",
+            "en:76543305"
+          ]
+        },
+        {
+          "sha256": "a072c5f546cb5148264d75805b4c9973d9925b60055d3963fb538d09fb0128cf",
+          "count": 169,
+          "example_ids": [
+            "en:940035",
+            "en:80268078",
+            "en:23635237",
+            "en:77946836",
+            "en:76337663",
+            "en:2145417",
+            "en:16774219",
+            "en:53632655"
+          ]
+        },
+        {
+          "sha256": "cc01ba625fbe4505a9dc4a69282f2f7d03b34e5e68d6116d5b24f04bd204dbed",
+          "count": 167,
+          "example_ids": [
+            "en:16818081",
+            "en:14370868",
+            "en:3097302",
+            "en:2492541",
+            "en:17085724",
+            "en:32403009",
+            "en:32402649",
+            "en:12173260"
+          ]
+        },
+        {
+          "sha256": "af3a56ccade428b4100d57419eebdd849fabc79045c1bfa643a2da02d209c963",
+          "count": 166,
+          "example_ids": [
+            "en:1921683",
+            "en:80060044",
+            "en:50812837",
+            "en:11640269",
+            "en:48802100",
+            "en:7371111",
+            "en:54662933",
+            "en:8286682"
+          ]
+        },
+        {
+          "sha256": "dbcc2a386e634dcf4b6516d0e554a31fe89ad90898c51cfd52d1d114178a98c7",
+          "count": 161,
+          "example_ids": [
+            "en:63777150",
+            "en:3636155",
+            "en:11959504",
+            "en:16575334",
+            "en:71471724",
+            "en:41781211",
+            "en:77492208",
+            "en:6339956"
+          ]
+        }
+      ]
+    },
+    "decolored_svg_ordered": {
+      "total": 2650,
+      "unique": 57,
+      "largest_duplicate_count": 493,
+      "max_duplicate_ratio": 0.18603774,
+      "duplicate_excess_ratio": 0.97849057,
+      "largest_groups": [
+        {
+          "sha256": "edce6a0547a30c15907352ebd2b7b37ee8e99ebe60cabf463fad8e830fc67a50",
+          "count": 493,
+          "example_ids": [
+            "en:69817162",
+            "en:16818081",
+            "en:81191567",
+            "en:9058934",
+            "en:14370868",
+            "en:50394077",
+            "en:8130676",
+            "en:79386240"
+          ]
+        },
+        {
+          "sha256": "a1cdbd0a0d03282a189e0156d9e80513738531b08d622111421d398bc1212e28",
+          "count": 478,
+          "example_ids": [
+            "en:940035",
+            "en:80268078",
+            "en:23635237",
+            "en:161607",
+            "en:75056092",
+            "en:70582310",
+            "en:13094841",
+            "en:45170719"
+          ]
+        },
+        {
+          "sha256": "5f3be626986a95d366798ac0c1efb000df548ecf3e9887c6bc690de9a3a81ca6",
+          "count": 467,
+          "example_ids": [
+            "en:1921683",
+            "en:48574674",
+            "en:738198",
+            "en:80060044",
+            "en:79948667",
+            "en:50812837",
+            "en:11640269",
+            "en:48802100"
+          ]
+        },
+        {
+          "sha256": "765fee914ffbd531e5d80f6196c0614c12c67f0ac82db1f069c37d8fc2b19ce8",
+          "count": 181,
+          "example_ids": [
+            "en:37670777",
+            "en:57154148",
+            "en:8661992",
+            "en:10344252",
+            "en:37791681",
+            "en:7639167",
+            "en:21792368",
+            "en:58866406"
+          ]
+        },
+        {
+          "sha256": "c86610494728bd5530ddddf5114a305dea5904dd30d4a75fb0d3b9b533bb6c45",
+          "count": 144,
+          "example_ids": [
+            "en:9068605",
+            "en:20855240",
+            "en:9919932",
+            "en:43304543",
+            "en:12629963",
+            "en:78945655",
+            "en:22066588",
+            "en:940047"
+          ]
+        }
+      ]
+    },
+    "canonical_geometry": {
+      "total": 2650,
+      "unique": 55,
+      "largest_duplicate_count": 493,
+      "max_duplicate_ratio": 0.18603774,
+      "duplicate_excess_ratio": 0.97924528,
+      "largest_groups": [
+        {
+          "sha256": "7b8e35a88b748a8dd5181fef7fd26a38f07df0d7658ffe5c62f9ef54f1a70d27",
+          "count": 493,
+          "example_ids": [
+            "en:69817162",
+            "en:16818081",
+            "en:81191567",
+            "en:9058934",
+            "en:14370868",
+            "en:50394077",
+            "en:8130676",
+            "en:79386240"
+          ]
+        },
+        {
+          "sha256": "dd7bdd15d6f62ede2db298a5a320f0f501d9e36ffd8b13d528eaef560be43bed",
+          "count": 478,
+          "example_ids": [
+            "en:940035",
+            "en:80268078",
+            "en:23635237",
+            "en:161607",
+            "en:75056092",
+            "en:70582310",
+            "en:13094841",
+            "en:45170719"
+          ]
+        },
+        {
+          "sha256": "b63d3528c20eb241bb2926e06980a5950ddb58e07c0cd40a36acc4dfae86701f",
+          "count": 467,
+          "example_ids": [
+            "en:1921683",
+            "en:48574674",
+            "en:738198",
+            "en:80060044",
+            "en:79948667",
+            "en:50812837",
+            "en:11640269",
+            "en:48802100"
+          ]
+        },
+        {
+          "sha256": "414665c35157dc9da7c08c4547ec9c8c1b2620d5802e4c8c634d904d6bd4a64a",
+          "count": 181,
+          "example_ids": [
+            "en:37670777",
+            "en:57154148",
+            "en:8661992",
+            "en:10344252",
+            "en:37791681",
+            "en:7639167",
+            "en:21792368",
+            "en:58866406"
+          ]
+        },
+        {
+          "sha256": "9355f9363480279e58f18a6cfd11ef10817486cfa8e58a320f145998f5a9ff7f",
+          "count": 144,
+          "example_ids": [
+            "en:9068605",
+            "en:20855240",
+            "en:9919932",
+            "en:43304543",
+            "en:12629963",
+            "en:78945655",
+            "en:22066588",
+            "en:940047"
+          ]
+        }
+      ]
+    }
+  },
+  "abstract_drawings": {
+    "actual_svg_exact": {
+      "total": 1438,
+      "unique": 9,
+      "largest_duplicate_count": 179,
+      "max_duplicate_ratio": 0.12447844,
+      "duplicate_excess_ratio": 0.99374131,
+      "largest_groups": [
+        {
+          "sha256": "7bea97e4a8f1d808680a4a4b1a76e9f76fad43e6e7b7ade54af5c454dcc8bf5f",
+          "count": 179,
+          "example_ids": [
+            "en:69817162",
+            "en:81191567",
+            "en:50394077",
+            "en:8130676",
+            "en:10577467",
+            "en:42059354",
+            "en:9753058",
+            "en:76543305"
+          ]
+        },
+        {
+          "sha256": "a072c5f546cb5148264d75805b4c9973d9925b60055d3963fb538d09fb0128cf",
+          "count": 169,
+          "example_ids": [
+            "en:940035",
+            "en:80268078",
+            "en:23635237",
+            "en:77946836",
+            "en:76337663",
+            "en:2145417",
+            "en:16774219",
+            "en:53632655"
+          ]
+        },
+        {
+          "sha256": "cc01ba625fbe4505a9dc4a69282f2f7d03b34e5e68d6116d5b24f04bd204dbed",
+          "count": 167,
+          "example_ids": [
+            "en:16818081",
+            "en:14370868",
+            "en:3097302",
+            "en:2492541",
+            "en:17085724",
+            "en:32403009",
+            "en:32402649",
+            "en:12173260"
+          ]
+        },
+        {
+          "sha256": "af3a56ccade428b4100d57419eebdd849fabc79045c1bfa643a2da02d209c963",
+          "count": 166,
+          "example_ids": [
+            "en:1921683",
+            "en:80060044",
+            "en:50812837",
+            "en:11640269",
+            "en:48802100",
+            "en:7371111",
+            "en:54662933",
+            "en:8286682"
+          ]
+        },
+        {
+          "sha256": "dbcc2a386e634dcf4b6516d0e554a31fe89ad90898c51cfd52d1d114178a98c7",
+          "count": 161,
+          "example_ids": [
+            "en:63777150",
+            "en:3636155",
+            "en:11959504",
+            "en:16575334",
+            "en:71471724",
+            "en:41781211",
+            "en:77492208",
+            "en:6339956"
+          ]
+        }
+      ]
+    },
+    "decolored_svg_ordered": {
+      "total": 1438,
+      "unique": 3,
+      "largest_duplicate_count": 493,
+      "max_duplicate_ratio": 0.34283727,
+      "duplicate_excess_ratio": 0.99791377,
+      "largest_groups": [
+        {
+          "sha256": "edce6a0547a30c15907352ebd2b7b37ee8e99ebe60cabf463fad8e830fc67a50",
+          "count": 493,
+          "example_ids": [
+            "en:69817162",
+            "en:16818081",
+            "en:81191567",
+            "en:9058934",
+            "en:14370868",
+            "en:50394077",
+            "en:8130676",
+            "en:79386240"
+          ]
+        },
+        {
+          "sha256": "a1cdbd0a0d03282a189e0156d9e80513738531b08d622111421d398bc1212e28",
+          "count": 478,
+          "example_ids": [
+            "en:940035",
+            "en:80268078",
+            "en:23635237",
+            "en:161607",
+            "en:75056092",
+            "en:70582310",
+            "en:13094841",
+            "en:45170719"
+          ]
+        },
+        {
+          "sha256": "5f3be626986a95d366798ac0c1efb000df548ecf3e9887c6bc690de9a3a81ca6",
+          "count": 467,
+          "example_ids": [
+            "en:1921683",
+            "en:48574674",
+            "en:738198",
+            "en:80060044",
+            "en:79948667",
+            "en:50812837",
+            "en:11640269",
+            "en:48802100"
+          ]
+        }
+      ]
+    },
+    "canonical_geometry": {
+      "total": 1438,
+      "unique": 3,
+      "largest_duplicate_count": 493,
+      "max_duplicate_ratio": 0.34283727,
+      "duplicate_excess_ratio": 0.99791377,
+      "largest_groups": [
+        {
+          "sha256": "7b8e35a88b748a8dd5181fef7fd26a38f07df0d7658ffe5c62f9ef54f1a70d27",
+          "count": 493,
+          "example_ids": [
+            "en:69817162",
+            "en:16818081",
+            "en:81191567",
+            "en:9058934",
+            "en:14370868",
+            "en:50394077",
+            "en:8130676",
+            "en:79386240"
+          ]
+        },
+        {
+          "sha256": "dd7bdd15d6f62ede2db298a5a320f0f501d9e36ffd8b13d528eaef560be43bed",
+          "count": 478,
+          "example_ids": [
+            "en:940035",
+            "en:80268078",
+            "en:23635237",
+            "en:161607",
+            "en:75056092",
+            "en:70582310",
+            "en:13094841",
+            "en:45170719"
+          ]
+        },
+        {
+          "sha256": "b63d3528c20eb241bb2926e06980a5950ddb58e07c0cd40a36acc4dfae86701f",
+          "count": 467,
+          "example_ids": [
+            "en:1921683",
+            "en:48574674",
+            "en:738198",
+            "en:80060044",
+            "en:79948667",
+            "en:50812837",
+            "en:11640269",
+            "en:48802100"
+          ]
+        }
+      ]
+    }
+  },
+  "abstract_templates": {
+    "0": {
+      "count": 478,
+      "ratio_of_abstract": 0.33240612,
+      "unique_actual_svg": 3,
+      "unique_canonical_geometry": 1
+    },
+    "1": {
+      "count": 493,
+      "ratio_of_abstract": 0.34283727,
+      "unique_actual_svg": 3,
+      "unique_canonical_geometry": 1
+    },
+    "2": {
+      "count": 467,
+      "ratio_of_abstract": 0.32475661,
+      "unique_actual_svg": 3,
+      "unique_canonical_geometry": 1
+    }
+  },
+  "abstract_template_note": "Selected recipe template distribution; actual emitted diversity measured separately. Historical recipes without a template field are unspecified.",
+  "bytes": {
+    "min": 696,
+    "p50": 779,
+    "p90": 1514,
+    "max": 5376,
+    "total": 2841921
+  },
+  "commit": "91d44bc3a81c805164376564e7c59547fb2661f6",
+  "method": "Original git-show artwork Python and committed data executed in an isolated temporary directory; measured with this script. Original stats.json remains unchanged.",
+  "source_sha256": {
+    "artwork/__init__.py": "28341140fb190ce9d2a3cc518a416baacbbc39a6c4264ea5a72941d272646f5b",
+    "artwork/compose.py": "55bae3e3dd1c49cc3db57f9df6c255252d70478c500587ab66c1230059b95c3d",
+    "artwork/draw.py": "dc64958123bbe66ffd7b665a45bb6c4563c791c81dfbbf66a0db814520f891c6",
+    "artwork/extract.py": "45ea5e751294ba4220af705dc28407cfd09c913708369259c4af7b00e3d615e1",
+    "artwork/generate.py": "5c626d9a10837eae48721a73e341da587a764f14b6b8881a7adc7e8ffa2e71b9",
+    "artwork/lexicon.py": "1609f1c3ba877bd072af1229d91f04b5225cc68d9bd95cbff8e2dbfd31a944c2",
+    "artwork/normalize.py": "05e0437f7538602240dc1c74f4e084f586738341a99522224ee396ed92504218",
+    "artwork/versions.py": "1f50273712e0cb7ff1f02e19f9e16908b9afb86c24650f95dafebd07e3532deb"
+  },
+  "data_sha256": {
+    "data/catalog.json": "9420a8fcff615b68dc019e683935a0392ef8d7154f8ae6177a710d859996f752",
+    "data/articles.json": "54c07d11631d202f3281b148960460d5cf79eed7ad5a79aecf844a4fae049a1d",
+    "data/summaries_zh.json": "50ba4f7d8c20918ab29704265025148e7af92635ac0db24874e05d4c8f277226"
+  }
+}

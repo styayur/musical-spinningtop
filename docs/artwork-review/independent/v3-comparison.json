@@ -1,0 +1,1337 @@
+{
+  "evidence_status": "Originally independent seeded sample; its three observed v3 creator/song-title/production-place failures drove generic v4 fixes. Reused unchanged as regression evidence, no longer blind or held-out accuracy evidence.",
+  "before": "../pre-fix-v3/independent/sample-trace.json",
+  "after": "sample-trace.json",
+  "same_ids_and_order": true,
+  "items": [
+    {
+      "position": 1,
+      "id": "en:8451192",
+      "title": "The Wedding Singer",
+      "before": {
+        "family": "relation",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "love"
+        ],
+        "count": 2,
+        "basis": [
+          {
+            "motif": "love",
+            "label": "相爱",
+            "phrase": "romance",
+            "source_field": "intro_en",
+            "rule_id": "en:romance",
+            "score": 1.7
+          }
+        ],
+        "source_digest": "b8a56a2ba86020ad7293ebdd91940c32e1e6b6180209b349156b690ed5c5d0cb",
+        "actual_svg_exact": "a6d02196e7728fa73d4cd8deef5d17f3101ca26e07f0b324be7b5238573b9ff8",
+        "canonical_geometry": "414665c35157dc9da7c08c4547ec9c8c1b2620d5802e4c8c634d904d6bd4a64a"
+      },
+      "after": {
+        "family": "relation",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "love"
+        ],
+        "count": 2,
+        "basis": [
+          {
+            "motif": "love",
+            "label": "相爱",
+            "phrase": "romance",
+            "source_field": "intro_en",
+            "rule_id": "en:romance",
+            "score": 1.7
+          }
+        ],
+        "source_digest": "b8a56a2ba86020ad7293ebdd91940c32e1e6b6180209b349156b690ed5c5d0cb",
+        "actual_svg_exact": "a6d02196e7728fa73d4cd8deef5d17f3101ca26e07f0b324be7b5238573b9ff8",
+        "canonical_geometry": "414665c35157dc9da7c08c4547ec9c8c1b2620d5802e4c8c634d904d6bd4a64a"
+      }
+    },
+    {
+      "position": 2,
+      "id": "en:61874227",
+      "title": "Identical",
+      "before": {
+        "family": "relation",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "child"
+        ],
+        "count": 3,
+        "basis": [
+          {
+            "motif": "child",
+            "label": "孩子",
+            "phrase": "children",
+            "source_field": "intro_en",
+            "rule_id": "en:children",
+            "score": 1.6
+          }
+        ],
+        "source_digest": "05afbe5aae8b5bedd2beee788123e2092ce3a118618cfcb207028a846d3dc393",
+        "actual_svg_exact": "f2458990b3354ee4a295ae90441892a5e9ae3d9945d7b194f0db09ce243269e8",
+        "canonical_geometry": "f2d8ced7f9d729d49bd1003864cf7cea95eb6fa9a4d19baaca829959e9655162"
+      },
+      "after": {
+        "family": "relation",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "child"
+        ],
+        "count": 3,
+        "basis": [
+          {
+            "motif": "child",
+            "label": "孩子",
+            "phrase": "children",
+            "source_field": "intro_en",
+            "rule_id": "en:children",
+            "score": 1.6
+          }
+        ],
+        "source_digest": "05afbe5aae8b5bedd2beee788123e2092ce3a118618cfcb207028a846d3dc393",
+        "actual_svg_exact": "f2458990b3354ee4a295ae90441892a5e9ae3d9945d7b194f0db09ce243269e8",
+        "canonical_geometry": "f2d8ced7f9d729d49bd1003864cf7cea95eb6fa9a4d19baaca829959e9655162"
+      }
+    },
+    {
+      "position": 3,
+      "id": "en:53368492",
+      "title": "UniSon",
+      "before": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "f411c297e80754e2665165254721f22672d37dd255e22b812d1586584c70120a",
+        "actual_svg_exact": "983d2117c5d00b23587da5ec9a98673389b07dd75e7b97348972d891d01cd663",
+        "canonical_geometry": "bcecbe333d6a1d280099363bd60bf8f69c45bc37c119eb40c200b0b30f64e2b2"
+      },
+      "after": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "f411c297e80754e2665165254721f22672d37dd255e22b812d1586584c70120a",
+        "actual_svg_exact": "6f3cca6df5efb1ac34ef8801a844d1d0aee84eecf6803274b1f0be40abeaf09d",
+        "canonical_geometry": "e58c676bea76bd357a1e5acab356ab2fac1f2f57b8b23db5befee6fda138b704"
+      }
+    },
+    {
+      "position": 4,
+      "id": "en:45197113",
+      "title": "Das Feuerwerk",
+      "before": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "6d4e15bc8ed2ba02db80e900b403e9812d7da69013f4989f07b0a617c6b3a59b",
+        "actual_svg_exact": "1983194183a445b677f2ec0c7404e9b13edefd2a0054baeb1eccb23385027ae3",
+        "canonical_geometry": "bcecbe333d6a1d280099363bd60bf8f69c45bc37c119eb40c200b0b30f64e2b2"
+      },
+      "after": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "6d4e15bc8ed2ba02db80e900b403e9812d7da69013f4989f07b0a617c6b3a59b",
+        "actual_svg_exact": "9d0af584cf550b77a82462f47113affa6c5a7fe857a7479c1fbe4352e6460cbc",
+        "canonical_geometry": "465a2215975cf36012459d3d9cd988ebeb8a125681b00bcc15c01a34026f57bf"
+      }
+    },
+    {
+      "position": 5,
+      "id": "en:20991896",
+      "title": "Smiling Faces",
+      "before": {
+        "family": "route",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "island"
+        ],
+        "count": 0,
+        "basis": [
+          {
+            "motif": "island",
+            "label": "岛屿",
+            "phrase": "Island",
+            "source_field": "intro_en",
+            "rule_id": "en:island",
+            "score": 1.8
+          }
+        ],
+        "source_digest": "cb26257e78bf046b90fa001b9799e58be54d152e168dde4ea0bba180e6b550b3",
+        "actual_svg_exact": "d1ad3fc25adae2198b29691d6b2c5e73dbedcdda0924ee861316960c1f9f5f59",
+        "canonical_geometry": "16371d819898b268de0aafd82dff5633e1668be1abde778ae85d3db070ebd460"
+      },
+      "after": {
+        "family": "route",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "island"
+        ],
+        "count": 0,
+        "basis": [
+          {
+            "motif": "island",
+            "label": "岛屿",
+            "phrase": "Island",
+            "source_field": "intro_en",
+            "rule_id": "en:island",
+            "score": 1.8
+          }
+        ],
+        "source_digest": "cb26257e78bf046b90fa001b9799e58be54d152e168dde4ea0bba180e6b550b3",
+        "actual_svg_exact": "138064bcbfe254e9cc1442fbef7c9473defed9ad19eba33a26ef5c8dc7506f0d",
+        "canonical_geometry": "16371d819898b268de0aafd82dff5633e1668be1abde778ae85d3db070ebd460"
+      }
+    },
+    {
+      "position": 6,
+      "id": "en:53353528",
+      "title": "The Big Life",
+      "before": {
+        "family": "relation",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "love"
+        ],
+        "count": 2,
+        "basis": [
+          {
+            "motif": "love",
+            "label": "相爱",
+            "phrase": "Love",
+            "source_field": "intro_en",
+            "rule_id": "en:love",
+            "score": 1.6
+          }
+        ],
+        "source_digest": "023dec9ed085b74fde6be80d1c401d4d00486722f41842dac7ed76b221c0229e",
+        "actual_svg_exact": "a6d02196e7728fa73d4cd8deef5d17f3101ca26e07f0b324be7b5238573b9ff8",
+        "canonical_geometry": "414665c35157dc9da7c08c4547ec9c8c1b2620d5802e4c8c634d904d6bd4a64a"
+      },
+      "after": {
+        "family": "relation",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "love"
+        ],
+        "count": 2,
+        "basis": [
+          {
+            "motif": "love",
+            "label": "相爱",
+            "phrase": "Love",
+            "source_field": "intro_en",
+            "rule_id": "en:love",
+            "score": 1.6
+          }
+        ],
+        "source_digest": "023dec9ed085b74fde6be80d1c401d4d00486722f41842dac7ed76b221c0229e",
+        "actual_svg_exact": "d57ce197c594a09b5377f82305ae1da39062876598d0ca56db6bd3e620c16aa3",
+        "canonical_geometry": "414665c35157dc9da7c08c4547ec9c8c1b2620d5802e4c8c634d904d6bd4a64a"
+      }
+    },
+    {
+      "position": 7,
+      "id": "en:32832272",
+      "title": "White Dalmatian",
+      "before": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "68e81de23b60c634e98f8913064b92f40959ac416d3f07ea1d582073eb3b17ae",
+        "actual_svg_exact": "d91041d4f4e76f73d8cf8fd3df39296e0f79c95beb193da0bdc8f50b89a42e24",
+        "canonical_geometry": "7da25e00645b8cfa9328b9448c89ba2a58a9efd64a6bacd0408e1a1e230e3507"
+      },
+      "after": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "68e81de23b60c634e98f8913064b92f40959ac416d3f07ea1d582073eb3b17ae",
+        "actual_svg_exact": "1983194183a445b677f2ec0c7404e9b13edefd2a0054baeb1eccb23385027ae3",
+        "canonical_geometry": "bcecbe333d6a1d280099363bd60bf8f69c45bc37c119eb40c200b0b30f64e2b2"
+      }
+    },
+    {
+      "position": 8,
+      "id": "en:52438804",
+      "title": "Hadestown",
+      "before": {
+        "family": "relation",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "love"
+        ],
+        "count": 2,
+        "basis": [
+          {
+            "motif": "love",
+            "label": "相爱",
+            "phrase": "爱情故事",
+            "source_field": "intro_zh",
+            "rule_id": "zh:love-story",
+            "score": 1.8
+          }
+        ],
+        "source_digest": "b72b299a4d670917c627474bfa15633bd270bc674758cdb2c3b46ef384c9685a",
+        "actual_svg_exact": "238fc4f144ad75c0f8d9c6e786ae3093ad7c08550d3f5b690c3ca0a7702992db",
+        "canonical_geometry": "414665c35157dc9da7c08c4547ec9c8c1b2620d5802e4c8c634d904d6bd4a64a"
+      },
+      "after": {
+        "family": "relation",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "love"
+        ],
+        "count": 2,
+        "basis": [
+          {
+            "motif": "love",
+            "label": "相爱",
+            "phrase": "爱情故事",
+            "source_field": "intro_zh",
+            "rule_id": "zh:love-story",
+            "score": 1.8
+          }
+        ],
+        "source_digest": "b72b299a4d670917c627474bfa15633bd270bc674758cdb2c3b46ef384c9685a",
+        "actual_svg_exact": "a6d02196e7728fa73d4cd8deef5d17f3101ca26e07f0b324be7b5238573b9ff8",
+        "canonical_geometry": "414665c35157dc9da7c08c4547ec9c8c1b2620d5802e4c8c634d904d6bd4a64a"
+      }
+    },
+    {
+      "position": 9,
+      "id": "en:3616987",
+      "title": "Street Scene (opera)",
+      "before": {
+        "family": "city",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "street"
+        ],
+        "count": 0,
+        "basis": [
+          {
+            "motif": "street",
+            "label": "街道",
+            "phrase": "Street",
+            "source_field": "intro_en",
+            "rule_id": "en:street",
+            "score": 1.7
+          }
+        ],
+        "source_digest": "1c3f9bf16d6ce7e3ba29cc89b9768a0889b1aa062e1c1ac2dd4aae407847c24d",
+        "actual_svg_exact": "61387f313a5625afc79a03f433cbbd0ec54be6acb78d9f4314fe111a426b3338",
+        "canonical_geometry": "fde41fb984d2ea137a01600350263b5d6b5ccf6283c219cb5124726613a07bc3"
+      },
+      "after": {
+        "family": "city",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "street"
+        ],
+        "count": 0,
+        "basis": [
+          {
+            "motif": "street",
+            "label": "街道",
+            "phrase": "Street",
+            "source_field": "intro_en",
+            "rule_id": "en:street",
+            "score": 1.7
+          }
+        ],
+        "source_digest": "1c3f9bf16d6ce7e3ba29cc89b9768a0889b1aa062e1c1ac2dd4aae407847c24d",
+        "actual_svg_exact": "f93a705c7a90b7d78675a51b11136393f9d5afc03ce2b7f97defd4dfadf42e6c",
+        "canonical_geometry": "fde41fb984d2ea137a01600350263b5d6b5ccf6283c219cb5124726613a07bc3"
+      }
+    },
+    {
+      "position": 10,
+      "id": "en:5559219",
+      "title": "Barbarella",
+      "before": {
+        "family": "terrain",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "forest"
+        ],
+        "count": 0,
+        "basis": [
+          {
+            "motif": "forest",
+            "label": "森林",
+            "phrase": "Forest",
+            "source_field": "intro_en",
+            "rule_id": "en:forest",
+            "score": 2.0
+          }
+        ],
+        "source_digest": "a9328b758a1f5bd0fec217d52901c533a7852a4832de10abcbcc5d6f1d78bd2d",
+        "actual_svg_exact": "7743f014559272e6941ff1909266913691f482bf3b08466d7805fab195f02117",
+        "canonical_geometry": "c0ce2abab0c9a2b9bed858cf8f82f7aa01efe7599319ef6756641371c0affe59"
+      },
+      "after": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "a9328b758a1f5bd0fec217d52901c533a7852a4832de10abcbcc5d6f1d78bd2d",
+        "actual_svg_exact": "368ba1c218a9a8b96290b838debb1cd35ff3598caca0310ff1987281a5eac283",
+        "canonical_geometry": "280d8b31513919b4cab9b1bf66d58bad2b2bbee5e21b249f5aeb5128068cddf9"
+      }
+    },
+    {
+      "position": 11,
+      "id": "en:24302406",
+      "title": "Balada pro banditu",
+      "before": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "578d3927fa2e3c22fca996be326677c09abb5507f0325bd05859e92b56c32d45",
+        "actual_svg_exact": "82bea4174c840035233f03a1f245e7e7808722778dc1a2c92f7e5f79b62c8c06",
+        "canonical_geometry": "44bef05a22891e29a174effd90d51cf26699fbf81681cfe2a2ab796f0d4667c4"
+      },
+      "after": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "578d3927fa2e3c22fca996be326677c09abb5507f0325bd05859e92b56c32d45",
+        "actual_svg_exact": "983d2117c5d00b23587da5ec9a98673389b07dd75e7b97348972d891d01cd663",
+        "canonical_geometry": "bcecbe333d6a1d280099363bd60bf8f69c45bc37c119eb40c200b0b30f64e2b2"
+      }
+    },
+    {
+      "position": 12,
+      "id": "en:29579546",
+      "title": "John Tartaglia's ImaginOcean",
+      "before": {
+        "family": "route",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "ship"
+        ],
+        "count": 0,
+        "basis": [
+          {
+            "motif": "ship",
+            "label": "船",
+            "phrase": "ship",
+            "source_field": "intro_en",
+            "rule_id": "en:ship",
+            "score": 1.9
+          }
+        ],
+        "source_digest": "bd302a16d7f58b822a34551024b93ef4335114332f03d00111374ba27e8af97e",
+        "actual_svg_exact": "860992e48730026407a50a90d0261c3e09d89ff452f714d38a8788f1c925e76a",
+        "canonical_geometry": "5bff7570b8bdc0b7b4347b9b6859592d96b5d470b5f09fd498bde610d6284b85"
+      },
+      "after": {
+        "family": "route",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "ship"
+        ],
+        "count": 0,
+        "basis": [
+          {
+            "motif": "ship",
+            "label": "船",
+            "phrase": "ship",
+            "source_field": "intro_en",
+            "rule_id": "en:ship",
+            "score": 1.9
+          }
+        ],
+        "source_digest": "bd302a16d7f58b822a34551024b93ef4335114332f03d00111374ba27e8af97e",
+        "actual_svg_exact": "5f462979ed97738298576eb81513c51101ca49601a017b5ee1d02f3d8f406868",
+        "canonical_geometry": "5bff7570b8bdc0b7b4347b9b6859592d96b5d470b5f09fd498bde610d6284b85"
+      }
+    },
+    {
+      "position": 13,
+      "id": "en:40078305",
+      "title": "The Lancers",
+      "before": {
+        "family": "relation",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "conflict"
+        ],
+        "count": 4,
+        "basis": [
+          {
+            "motif": "conflict",
+            "label": "冲突",
+            "phrase": "War",
+            "source_field": "intro_en",
+            "rule_id": "en:war",
+            "score": 1.8
+          }
+        ],
+        "source_digest": "2669799872aed2fc357196f9ce9cea4a39db5a83fb48b9063520e42477315ca5",
+        "actual_svg_exact": "f03d91a8606efea80aa20c370bf1b3e93b045d8de8f5ba98f2ada34e51443626",
+        "canonical_geometry": "249cc716fa1fc1139953705a0b58b704cdc1f8d3434ef62869d18b47c1a214a0"
+      },
+      "after": {
+        "family": "relation",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "conflict"
+        ],
+        "count": 4,
+        "basis": [
+          {
+            "motif": "conflict",
+            "label": "冲突",
+            "phrase": "War",
+            "source_field": "intro_en",
+            "rule_id": "en:war",
+            "score": 1.8
+          }
+        ],
+        "source_digest": "2669799872aed2fc357196f9ce9cea4a39db5a83fb48b9063520e42477315ca5",
+        "actual_svg_exact": "58f51b1698730718625d00fa0936e5ea8f8473be9af757be9c095b0b091201fe",
+        "canonical_geometry": "249cc716fa1fc1139953705a0b58b704cdc1f8d3434ef62869d18b47c1a214a0"
+      }
+    },
+    {
+      "position": 14,
+      "id": "en:252540",
+      "title": "Mamma Mia!",
+      "before": {
+        "family": "relation",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "love",
+          "power",
+          "family"
+        ],
+        "count": 3,
+        "basis": [
+          {
+            "motif": "power",
+            "label": "权力",
+            "phrase": "Queen",
+            "source_field": "intro_en",
+            "rule_id": "en:queen",
+            "score": 1.7
+          }
+        ],
+        "source_digest": "0cdfcb8663d38e9baa0d0dab9fca9fb769c3da4df4c1df713ecdefdecae8169e",
+        "actual_svg_exact": "c88c69f8782d7c9026b4d0bbc2e5db984cee6c6f8231e8c1aa815665e865665e",
+        "canonical_geometry": "7002c0d762c64357d49e3458351a4bfde0a7265581e39272e53b252dd1ae88c4"
+      },
+      "after": {
+        "family": "relation",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "love",
+          "family"
+        ],
+        "count": 3,
+        "basis": [
+          {
+            "motif": "family",
+            "label": "家庭",
+            "phrase": "母亲",
+            "source_field": "intro_zh",
+            "rule_id": "zh:mother",
+            "score": 1.6
+          }
+        ],
+        "source_digest": "0cdfcb8663d38e9baa0d0dab9fca9fb769c3da4df4c1df713ecdefdecae8169e",
+        "actual_svg_exact": "9120f84675156f035c1a4c66c7586b13164d337e9e550a8e031e99bb8779d23e",
+        "canonical_geometry": "18a577c9bfd05a98c2e1c626c8050cc234a75bdd65fe8ca60c2a561c20463bdb"
+      }
+    },
+    {
+      "position": 15,
+      "id": "en:61962592",
+      "title": "Goodbye Barcelona",
+      "before": {
+        "family": "relation",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "conflict"
+        ],
+        "count": 4,
+        "basis": [
+          {
+            "motif": "conflict",
+            "label": "冲突",
+            "phrase": "War",
+            "source_field": "intro_en",
+            "rule_id": "en:war",
+            "score": 1.8
+          }
+        ],
+        "source_digest": "4d7e48116e71baed0681a4d8ecb2b696b66b5a1b7e88ce46b3bd37d13d6241d5",
+        "actual_svg_exact": "58f51b1698730718625d00fa0936e5ea8f8473be9af757be9c095b0b091201fe",
+        "canonical_geometry": "249cc716fa1fc1139953705a0b58b704cdc1f8d3434ef62869d18b47c1a214a0"
+      },
+      "after": {
+        "family": "relation",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "conflict"
+        ],
+        "count": 4,
+        "basis": [
+          {
+            "motif": "conflict",
+            "label": "冲突",
+            "phrase": "War",
+            "source_field": "intro_en",
+            "rule_id": "en:war",
+            "score": 1.8
+          }
+        ],
+        "source_digest": "4d7e48116e71baed0681a4d8ecb2b696b66b5a1b7e88ce46b3bd37d13d6241d5",
+        "actual_svg_exact": "f66327a6718218fff3de9d590cb9846eca57318a5ee4e3b8f8c5a0262c91b040",
+        "canonical_geometry": "249cc716fa1fc1139953705a0b58b704cdc1f8d3434ef62869d18b47c1a214a0"
+      }
+    },
+    {
+      "position": 16,
+      "id": "en:6543121",
+      "title": "Gay's the Word",
+      "before": {
+        "family": "relation",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "death",
+          "love"
+        ],
+        "count": 1,
+        "basis": [
+          {
+            "motif": "death",
+            "label": "死亡",
+            "phrase": "died",
+            "source_field": "intro_en",
+            "rule_id": "en:died",
+            "score": 1.7
+          }
+        ],
+        "source_digest": "9bc4c43a941a8c1971f18783eb4a945067d8df2d1641720243025eceaa2c3a52",
+        "actual_svg_exact": "a3a07894e2a98ac958a931d20c2dca4ccd0f4848ec2360da7e57ff2faa00a702",
+        "canonical_geometry": "371355569b5e0f64a310bd785cc83c216de42b08475e1306ed92bca32b624b31"
+      },
+      "after": {
+        "family": "relation",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "death",
+          "love"
+        ],
+        "count": 1,
+        "basis": [
+          {
+            "motif": "death",
+            "label": "死亡",
+            "phrase": "died",
+            "source_field": "intro_en",
+            "rule_id": "en:died",
+            "score": 1.7
+          }
+        ],
+        "source_digest": "9bc4c43a941a8c1971f18783eb4a945067d8df2d1641720243025eceaa2c3a52",
+        "actual_svg_exact": "d511d1ae8cac37f43bfebf23549e934151c6b49f56b9973a33cb5a2bb49b7b7a",
+        "canonical_geometry": "371355569b5e0f64a310bd785cc83c216de42b08475e1306ed92bca32b624b31"
+      }
+    },
+    {
+      "position": 17,
+      "id": "en:306521",
+      "title": "Guys and Dolls",
+      "before": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "388ef3502482b6d424a5fe5cd5bbc12581ffd23a5e40cf75409dce749bdbe4d9",
+        "actual_svg_exact": "d640ad083d7ef49ee62f592d5b25d43f0f76dce86c8cb1bbe193b90cd1e3e5fc",
+        "canonical_geometry": "465a2215975cf36012459d3d9cd988ebeb8a125681b00bcc15c01a34026f57bf"
+      },
+      "after": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "388ef3502482b6d424a5fe5cd5bbc12581ffd23a5e40cf75409dce749bdbe4d9",
+        "actual_svg_exact": "837b7bf16e99db744f68bd559b7872030b208913fc09f899384b8ec39b2dc3a3",
+        "canonical_geometry": "b23f420b93cff7724f2e013a4fa8150036ffd1589a7c1a931b1fa2807a2ab4a4"
+      }
+    },
+    {
+      "position": 18,
+      "id": "en:17224272",
+      "title": "Robert the Devil (Gilbert)",
+      "before": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "e4dc6c85b0b45c945cc432bce6b963bdf39bc161140c1e034be89760e4900c7c",
+        "actual_svg_exact": "14e6dd6616e1814974009026c861270336019457f851301d7c75112bd10d3af0",
+        "canonical_geometry": "78d0f41466e138c855ac46fc657aeb2b306168e8d010413b90fa9feb256cd4f4"
+      },
+      "after": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "e4dc6c85b0b45c945cc432bce6b963bdf39bc161140c1e034be89760e4900c7c",
+        "actual_svg_exact": "d91041d4f4e76f73d8cf8fd3df39296e0f79c95beb193da0bdc8f50b89a42e24",
+        "canonical_geometry": "7da25e00645b8cfa9328b9448c89ba2a58a9efd64a6bacd0408e1a1e230e3507"
+      }
+    },
+    {
+      "position": 19,
+      "id": "en:67476409",
+      "title": "Sadie Thompson",
+      "before": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "c419d39122167d469da8c8d036685a1fc5d1d271338e1a17e35903e71bd10958",
+        "actual_svg_exact": "4ff6b2b0599dc8e170ffb8a40f9f514737a4b64f3559c02ea3a5df4f28028c8e",
+        "canonical_geometry": "280d8b31513919b4cab9b1bf66d58bad2b2bbee5e21b249f5aeb5128068cddf9"
+      },
+      "after": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "c419d39122167d469da8c8d036685a1fc5d1d271338e1a17e35903e71bd10958",
+        "actual_svg_exact": "6cfb94d3b80b0d6caace7edb6499f3e9ef1473a82071b06b6513caad100c1d8a",
+        "canonical_geometry": "df7d2f5fcd676bbbe324cffd93f959eacb85b00bff16140434c4e99023eef969"
+      }
+    },
+    {
+      "position": 20,
+      "id": "en:41580890",
+      "title": "Dogfight",
+      "before": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "991331a7fbef63bab671ac98b3ee91a1c33b2781d59d750cf5f75460182b38d2",
+        "actual_svg_exact": "e7f6800267afe1b7c28b00bd22e5ac441e1a3407d1eb95eec8e01491391f22b2",
+        "canonical_geometry": "465a2215975cf36012459d3d9cd988ebeb8a125681b00bcc15c01a34026f57bf"
+      },
+      "after": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "991331a7fbef63bab671ac98b3ee91a1c33b2781d59d750cf5f75460182b38d2",
+        "actual_svg_exact": "25fa230db0f7dc79746f0a9c51626ce484ce1746e14d6687f2cd734ea3167d04",
+        "canonical_geometry": "e58c676bea76bd357a1e5acab356ab2fac1f2f57b8b23db5befee6fda138b704"
+      }
+    },
+    {
+      "position": 21,
+      "id": "en:47428808",
+      "title": "The Streets of Paris",
+      "before": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "c1e8dcae2605b13c3100eb6ca7b2576df09716968e6f6afd749922e446c15196",
+        "actual_svg_exact": "706df1208b7da6390d93a8ecc63932f165b553bdee79db26f83ca8e2b181ab73",
+        "canonical_geometry": "bcecbe333d6a1d280099363bd60bf8f69c45bc37c119eb40c200b0b30f64e2b2"
+      },
+      "after": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "c1e8dcae2605b13c3100eb6ca7b2576df09716968e6f6afd749922e446c15196",
+        "actual_svg_exact": "efac88147f796f710e2fdc1df8bf3cf65207e712d7050e7318f8b032440fc1ad",
+        "canonical_geometry": "7da25e00645b8cfa9328b9448c89ba2a58a9efd64a6bacd0408e1a1e230e3507"
+      }
+    },
+    {
+      "position": 22,
+      "id": "en:30208269",
+      "title": "Chris and the Wonderful Lamp",
+      "before": {
+        "family": "route",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "ship"
+        ],
+        "count": 0,
+        "basis": [
+          {
+            "motif": "ship",
+            "label": "船",
+            "phrase": "ship",
+            "source_field": "intro_en",
+            "rule_id": "en:ship",
+            "score": 1.9
+          }
+        ],
+        "source_digest": "ec77f7029ea60d6664a0cf9ecde4da709b26c961e7eecb9e64dd2161c376e370",
+        "actual_svg_exact": "018045c5b31bdb6d2b0a21eba88855624829f0416ed24f937d5efaf8c38662bd",
+        "canonical_geometry": "5bff7570b8bdc0b7b4347b9b6859592d96b5d470b5f09fd498bde610d6284b85"
+      },
+      "after": {
+        "family": "route",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "ship"
+        ],
+        "count": 0,
+        "basis": [
+          {
+            "motif": "ship",
+            "label": "船",
+            "phrase": "ship",
+            "source_field": "intro_en",
+            "rule_id": "en:ship",
+            "score": 1.9
+          }
+        ],
+        "source_digest": "ec77f7029ea60d6664a0cf9ecde4da709b26c961e7eecb9e64dd2161c376e370",
+        "actual_svg_exact": "5f462979ed97738298576eb81513c51101ca49601a017b5ee1d02f3d8f406868",
+        "canonical_geometry": "5bff7570b8bdc0b7b4347b9b6859592d96b5d470b5f09fd498bde610d6284b85"
+      }
+    },
+    {
+      "position": 23,
+      "id": "en:46466350",
+      "title": "An American in Paris",
+      "before": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "d5538e9eb25d77b85330655026e3acffa5baca3e0747e1ee5cfd54ef9054abee",
+        "actual_svg_exact": "fb65a23553453b8eae8ebf4fe077af17e33130e621fd1c83913e901dbf6cb349",
+        "canonical_geometry": "d89594ae4ee458b1c7d9d71041e9fbd4b0c84ee09b2aa8e8cd788b5dbfd61037"
+      },
+      "after": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "d5538e9eb25d77b85330655026e3acffa5baca3e0747e1ee5cfd54ef9054abee",
+        "actual_svg_exact": "8f126a6ab90bfba9dc0162f1ead5cf5a56ac2fda70f23bdb2967690663fa9931",
+        "canonical_geometry": "b23f420b93cff7724f2e013a4fa8150036ffd1589a7c1a931b1fa2807a2ab4a4"
+      }
+    },
+    {
+      "position": 24,
+      "id": "en:50946494",
+      "title": "The Seven (play)",
+      "before": {
+        "family": "city",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "city"
+        ],
+        "count": 0,
+        "basis": [
+          {
+            "motif": "city",
+            "label": "城市",
+            "phrase": "the city",
+            "source_field": "intro_en",
+            "rule_id": "en:the-city",
+            "score": 1.8
+          }
+        ],
+        "source_digest": "f02166380639ad10c89c95ab9179a5ab5b2cb8bd5e0b12a4d5675bd6f7a20a8c",
+        "actual_svg_exact": "fcc2bcd017418074f698f4ac3159a06ba4dfae4374031cb16eda814dc4bd71fd",
+        "canonical_geometry": "bcc7159a394d576921dcd5e70b9844de898f95a4cfacfc1c796db0e2acb87036"
+      },
+      "after": {
+        "family": "city",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "city"
+        ],
+        "count": 0,
+        "basis": [
+          {
+            "motif": "city",
+            "label": "城市",
+            "phrase": "the city",
+            "source_field": "intro_en",
+            "rule_id": "en:the-city",
+            "score": 1.8
+          }
+        ],
+        "source_digest": "f02166380639ad10c89c95ab9179a5ab5b2cb8bd5e0b12a4d5675bd6f7a20a8c",
+        "actual_svg_exact": "121bea628bf7834a9ec018f5f280a06fd04edb9f00a6d4ec347e98cf680ed2cd",
+        "canonical_geometry": "bcc7159a394d576921dcd5e70b9844de898f95a4cfacfc1c796db0e2acb87036"
+      }
+    },
+    {
+      "position": 25,
+      "id": "en:62494495",
+      "title": "A Knight for a Day",
+      "before": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "8bf8c8ef9d0c02c0c2f53c2dc6da5a8616154aaa8417354b8764da6a272d6607",
+        "actual_svg_exact": "97f32a9fb55ca783ef595dd1b557400d3454caecc0179ea1928644226d24c6e9",
+        "canonical_geometry": "44bef05a22891e29a174effd90d51cf26699fbf81681cfe2a2ab796f0d4667c4"
+      },
+      "after": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "8bf8c8ef9d0c02c0c2f53c2dc6da5a8616154aaa8417354b8764da6a272d6607",
+        "actual_svg_exact": "983d2117c5d00b23587da5ec9a98673389b07dd75e7b97348972d891d01cd663",
+        "canonical_geometry": "bcecbe333d6a1d280099363bd60bf8f69c45bc37c119eb40c200b0b30f64e2b2"
+      }
+    },
+    {
+      "position": 26,
+      "id": "en:72697165",
+      "title": "Red, White and Maddox",
+      "before": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "a93efb695df159d7d2c1ff5613ea4c7347efe923bfa6d20d7b5312107c4690e1",
+        "actual_svg_exact": "98129f091a6e93f1af9404aac550d2d0923b4b3b8671b82c3e546e3578bece73",
+        "canonical_geometry": "df7d2f5fcd676bbbe324cffd93f959eacb85b00bff16140434c4e99023eef969"
+      },
+      "after": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "a93efb695df159d7d2c1ff5613ea4c7347efe923bfa6d20d7b5312107c4690e1",
+        "actual_svg_exact": "4ff6b2b0599dc8e170ffb8a40f9f514737a4b64f3559c02ea3a5df4f28028c8e",
+        "canonical_geometry": "280d8b31513919b4cab9b1bf66d58bad2b2bbee5e21b249f5aeb5128068cddf9"
+      }
+    },
+    {
+      "position": 27,
+      "id": "en:70336996",
+      "title": "The Regulars",
+      "before": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "814b73d9ab5de2e9c793bed4ff4e7c01c98db27cc8486ddb521da98883a965c6",
+        "actual_svg_exact": "3dee08e10bb6bfface30f2eff9cdde024e26a2eeb3929c7a902ff85705240503",
+        "canonical_geometry": "f5dd43d6a08effd291e905f1283328dbc9aa3fdb831820d34a7c77b9623530ac"
+      },
+      "after": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "814b73d9ab5de2e9c793bed4ff4e7c01c98db27cc8486ddb521da98883a965c6",
+        "actual_svg_exact": "0a821107f8d02c778ddfece9779fdc1a9c1a410eefaf17ab51700a315cb8c42a",
+        "canonical_geometry": "b23f420b93cff7724f2e013a4fa8150036ffd1589a7c1a931b1fa2807a2ab4a4"
+      }
+    },
+    {
+      "position": 28,
+      "id": "en:81704432",
+      "title": "Dare to Dream Jr.",
+      "before": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "14edcb45d060eee4d93e78d0547a135cd8e342e067ccb748ceb66ac0116e6612",
+        "actual_svg_exact": "3dee08e10bb6bfface30f2eff9cdde024e26a2eeb3929c7a902ff85705240503",
+        "canonical_geometry": "f5dd43d6a08effd291e905f1283328dbc9aa3fdb831820d34a7c77b9623530ac"
+      },
+      "after": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "14edcb45d060eee4d93e78d0547a135cd8e342e067ccb748ceb66ac0116e6612",
+        "actual_svg_exact": "b7691d676e56cbe5b238e038a1869c4d81567ac33324f3b93064f47d46ba2c21",
+        "canonical_geometry": "c0923bc95b952fca7ef90cb2a5f16b4f79765f514df5023a03ff7e5f8510ff66"
+      }
+    },
+    {
+      "position": 29,
+      "id": "en:21792863",
+      "title": "Sigh No More",
+      "before": {
+        "family": "relation",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "conflict"
+        ],
+        "count": 4,
+        "basis": [
+          {
+            "motif": "conflict",
+            "label": "冲突",
+            "phrase": "War",
+            "source_field": "intro_en",
+            "rule_id": "en:war",
+            "score": 1.8
+          }
+        ],
+        "source_digest": "2afddbb927f80dfa3b144e61c7761dbcde97019bc36fa42874a3aa51d2a06a3e",
+        "actual_svg_exact": "f66327a6718218fff3de9d590cb9846eca57318a5ee4e3b8f8c5a0262c91b040",
+        "canonical_geometry": "249cc716fa1fc1139953705a0b58b704cdc1f8d3434ef62869d18b47c1a214a0"
+      },
+      "after": {
+        "family": "relation",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "conflict"
+        ],
+        "count": 4,
+        "basis": [
+          {
+            "motif": "conflict",
+            "label": "冲突",
+            "phrase": "War",
+            "source_field": "intro_en",
+            "rule_id": "en:war",
+            "score": 1.8
+          }
+        ],
+        "source_digest": "2afddbb927f80dfa3b144e61c7761dbcde97019bc36fa42874a3aa51d2a06a3e",
+        "actual_svg_exact": "f66327a6718218fff3de9d590cb9846eca57318a5ee4e3b8f8c5a0262c91b040",
+        "canonical_geometry": "249cc716fa1fc1139953705a0b58b704cdc1f8d3434ef62869d18b47c1a214a0"
+      }
+    },
+    {
+      "position": 30,
+      "id": "en:37882642",
+      "title": "Robin des Bois",
+      "before": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "616f061974e5e64b3021f178ddb686b9a68a65ab4399b407e6c62cc0fb7c9a44",
+        "actual_svg_exact": "083fa65989008538c65d228bd920555b8d9f0c3b3a36170cc588fae6bbcd258e",
+        "canonical_geometry": "78d0f41466e138c855ac46fc657aeb2b306168e8d010413b90fa9feb256cd4f4"
+      },
+      "after": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "616f061974e5e64b3021f178ddb686b9a68a65ab4399b407e6c62cc0fb7c9a44",
+        "actual_svg_exact": "fb65a23553453b8eae8ebf4fe077af17e33130e621fd1c83913e901dbf6cb349",
+        "canonical_geometry": "d89594ae4ee458b1c7d9d71041e9fbd4b0c84ee09b2aa8e8cd788b5dbfd61037"
+      }
+    },
+    {
+      "position": 31,
+      "id": "en:33791914",
+      "title": "Soon",
+      "before": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "d611e4b756041d80f41952e1ea9dbfaf5061b02a1ff2f789c43db1351a2f327f",
+        "actual_svg_exact": "ec61dd81503d34274cf655e471f86629687303cffd72ed5fb50a6644690bcae8",
+        "canonical_geometry": "d89594ae4ee458b1c7d9d71041e9fbd4b0c84ee09b2aa8e8cd788b5dbfd61037"
+      },
+      "after": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "d611e4b756041d80f41952e1ea9dbfaf5061b02a1ff2f789c43db1351a2f327f",
+        "actual_svg_exact": "efac88147f796f710e2fdc1df8bf3cf65207e712d7050e7318f8b032440fc1ad",
+        "canonical_geometry": "7da25e00645b8cfa9328b9448c89ba2a58a9efd64a6bacd0408e1a1e230e3507"
+      }
+    },
+    {
+      "position": 32,
+      "id": "en:12084106",
+      "title": "Young Frankenstein",
+      "before": {
+        "family": "route",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "island"
+        ],
+        "count": 0,
+        "basis": [
+          {
+            "motif": "island",
+            "label": "岛屿",
+            "phrase": "Island",
+            "source_field": "intro_en",
+            "rule_id": "en:island",
+            "score": 1.8
+          }
+        ],
+        "source_digest": "da09a221ca661f76352e0b753a873636bf91122516aa5fe35b4b2bf3dc83005b",
+        "actual_svg_exact": "3b78c1a3f454f1dd9791ed7dd824cbd7e96c14b0f0d494b4532373b0c9eed11e",
+        "canonical_geometry": "16371d819898b268de0aafd82dff5633e1668be1abde778ae85d3db070ebd460"
+      },
+      "after": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "da09a221ca661f76352e0b753a873636bf91122516aa5fe35b4b2bf3dc83005b",
+        "actual_svg_exact": "838de9556202a95f461a90cea5039c9305f8d7568ea231583fe39c3a4f712d96",
+        "canonical_geometry": "d89594ae4ee458b1c7d9d71041e9fbd4b0c84ee09b2aa8e8cd788b5dbfd61037"
+      }
+    },
+    {
+      "position": 33,
+      "id": "en:62166813",
+      "title": "The Street Singer",
+      "before": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "abde33bc1f3841a3aa36f3df7e681aee1390f50cd563d2f3e622cba21ccca189",
+        "actual_svg_exact": "b66f1853cff024e8150443b2c1c21a983bd31d4c95a0576aaecdf03d0c00ea47",
+        "canonical_geometry": "17ced97f6e6bbc330a7714200a01c2cbfb5bdc21440d5452ecebfafdf0fae183"
+      },
+      "after": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "abde33bc1f3841a3aa36f3df7e681aee1390f50cd563d2f3e622cba21ccca189",
+        "actual_svg_exact": "8f126a6ab90bfba9dc0162f1ead5cf5a56ac2fda70f23bdb2967690663fa9931",
+        "canonical_geometry": "b23f420b93cff7724f2e013a4fa8150036ffd1589a7c1a931b1fa2807a2ab4a4"
+      }
+    },
+    {
+      "position": 34,
+      "id": "en:429885",
+      "title": "Show Boat",
+      "before": {
+        "family": "terrain",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "river"
+        ],
+        "count": 0,
+        "basis": [
+          {
+            "motif": "river",
+            "label": "河",
+            "phrase": "River",
+            "source_field": "intro_en",
+            "rule_id": "en:river",
+            "score": 1.6
+          }
+        ],
+        "source_digest": "c234ec50a673e22669e93d31243120f8d53d18d104d0b29a1d27d8a9802f1014",
+        "actual_svg_exact": "5292447507c058492433d869a5bbc8bebab379662154553574c78a9e924b1ad0",
+        "canonical_geometry": "0bdc59a8025c5d2e14679e27cd7e13a9303d976f9b9be423c34b6ddb096c04c8"
+      },
+      "after": {
+        "family": "terrain",
+        "kind": "generated",
+        "reason": null,
+        "subjects": [
+          "river"
+        ],
+        "count": 0,
+        "basis": [
+          {
+            "motif": "river",
+            "label": "河",
+            "phrase": "River",
+            "source_field": "intro_en",
+            "rule_id": "en:river",
+            "score": 1.6
+          }
+        ],
+        "source_digest": "c234ec50a673e22669e93d31243120f8d53d18d104d0b29a1d27d8a9802f1014",
+        "actual_svg_exact": "2c070c6ad47a0dc2a4388b4157550a624c2d5e0113bf114bc146d09b4f2f07d2",
+        "canonical_geometry": "0bdc59a8025c5d2e14679e27cd7e13a9303d976f9b9be423c34b6ddb096c04c8"
+      }
+    },
+    {
+      "position": 35,
+      "id": "en:67122395",
+      "title": "Saro, the musical",
+      "before": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "b0b1c0f9775f70ff9b30871e2d40133e98b85aa565cc439ee27e695b6f85825f",
+        "actual_svg_exact": "368ba1c218a9a8b96290b838debb1cd35ff3598caca0310ff1987281a5eac283",
+        "canonical_geometry": "280d8b31513919b4cab9b1bf66d58bad2b2bbee5e21b249f5aeb5128068cddf9"
+      },
+      "after": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "b0b1c0f9775f70ff9b30871e2d40133e98b85aa565cc439ee27e695b6f85825f",
+        "actual_svg_exact": "40e6c46a35c02196cf779a52279e7c3729b136a9b4426696662c85e750504562",
+        "canonical_geometry": "6643c515edcead49204f0ee3b12f1c1e3b033c891631a8a450a52382640bdd47"
+      }
+    },
+    {
+      "position": 36,
+      "id": "en:65437781",
+      "title": "The Jungle Book",
+      "before": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "e4d69a3e865f301bd5772d5520825792ef2eb8a7c334d026359a411e2f7800d8",
+        "actual_svg_exact": "837b7bf16e99db744f68bd559b7872030b208913fc09f899384b8ec39b2dc3a3",
+        "canonical_geometry": "b23f420b93cff7724f2e013a4fa8150036ffd1589a7c1a931b1fa2807a2ab4a4"
+      },
+      "after": {
+        "family": "abstract",
+        "kind": "abstract",
+        "reason": "insufficient",
+        "subjects": [],
+        "count": 0,
+        "basis": [],
+        "source_digest": "e4d69a3e865f301bd5772d5520825792ef2eb8a7c334d026359a411e2f7800d8",
+        "actual_svg_exact": "165addec837eb543c9b9baada71623207b651d1ecf9c4b7d3e1afc49a33de669",
+        "canonical_geometry": "f5dd43d6a08effd291e905f1283328dbc9aa3fdb831820d34a7c77b9623530ac"
+      }
+    }
+  ]
+}
