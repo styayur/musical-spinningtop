@@ -2,7 +2,7 @@
 
 Repository branch: `artwork-offline-imagery`. Reviewed input HEAD: `91d44bc3a81c805164376564e7c59547fb2661f6`, with 17 inherited modified files and no initial untracked files. Fetched main remains `e537616f307e87ec7cc57384fbd5d6a2ef053a07`. The inherited diff was preserved outside the repository before editing. No reset, discard, main update, merge, Release, or Pages dispatch was performed.
 
-This report accompanies the final implementation commit. `stats.json` records generator/data source hashes; `performance.json` records frozen experiment source hashes. The PR body records the final remote HEAD and its check results after push. A report cannot contain its own commit hash. Earlier check results do not establish success for the final HEAD.
+This report validates the final implementation source hashes. `stats.json` records generator/data source hashes; `performance.json` records frozen experiment source hashes. The PR body records the final remote HEAD and its check results after push, including any documentation-only follow-up. A report cannot contain its own commit hash. Earlier check results do not establish success for a later HEAD.
 
 PR #23 is intentionally a draft: the repository's `native-automerge.yml` automatically enables merging eligible owner PRs. Draft status keeps the requested manual decision boundary without changing that workflow.
 
@@ -80,4 +80,6 @@ Baseline hot mean was 15.58 ms; current with artwork bypassed was 14.92 ms. Pair
 
 ## Review disposition
 
-Local functional acceptance passes with documented visual/semantic limits. CI at the pushed HEAD must still be checked and recorded in the PR body before recommending merge. The remaining unverified native zoom/device checks limit platform assurance; they are not reported as passes. Retain draft status for the maintainer's review and decision. No deployment authorization is implied.
+The implementation commit `0f84eb8584dce2906d2ce4a31b95783a8a330956` passed remote [Verify](https://github.com/styayur/musical-spinningtop/actions/runs/45827543804) (Python 3.9/3.12/3.14 and browser), [CodeQL](https://github.com/styayur/musical-spinningtop/actions/runs/45827538249) (actions, JavaScript/TypeScript and Python), and [CodeForge](https://github.com/styayur/musical-spinningtop/actions/runs/45827543795). Native auto-merge was skipped for the draft. This paragraph is a documentation-only follow-up; its own final HEAD and fresh check results are recorded in the PR body after push. No later code changes are implied by those earlier run links.
+
+Local functional acceptance and the implementation's remote checks pass. No known blocking correctness defect remains from this review. Merge is technically recommended if the maintainer accepts the documented heuristic semantics and template repetition; this does not certify universal plot accuracy or physical-device compatibility. Native zoom, screen-reader and physical-device checks were not part of the executed headless/CSS-zoom test path and limit platform assurance. Retain draft status for the maintainer's review and decision. No deployment authorization is implied.
