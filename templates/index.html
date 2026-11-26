@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Spinning Top</title>
+  <!-- SHARE_HEAD -->
   <meta name="description" content="从有来源的音乐剧目录中，每天遇见一部，并阅读节目册式简介。">
   <link rel="stylesheet" href="/static/style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><rect width='96' height='96' rx='20' fill='%23243044'/><path d='M48 16 C58 26 62 38 62 50 C62 66 56 76 48 80 C40 76 34 66 34 50 C34 38 38 26 48 16 Z' fill='none' stroke='%23c4a574' stroke-width='4'/></svg>">
@@ -23,7 +24,8 @@
     <button type="button" id="infoBtn" class="info-btn" aria-label="作品与使用信息" aria-haspopup="dialog" aria-controls="infoDialog" title="信息"><span aria-hidden="true">i</span></button>
   </header>
   <main>
-    <h2 class="invitation">把今天，交给一场好戏。</h2>
+    <h2 class="invitation" id="invitation" lang="en">Give today to a good show.</h2>
+    <p id="sharedNotice" class="shared-notice" hidden></p>
     <div class="date-nav" aria-label="日期">
       <button type="button" class="icon-btn" id="prevBtn" aria-label="前一天" title="前一天">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6 L8 12 L14 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -78,6 +80,9 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="3.5" width="12" height="15" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/><rect x="4" y="6.5" width="12" height="15" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
       </button>
     </div>
+    <div class="share-action"><button type="button" id="shareBtn" class="icon-btn" aria-label="Share this work" title="Share" aria-haspopup="dialog" aria-controls="shareDialog" disabled>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m-4 4 4-4 4 4M5 12v8h14v-8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button></div>
     <p class="notice" id="notice" role="status" aria-live="polite"></p>
     <button type="button" id="retryBtn" class="text-btn retry" hidden>重试加载</button>
   </main>
@@ -118,6 +123,23 @@
       <p id="licenseNote">程序代码采用 <a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank" rel="noopener noreferrer">AGPL-3.0</a>。百科文字为 CC BY-SA 4.0。原图许可各异；未核实的原图不作为主画面。算法插画是本程序的原创图形，不改变文字许可。</p>
     </div>
   </dialog>
+  <dialog id="shareDialog" aria-labelledby="shareTitle">
+    <div class="dialog-head"><h2 id="shareTitle">Share this work</h2><button type="button" class="icon-btn" id="shareClose" aria-label="Close sharing">×</button></div>
+    <p id="shareWorkTitle"></p>
+    <button type="button" class="text-btn" id="nativeShare" hidden>Share with your device</button>
+    <div class="share-platforms" id="sharePlatforms">
+      <a id="shareX" target="_blank" rel="noopener noreferrer">X</a>
+      <a id="shareFacebook" target="_blank" rel="noopener noreferrer">Facebook</a>
+      <a id="shareWhatsApp" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+      <a id="shareThreads" target="_blank" rel="noopener noreferrer">Threads</a>
+    </div>
+    <label id="shareLinkLabel" for="shareLink">Current work link</label><input id="shareLink" type="url" readonly>
+    <div class="share-tools"><button type="button" class="text-btn" id="copyShare">Copy work link</button><button type="button" class="text-btn" id="saveShare">Save share card</button></div>
+    <p id="shareHelp" class="share-help">Previews vary by platform. Save the card to attach it manually.</p>
+    <p id="sharePublication" class="share-help" hidden></p>
+    <p id="shareStatus" role="status" aria-live="polite"></p>
+  </dialog>
+  <script src="/static/sharing.js"></script>
   <script src="/static/app.js"></script>
 </body>
 </html>

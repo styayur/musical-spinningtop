@@ -1,0 +1,19 @@
+{
+  "cold": {
+    "seconds": 404.066,
+    "works": 2650,
+    "share_pngs": 2650,
+    "share_bytes": 60323997,
+    "site_bytes": 110285893
+  },
+  "warm": {
+    "seconds": 30.419,
+    "works": 2650,
+    "share_pngs": 2650,
+    "share_bytes": 60323997,
+    "site_bytes": 110286283
+  },
+  "environment": "Windows 11, Python 3.14.7; other verification jobs overlapped, wall-clock observations only",
+  "font_source_bytes": 24543080,
+  "public_font_bytes": 0
+}

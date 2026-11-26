@@ -14,6 +14,9 @@ _CITY = ("palace", "station", "street", "bridge", "prison", "school", "city")
 
 
 def derived_int(identity, purpose, art_version=ART_VERSION):
+    # Version 5 changes ink and canvas only; preserve the reviewed v4 geometry.
+    if str(art_version) == "5":
+        art_version = "4"
     digest = hashlib.sha256(f"{art_version}|{purpose}|{identity}".encode("utf-8")).digest()
     return int.from_bytes(digest[:4], "big")
 
