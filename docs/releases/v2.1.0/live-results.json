@@ -1,0 +1,113 @@
+{
+  "checked_at_utc": "2026-11-26T15:30:37.060901+00:00",
+  "site": "https://styayur.github.io/musical-spinningtop/",
+  "browser": "Playwright Chromium, Windows; isolated profiles and simulated viewports",
+  "unverified": [
+    "personal pre-existing user profile",
+    "authenticated social previews/posts",
+    "native OS share sheet",
+    "physical devices",
+    "native browser zoom",
+    "screen reader"
+  ],
+  "catalog": {
+    "count": 2650,
+    "updated_at": "2026-09-24T16:36:48.116681+00:00",
+    "pre_upgrade_text_and_ids_equal": true,
+    "art_version": "5"
+  },
+  "share_index_count": 2650,
+  "public_samples": [
+    {
+      "id": "en:1921683",
+      "url": "https://styayur.github.io/musical-spinningtop/works/ZW46MTkyMTY4Mw.html",
+      "image": "https://styayur.github.io/musical-spinningtop/static/share/62403dce91f7e903ce190bd61a880915e4582a068eb4c90394d3ccd1beb04bf5.png",
+      "html_status": 200,
+      "png_status": 200,
+      "png_dimensions": [
+        1200,
+        630
+      ],
+      "png_sha256": "387615c15a0fca7cdeb0bdf65b070e3669a0107e155aa632b8d3c1aa0512648b",
+      "no_js_source_license_year": true,
+      "transparent_svg_corners": true,
+      "external_frame_absent": true
+    },
+    {
+      "id": "en:1921683",
+      "url": "https://styayur.github.io/musical-spinningtop/works/ZW46MTkyMTY4Mw.html",
+      "image": "https://styayur.github.io/musical-spinningtop/static/share/62403dce91f7e903ce190bd61a880915e4582a068eb4c90394d3ccd1beb04bf5.png",
+      "html_status": 200,
+      "png_status": 200,
+      "png_dimensions": [
+        1200,
+        630
+      ],
+      "png_sha256": "387615c15a0fca7cdeb0bdf65b070e3669a0107e155aa632b8d3c1aa0512648b",
+      "no_js_source_license_year": true,
+      "transparent_svg_corners": true,
+      "external_frame_absent": true
+    },
+    {
+      "id": "en:19110511",
+      "url": "https://styayur.github.io/musical-spinningtop/works/ZW46MTkxMTA1MTE.html",
+      "image": "https://styayur.github.io/musical-spinningtop/static/share/4ba2c48755c84d41d00d985eca8d7cf8aeafd0f9fef95bed38b78ca85399cd02.png",
+      "html_status": 200,
+      "png_status": 200,
+      "png_dimensions": [
+        1200,
+        630
+      ],
+      "png_sha256": "ff8894f257a669c651be942b8be89f4c7fd68ef555be7533f07395c2d0a3efa9",
+      "no_js_source_license_year": true,
+      "transparent_svg_corners": true,
+      "external_frame_absent": true
+    }
+  ],
+  "base_transparent_borderless": true,
+  "locales": {
+    "zh-CN": {
+      "text": "把今天，交给一场好戏。",
+      "lang": "zh-CN",
+      "info_circle_px": 24,
+      "hit_target_min_px": 44,
+      "info_color": "rgb(197, 202, 211)"
+    },
+    "zh-TW": {
+      "text": "把今天，交给一场好戏。",
+      "lang": "zh-TW",
+      "info_circle_px": 24,
+      "hit_target_min_px": 44,
+      "info_color": "rgb(197, 202, 211)"
+    },
+    "en-US": {
+      "text": "Give today to a good show.",
+      "lang": "en",
+      "info_circle_px": 24,
+      "hit_target_min_px": 44,
+      "info_color": "rgb(197, 202, 211)"
+    },
+    "ja-JP": {
+      "text": "Give today to a good show.",
+      "lang": "en",
+      "info_circle_px": 24,
+      "hit_target_min_px": 44,
+      "info_color": "rgb(197, 202, 211)"
+    }
+  },
+  "fresh_shared_session": {
+    "same_work": true,
+    "daily": 0,
+    "cycles": 0,
+    "reload_unchanged": true,
+    "save_card_passed": true
+  },
+  "pre_upgrade_profile": {
+    "scope": "isolated browser genuinely used the public pre-upgrade site; not a personal user profile",
+    "today": "2026-11-26",
+    "today_id": "en:4900090",
+    "history_date": "2026-11-25",
+    "history_id": "en:61302673",
+    "full_daily_and_cycle_records_equal": true
+  }
+}
