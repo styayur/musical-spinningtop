@@ -14,6 +14,8 @@ No changes to `artwork/`, catalogue data, random selection, SQLite/IndexedDB sch
 
 Local pre-commit builds honestly record `source_dirty: true` and the baseline SHA; these are development evidence, not falsely labeled clean release artifacts. [Build summary](build-summary.json) binds them to the relevant source-file hashes. Verify CI builds and verifies clean PR-HEAD outputs and uploads their manifests/comparison as `portable-deployment-evidence`. The PR body records the final SHA and remote check results separately from this pre-commit evidence.
 
+Complete dual-target CI artifacts are also uploaded as `spinningtop-<target>-<SHA>` for review and later pinned consumption. They are not deployed or published as a Release; retention is limited by the repository's artifact policy.
+
 | Measurement | github | personal |
 | --- | ---: | ---: |
 | Full artifact files | 7,967 | 7,967 |

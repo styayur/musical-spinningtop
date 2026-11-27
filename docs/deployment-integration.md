@@ -68,3 +68,5 @@ python tests/portable_smoke.py --github dist/github --personal dist/personal
 ```
 
 The last command compares every actual output file and tests both mount paths, history/offline catalogue use, read-only sharing, normalized aliases, no-JS metadata, exact URL rejection, image fallback and cross-origin storage isolation. Its machine-readable report is `artifacts/portable/comparison.json`. Existing v2.1.0 tests remain active. Verify CI builds both targets and retains comparison/manifests as `portable-deployment-evidence`; no workflow deploys the personal target.
+
+The same successful CI run uploads complete `spinningtop-github-<SHA>` and `spinningtop-personal-<SHA>` artifacts, including `.nojekyll`. Download and extract the chosen artifact, then run the verifier with that exact SHA before mounting. CI artifacts expire under repository retention settings; they are review candidates, not a substitute for a future versioned Release. Alternatively, always rebuild from the pinned source using the commands above.

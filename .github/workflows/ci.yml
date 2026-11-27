@@ -60,3 +60,15 @@ jobs:
             artifacts/portable/comparison.json
             _site/build-manifest.json
             artifacts/portable/personal/build-manifest.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: spinningtop-github-${{ github.event.pull_request.head.sha || github.sha }}
+          path: _site/
+          include-hidden-files: true
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: spinningtop-personal-${{ github.event.pull_request.head.sha || github.sha }}
+          path: artifacts/portable/personal/
+          include-hidden-files: true
+          if-no-files-found: error
