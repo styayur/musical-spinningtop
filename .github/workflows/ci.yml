@@ -36,13 +36,39 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
       - run: python -m pip install -r requirements.txt playwright
       - run: python build_site.py
+      - run: python build_site.py --target personal --output artifacts/portable/personal
+      - run: python scripts/verify_build.py _site --target github --source-sha "$(git rev-parse HEAD)"
+      - run: python scripts/verify_build.py artifacts/portable/personal --target personal --source-sha "$(git rev-parse HEAD)"
       - run: python -m playwright install --with-deps chromium
       - run: python tests/site_smoke.py
       - run: python tests/ui_extra_smoke.py
       - run: python tests/sharing_smoke.py
       - run: python tests/sharing_flask_smoke.py
+      - run: python tests/sharing_flask_smoke.py --target personal
+      - run: python tests/portable_smoke.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: portable-deployment-evidence
+          path: |
+            artifacts/portable/comparison.json
+            _site/build-manifest.json
+            artifacts/portable/personal/build-manifest.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: spinningtop-github-${{ github.event.pull_request.head.sha || github.sha }}
+          path: _site/
+          include-hidden-files: true
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: spinningtop-personal-${{ github.event.pull_request.head.sha || github.sha }}
+          path: artifacts/portable/personal/
+          include-hidden-files: true
+          if-no-files-found: error

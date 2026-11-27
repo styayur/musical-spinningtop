@@ -16,12 +16,13 @@ from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import quote_plus
 
-from flask import Flask, abort, jsonify, render_template, request, send_file
+from flask import Flask, abort, jsonify, request, send_file
 
 from artwork.generate import annotate_display, ensure_artwork, ensure_base, resolve_artwork_path
 from artwork.normalize import merge_publication
 from catalog import BASE, discover, load_catalog, read_json, wiki_query, wiki_url, write_json
-from sharing import PUBLIC_BASE, ensure_card, public_url, work_html, work_id
+from deployment import get_deployment, home_metadata, page_shell
+from sharing import ensure_card, public_url, work_html, work_id
 
 LOG = logging.getLogger(__name__)
 ARCHIVE_FIELDS = ('title', 'title_zh', 'intro_en', 'intro_zh', 'intro_source', 'wiki_url', 'year', 'translator')
@@ -247,7 +248,8 @@ class Library:
                 self.jobs.discard(entry['id'])
 
 
-def create_app(runtime_dir=None, background=True):
+def create_app(runtime_dir=None, background=True, deployment_target=None):
+    deployment = get_deployment(deployment_target or os.environ.get('SPINNINGTOP_TARGET', 'github'))
     application = Flask(__name__)
     store = Store(runtime_dir or os.environ.get('SPINNINGTOP_DATA_DIR', BASE / 'data' / 'runtime'))
     library = Library(store, background)
@@ -278,7 +280,8 @@ def create_app(runtime_dir=None, background=True):
 
     @application.get('/')
     def index():
-        return render_template('index.html')
+        template = (BASE / 'templates/index.html').read_text(encoding='utf-8-sig')
+        return page_shell(template, deployment).replace('<!-- SHARE_HEAD -->', home_metadata(deployment))
 
     def public_work(identity):
         # Bundled candidates, not proof of an actual public deployment.
@@ -296,7 +299,7 @@ def create_app(runtime_dir=None, background=True):
         name = row['artwork_url'].split('?')[0].rsplit('/', 1)[-1]
         svg = (store.directory / 'artwork' / name).read_text(encoding='utf-8')
         card = ensure_card(row, svg, store.directory / 'share')
-        return {'url': public_url(row['id']), 'image': '/share-cards/' + card,
+        return {'url': public_url(row['id'], deployment), 'image': deployment.frontend(False)['local_card_path'] + card,
                 'available': True, 'publication': 'unverified'}, card
 
     @application.get('/api/share')
@@ -316,14 +319,16 @@ def create_app(runtime_dir=None, background=True):
         info, _ = share_details(row)
         return jsonify(info)
 
+    @application.get('/works/<key>')
+    @application.get('/works/<key>/')
     @application.get('/works/<key>.html')
     def shared_work(key):
         row = public_work(work_id(key))
         template = (BASE / 'templates' / 'index.html').read_text(encoding='utf-8-sig')
         if row is None:
-            return work_html(template), 404
+            return work_html(template, deployment=deployment), 404
         _, card = share_details(row)
-        return work_html(template, row, PUBLIC_BASE + 'static/share/' + card)
+        return work_html(template, row, deployment.public_base + 'static/share/' + card, deployment=deployment)
 
     @application.get('/share-cards/<name>')
     def share_card(name):

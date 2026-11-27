@@ -20,3 +20,4 @@ artifacts/
 .pytest_cache/
 _site/
 dist/
+.*.build.lock
