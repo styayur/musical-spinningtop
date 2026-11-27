@@ -68,6 +68,8 @@ python scripts/validate_catalog.py
 
 ## Tests and static builds
 
+This repository is the sole application upstream for future website integration. Build either mount from a pinned version with `python build_site.py --target github --output dist/github` or `python build_site.py --target personal --output dist/personal`. The personal output is designed for `/spinningtop/`; it is not a live deployment. GitHub's existing `.html` work links remain unchanged. See the [integration contract](docs/deployment-integration.md) for manifest verification, extensionless routes, CSP/404 requirements and offline Flask configuration, and [dual-target evidence](docs/portable-deployment/verification.md). Histories remain independent across origins.
+
 ```powershell
 .venv\Scripts\python.exe -m unittest discover -s tests -v
 .venv\Scripts\python.exe build_site.py

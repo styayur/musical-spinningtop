@@ -2,6 +2,7 @@
 (() => {
   'use strict';
   const $ = id => document.getElementById(id);
+  const deployment = window.spinningTopDeployment;
   function preferredLanguage() {
     const values = [...(navigator.languages || []), navigator.language];
     for (const value of values) {
@@ -55,29 +56,19 @@
     for (const id of ['copyShare', 'saveShare']) $(id).disabled = !on;
     $('sharePlatforms').hidden = !on;
   }
-  function safeInfo(info) {
-    if (!info || !info.available) return false;
-    try {
-      const link = new URL(info.url);
-      const image = new URL(info.image, document.baseURI);
-      return link.origin === 'https://styayur.github.io' && /^\/musical-spinningtop\/works\/[A-Za-z0-9_-]+\.html$/.test(link.pathname) && !link.search && !link.hash &&
-        image.origin === location.origin && /\/[a-f0-9]{64}\.png$/.test(image.pathname);
-    } catch (_) { return false; }
+  function safeInfo(info, identity) {
+    return info && info.available && typeof identity === 'string' &&
+      info.url === deployment.workURL(identity) && deployment.safeImage(info.image);
   }
-  function safeImage(value) {
-    try {
-      const image = new URL(value, document.baseURI);
-      return image.origin === location.origin && /\/[a-f0-9]{64}\.png$/.test(image.pathname);
-    } catch (_) { return false; }
-  }
+  const safeImage = deployment.safeImage;
   async function prepare(row) {
     if (window.spinningTopStatic) {
-      const response = await fetch(new URL('./data/share-index.json', document.baseURI), {cache:'no-cache'});
+      const response = await fetch(new URL(deployment.share_index_path, document.baseURI), {cache:'no-cache'});
       if (!response.ok) throw new Error('index');
       const info = (await response.json())[row.id] || {available:false};
       // Only a fetched index from the real public deployment confirms listing.
       // A bundled Flask catalogue or locally served static build cannot do so.
-      const published = response.url === 'https://styayur.github.io/musical-spinningtop/data/share-index.json';
+      const published = response.url === new URL(deployment.share_index_path, deployment.public_base).href;
       return {...info, publication: published ? 'published' : 'unverified'};
     }
     const response = await fetch('/api/share?id=' + encodeURIComponent(row.id), {cache:'no-store'});
@@ -110,7 +101,7 @@
         }
         return;
       }
-      if (!safeInfo(info)) throw new Error('invalid sharing data');
+      if (!safeInfo(info, row.id)) throw new Error('invalid sharing data');
       active = {...info, title:row.title_zh || row.title || 'Spinning Top'};
       $('sharePublication').textContent = words[info.publication === 'published' ? 'published' : 'unverified'];
       $('sharePublication').hidden = false;

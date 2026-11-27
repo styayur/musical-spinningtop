@@ -6,7 +6,7 @@
   const controls = ['randomBtn', 'todayBtn', 'prevBtn', 'nextBtn', 'dateInput'];
   let retrySelection = { mode: 'daily', selectedDate: '' };
   function text(id, value) { $(id).textContent = value || ''; }
-  function fallbackArt() { return window.spinningTopStatic ? './static/artwork/base.svg' : '/artwork/base.svg'; }
+  function fallbackArt() { return window.spinningTopDeployment.artwork_path + 'base.svg'; }
   function isControlledArtwork(value) {
     if (typeof value !== 'string' || value.length > 240) return false;
     const path = value.split('?')[0];
@@ -229,6 +229,14 @@
       history.replaceState(null, '', new URL('./', document.baseURI).pathname);
       document.querySelectorAll('[data-work-meta]').forEach(node => node.remove());
       document.getElementById('sharedWork').remove();
+      const canonical = document.createElement('link');
+      canonical.rel = 'canonical';
+      canonical.href = encodeURI(window.spinningTopDeployment.public_base);
+      document.head.append(canonical);
+      const robots = document.createElement('meta');
+      robots.name = 'robots';
+      robots.content = window.spinningTopDeployment.index_robots;
+      document.head.append(robots);
     }
   }
   async function load(mode = 'daily', selectedDate = '') {

@@ -1,5 +1,4 @@
 """Public work identities, read-only HTML and offline original share cards."""
-import base64
 import hashlib
 import html
 import io
@@ -15,27 +14,13 @@ import resvg_py
 from artwork.generate import _file_lock
 from catalog import BASE
 
-PUBLIC_BASE = 'https://styayur.github.io/musical-spinningtop/'
+from deployment import DEFAULT, PUBLIC_BASE, page_shell, work_id, work_key
 CARD_VERSION = '1'
 FONT = BASE / 'assets/fonts/NotoSerifCJKsc-Regular.otf'
 
 
-def work_key(identity):
-    return base64.urlsafe_b64encode(str(identity).encode('utf-8')).decode('ascii').rstrip('=')
-
-
-def work_id(key):
-    if not re.fullmatch(r'[A-Za-z0-9_-]{1,400}', key or ''):
-        return None
-    try:
-        identity = base64.urlsafe_b64decode(key + '=' * (-len(key) % 4)).decode('utf-8')
-        return identity if identity and work_key(identity) == key else None
-    except (ValueError, UnicodeError):
-        return None
-
-
-def public_url(identity):
-    return PUBLIC_BASE + 'works/' + work_key(identity) + '.html'
+def public_url(identity, deployment=DEFAULT):
+    return deployment.public_url(identity)
 
 
 @lru_cache(maxsize=24)
@@ -128,15 +113,16 @@ def ensure_card(row, svg, directory):
     return name
 
 
-def work_html(template, row=None, image_url=None, static=False, home='../'):
+def work_html(template, row=None, image_url=None, static=False, home=None, deployment=DEFAULT):
     """Crawler-visible metadata and content; JSON data never executes as code."""
+    template = page_shell(template, deployment, static, home if home is not None else (deployment.base_path if static else '/'))
     row = dict(row or {})
     valid = bool(row.get('id')) and not row.get('unavailable')
     title = row.get('title_zh') or row.get('title') or 'Work unavailable · 作品不可用'
     e = lambda value: html.escape(str(value), quote=True)
-    head = '<base href="' + e(home) + '">\n<meta data-work-meta name="robots" content="' + ('index,follow' if valid else 'noindex') + '">'
+    head = '<meta data-work-meta name="robots" content="' + deployment.frontend()['index_robots' if valid else 'missing_robots'] + '">'
     if valid:
-        url = public_url(row['id'])
+        url = public_url(row['id'], deployment)
         description = title + ' · Spinning Top'
         head += '\n<link data-work-meta rel="canonical" href="' + e(url) + '">'
         fields = {'og:type': 'website', 'og:site_name': 'Spinning Top', 'og:title': title,
@@ -182,6 +168,6 @@ def work_html(template, row=None, image_url=None, static=False, home='../'):
                             ' Excerpts may be abridged or translated / 摘要可能经过截取或翻译。')
         attribution += '</p></noscript>'
         result = result.replace('<details id="original"', attribution + '\n        <details id="original"', 1)
-    result = result.replace('id="artwork" alt=', 'id="artwork" src="' + e(row.get('artwork_url') or ('./static/artwork/base.svg' if static else '/artwork/base.svg')) + '" alt=')
+    result = result.replace('id="artwork" alt=', 'id="artwork" src="' + e(row.get('artwork_url') or (deployment.frontend(static)['artwork_path'] + 'base.svg')) + '" alt=')
     result = result.replace('id="card" aria-busy="true"', 'id="card" aria-busy="false"')
     return result

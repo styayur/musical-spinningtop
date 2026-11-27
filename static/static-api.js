@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: AGPL-3.0-only
- * GitHub Pages adapter: Web Crypto draws + transactional, per-browser IndexedDB history.
+ * Static deployment adapter: Web Crypto draws + transactional, per-browser IndexedDB history.
  */
 (() => {
   'use strict';
@@ -28,7 +28,7 @@
       const controller = new AbortController();
       const timer = setTimeout(() => controller.abort(), 12000);
       try {
-        const response = await fetch('./data/site-catalog.json', { cache: 'no-cache', signal: controller.signal });
+        const response = await fetch(window.spinningTopDeployment.catalog_path, { cache: 'no-cache', signal: controller.signal });
         if (!response.ok) throw new Error('片库下载失败，请检查网络后重试。');
         const next = await response.json();
         if (!Array.isArray(next.musicals) || !next.musicals.length || next.musicals.some(row => !row.id || !row.title)) {
@@ -141,7 +141,7 @@
             translator: legacy.translator || 'none',
             wiki_url: legacy.wiki_url || '',
             year: Number.isInteger(legacy.year) ? legacy.year : undefined,
-            artwork_url: './static/artwork/base.svg',
+            artwork_url: window.spinningTopDeployment.artwork_path + 'base.svg',
             artwork_kind: 'fallback',
             artwork_family: 'abstract',
             artwork_basis: [],

@@ -1,5 +1,6 @@
 """Local read-only work UI and card parity against the real static build."""
 import json
+import argparse
 import os
 import sys
 import tempfile
@@ -11,17 +12,23 @@ from werkzeug.serving import make_server
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
+from deployment import TARGETS, get_deployment
+
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--target', choices=tuple(TARGETS), default='github')
+config = get_deployment(parser.parse_args().target)
 
 with tempfile.TemporaryDirectory() as folder:
     os.environ['SPINNINGTOP_DATA_DIR']=str(Path(folder)/'import')
     from app import create_app
-    application=create_app(Path(folder)/'runtime',background=False)
+    application=create_app(Path(folder)/'runtime',background=False,deployment_target=config.target)
     server=make_server('127.0.0.1',0,application,threaded=True)
     threading.Thread(target=server.serve_forever,daemon=True).start()
     url=f'http://127.0.0.1:{server.server_port}'
     index=json.loads((ROOT/'_site/data/share-index.json').read_text(encoding='utf-8'))
     identity,info=next(iter(index.items()))
-    route=info['url'].split('/musical-spinningtop',1)[1]
+    info = {**info, 'url': config.public_url(identity)}
+    route='/' + info['url'][len(config.public_base):]
     try:
         with sync_playwright() as p:
             browser=p.chromium.launch(headless=True)
@@ -37,7 +44,7 @@ with tempfile.TemporaryDirectory() as folder:
             expect(page.locator('#sharePublication')).to_contain_text('has not been confirmed online')
             assert page.locator('#shareLink').input_value()==info['url']
             public_image=page.locator('meta[property="og:image"]').get_attribute('content')
-            assert public_image=='https://styayur.github.io/musical-spinningtop/'+info['image'][2:]
+            assert public_image==config.public_base+info['image'][2:]
             local=context.request.get(url+'/api/share',params={'id':identity}).json()
             png=context.request.get(url+local['image']).body()
             assert png==(ROOT/'_site'/info['image'][2:]).read_bytes()
@@ -62,6 +69,7 @@ with tempfile.TemporaryDirectory() as folder:
                 assert page.url==url+'/'
                 assert page.title()==page.locator('#title').inner_text()+' · Spinning Top'
                 assert page.locator('[data-work-meta], #sharedWork').count()==0
+                assert page.locator('link[rel="canonical"]').get_attribute('href')==config.public_base
                 expect(page.locator('#'+button)).to_have_attribute('aria-pressed','true')
             page.goto(url+'/works/unknown.html',wait_until='networkidle')
             expect(page.locator('#sharedNotice')).to_be_visible()

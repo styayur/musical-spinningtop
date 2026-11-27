@@ -141,6 +141,18 @@ python tests/site_smoke.py
 
 ## 数据来源与重建
 
+### 可移植静态构建
+
+本公开仓库是应用唯一源码上游；未来主站只获取固定版本产物或执行标准构建，不维护第二套实现。
+
+```sh
+python build_site.py --target github --output dist/github
+python build_site.py --target personal --output dist/personal
+python scripts/verify_build.py dist/personal --target personal --source-sha <固定上游完整SHA>
+```
+
+personal 产物可整体挂载到 `/spinningtop/`，本阶段尚未部署。原 GitHub Pages 的 `.html` 永久链接保持不变；personal 使用无扩展名 canonical。不同域名的历史记录各自保存，不进行同步。Flask 可通过 `SPINNINGTOP_TARGET=personal` 选择公开候选链接，仍能离线保存本地卡片。产物清单、源码归属、路由、CSP、404 与资源限制见[集成契约](docs/deployment-integration.md)，双目标结果见[验收记录](docs/portable-deployment/verification.md)。
+
 当前片库与摘要快照日期、条目数量、抓取命令和许可证边界见 [docs/data-provenance.md](docs/data-provenance.md)。运行 `python scripts/validate_catalog.py` 会在不联网的情况下检查重复 ID、重复 Wikipedia 页面 ID、标题冲突、缺失摘要和来源链接。`data/runtime/` 与 SQLite 数据库属于本机运行数据，不应提交到 Git。
 
 ## Roadmap

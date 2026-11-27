@@ -1,0 +1,127 @@
+{
+  "date": "2026-11-27",
+  "environment": "Windows / Python 3.14.7 / Playwright Chromium headless",
+  "baseline": "8049b902438ea8bd083a2fa2826f9beff9d7ac4e",
+  "builds": {
+    "github": {
+      "schema_version": 1,
+      "app_version": "2.1.1-dev",
+      "source_sha": "8049b902438ea8bd083a2fa2826f9beff9d7ac4e",
+      "source_dirty": true,
+      "deployment": {
+        "schema_version": 1,
+        "target": "github",
+        "public_origin": "https://styayur.github.io",
+        "base_path": "/musical-spinningtop/",
+        "public_base": "https://styayur.github.io/musical-spinningtop/",
+        "work_prefix": "works/",
+        "work_suffix": ".html",
+        "assets_path": "./static/",
+        "catalog_path": "./data/site-catalog.json",
+        "share_index_path": "./data/share-index.json",
+        "local_card_path": "./static/share/",
+        "artwork_path": "./static/artwork/",
+        "mode": "static",
+        "index_robots": "index,follow",
+        "missing_robots": "noindex"
+      },
+      "catalog": {
+        "updated_at": "2026-09-24T16:36:48.116681+00:00",
+        "sha256": "b8ea1e150196f807287a78b34d67bdec0b00bd0632539267e38827e843f7b93d"
+      },
+      "versions": {
+        "artwork": "5",
+        "extractor": "4",
+        "share_card": "1"
+      },
+      "payload_file_count": 7966,
+      "payload_bytes": 114028928,
+      "inventory_sha256": "80b29cec095366279a98d7823ce980efeaeb0de986162ceaad4767139ce0f1fb",
+      "inventory_scope": "All files except build-manifest.json (self hash excluded).",
+      "artifact_file_count": 7967,
+      "artifact_bytes": 115417880,
+      "largest_payload_file": [
+        "data/site-catalog.json",
+        {
+          "bytes": 3422440,
+          "sha256": "b8ea1e150196f807287a78b34d67bdec0b00bd0632539267e38827e843f7b93d"
+        }
+      ],
+      "build_metrics": {
+        "seconds": 41.666,
+        "works": 2650,
+        "share_pngs": 2650,
+        "share_bytes": 60323997,
+        "site_bytes": 115417840
+      },
+      "legacy_public_origin_occurrences": null
+    },
+    "personal": {
+      "schema_version": 1,
+      "app_version": "2.1.1-dev",
+      "source_sha": "8049b902438ea8bd083a2fa2826f9beff9d7ac4e",
+      "source_dirty": true,
+      "deployment": {
+        "schema_version": 1,
+        "target": "personal",
+        "public_origin": "https://styayur.co.uk",
+        "base_path": "/spinningtop/",
+        "public_base": "https://styayur.co.uk/spinningtop/",
+        "work_prefix": "works/",
+        "work_suffix": "",
+        "assets_path": "./static/",
+        "catalog_path": "./data/site-catalog.json",
+        "share_index_path": "./data/share-index.json",
+        "local_card_path": "./static/share/",
+        "artwork_path": "./static/artwork/",
+        "mode": "static",
+        "index_robots": "index,follow",
+        "missing_robots": "noindex"
+      },
+      "catalog": {
+        "updated_at": "2026-09-24T16:36:48.116681+00:00",
+        "sha256": "b8ea1e150196f807287a78b34d67bdec0b00bd0632539267e38827e843f7b93d"
+      },
+      "versions": {
+        "artwork": "5",
+        "extractor": "4",
+        "share_card": "1"
+      },
+      "payload_file_count": 7966,
+      "payload_bytes": 113737326,
+      "inventory_sha256": "d24ba1ffd90615fddaca17c3b8b511315ce2176140062f85c04861460cde099a",
+      "inventory_scope": "All files except build-manifest.json (self hash excluded).",
+      "artifact_file_count": 7967,
+      "artifact_bytes": 115126251,
+      "largest_payload_file": [
+        "data/site-catalog.json",
+        {
+          "bytes": 3422440,
+          "sha256": "b8ea1e150196f807287a78b34d67bdec0b00bd0632539267e38827e843f7b93d"
+        }
+      ],
+      "build_metrics": {
+        "seconds": 55.57,
+        "works": 2650,
+        "share_pngs": 2650,
+        "share_bytes": 60323997,
+        "site_bytes": 115126212
+      },
+      "legacy_public_origin_occurrences": 0
+    }
+  },
+  "local_source_note": "Pre-commit dirty development builds. CI verifies a clean PR HEAD and uploads both exact-head manifests. Timing in build-metrics excludes final inventory hashing; incremental site_bytes is diagnostic only.",
+  "source_file_sha256": {
+    "deployment.py": "7b8837f015719515c0069d9c6b80f49634e9881b318c25a265ab7829949ecf36",
+    "build_site.py": "2fdfc652f9dbb696382d49b9494ca6a8ec838b66f069603d8bd71eb19408893d",
+    "build_contract.py": "bdd772c330f7e5451b686a44e8d5ddf4b1aa536b69430d40a14e77169ac335c0",
+    "sharing.py": "7fc4b80b21aad835ab05b7a1757fc0ec5d4e56ff946bb199cd48a00883525c97",
+    "app.py": "6abb08bb8d163b8b564cabaf688318075b3ebd20fc95533f1a4b60e67e80e4ec",
+    "static/app.js": "438c634e07a82d2cc417e1d3c09486dfcbbffba98845616593a7c3845a4450ad",
+    "static/static-api.js": "4cf6a3aa27c013488f349967f36268f3cf8463d8dab84185d1f8baf1cac9c573",
+    "static/sharing.js": "b4f61956beef3440775d4bbbfd4eaec8ea1028d2c9818a5560552a6d229f2dda",
+    "static/deployment.js": "7df3ac91dfda3f42c8eddf02134dd43053848656bf60815a9c7547f1fa8b220a",
+    "static/style.css": "f271fa198905e9c2a5c1c4cff1f0334b09c19eda0c2a2734cb0602639adec8fd",
+    "templates/index.html": "8059ef78c81c5470e288c0afe2485a1643be8b5d24f72ffc4bdaa974ce406263"
+  }
+}

@@ -201,7 +201,8 @@ try:
             expect(page.locator('#card')).to_have_attribute('aria-busy','false')
             assert page.url==url
             assert page.title()==page.locator('#title').inner_text()+' · Spinning Top'
-            assert page.locator('[data-work-meta], #sharedWork, link[rel="canonical"], meta[property^="og:"], meta[name^="twitter:"]').count()==0
+            assert page.locator('[data-work-meta], #sharedWork, meta[property^="og:"], meta[name^="twitter:"]').count()==0
+            assert page.locator('link[rel="canonical"]').get_attribute('href')==public_base
             assert page.evaluate('selectionCalls')==[endpoint,endpoint]
             if button=='randomBtn':
                 expect(page.locator('#randomBtn')).to_have_attribute('aria-pressed','true')
