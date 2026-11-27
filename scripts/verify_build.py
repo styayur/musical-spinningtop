@@ -2,6 +2,7 @@
 import argparse
 import hashlib
 import json
+import sys
 from pathlib import Path, PurePosixPath
 
 
@@ -52,4 +53,5 @@ if __name__ == '__main__':
     parser.add_argument('--target', required=True)
     parser.add_argument('--allow-dirty', action='store_true', help='Development evidence only; not for integration')
     args = parser.parse_args()
-    print(json.dumps(verify(args.output, args.source_sha, args.target, args.allow_dirty), indent=2))
+    json.dump(verify(args.output, args.source_sha, args.target, args.allow_dirty), sys.stdout, indent=2)
+    sys.stdout.write('\n')

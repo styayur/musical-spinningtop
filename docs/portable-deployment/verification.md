@@ -61,4 +61,8 @@ New unit cases cover two targets and metadata, nested-host/source-export provena
 
 The routing normalization is a **local simulation**, not an actual Cloudflare deployment. Desktop/mobile/tablet sizing and keyboard checks are Playwright tests, not physical-device or native browser-zoom certification. Real authenticated social previews/posting, OS native share panels, physical devices and assistive technology are not newly verified. No release/tag, merge, Pages deployment, main modification, Cloudflare operation or host-site integration is authorized/performed by this patch.
 
+Remote CodeQL initially flagged request-derived filesystem paths and redirect headers in the new loopback test server. The server now uses a fixed route/redirect table constructed from the build inventory; incoming paths only select existing entries. Encoded traversal and response-header injection requests are explicitly rejected in the portable browser test. No alert suppression or security-check weakening was used. This correction changes the regression harness only, not application output.
+
+CodeForge also flagged the two new CLI `print` calls as possible debugging output. Both now serialize their documented machine-readable JSON results directly to standard output. The baseline and regression thresholds remain unchanged.
+
 The host must still validate production routing, CSP, nested/root 404 behavior and its total file budget when integrating. Independent origin histories are intentional. Caching across builds and pruning old public assets remain non-blocking follow-ups. Keep the PR draft for human review; final remote Verify, CodeQL and CodeForge outcomes must be checked at its final HEAD before calling remote acceptance complete.

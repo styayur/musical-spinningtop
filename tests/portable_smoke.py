@@ -21,30 +21,26 @@ def records(page):
 
 
 class MountHandler(SimpleHTTPRequestHandler):
-    def __init__(self, *args, config, directory, **kwargs):
+    def __init__(self, *args, config, directory, resources, redirects, **kwargs):
         self.config=config
+        self.resources=resources
+        self.redirects=redirects
         super().__init__(*args,directory=str(directory),**kwargs)
 
     def do_GET(self):
         path=urlsplit(self.path).path
         base=self.config.base_path
-        if path==base.rstrip('/'):
-            self.send_response(308);self.send_header('Location',base);self.end_headers();return
+        if path in self.redirects:
+            self.send_response(308);self.send_header('Location',self.redirects[path]);self.end_headers();return
         if not path.startswith(base):
             self.send_error(404);return
-        tail=path[len(base):]
-        if self.config.target=='personal' and tail.startswith('works/'):
-            canonical=path.rstrip('/')
-            if canonical.endswith('.html'): canonical=canonical[:-5]
-            if canonical!=path:
-                self.send_response(308);self.send_header('Location',canonical);self.end_headers();return
-            tail += '.html'
-        file=Path(self.directory)/(tail or 'index.html')
-        if not file.is_file():
+        file=self.resources.get(path)
+        if file is None:
             self.send_response(404);self.send_header('Content-Type','text/html; charset=utf-8');self.end_headers()
             self.wfile.write((Path(self.directory)/'404.html').read_bytes());return
-        self.path='/'+(tail or 'index.html')
-        super().do_GET()
+        data=file.read_bytes()
+        self.send_response(200);self.send_header('Content-Type',self.guess_type(str(file)))
+        self.send_header('Content-Length',str(len(data)));self.end_headers();self.wfile.write(data)
 
     def end_headers(self):
         self.send_header('Content-Security-Policy',"default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; object-src 'none'")
@@ -56,6 +52,26 @@ class MountHandler(SimpleHTTPRequestHandler):
 
 def inventory(root):
     return {p.relative_to(root).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in root.rglob('*') if p.is_file()}
+
+
+def mount_routes(output, config):
+    # Fixed routes from the build inventory: never use request text as a path
+    # or redirect header, even in this loopback-only regression server.
+    resources={config.base_path:output/'index.html'}
+    redirects={config.base_path.rstrip('/'):config.base_path}
+    for file in output.rglob('*'):
+        if not file.is_file():
+            continue
+        relative=file.relative_to(output).as_posix()
+        public=config.base_path+relative
+        if config.target=='personal' and relative.startswith('works/') and relative.endswith('.html'):
+            canonical=public[:-5]
+            resources[canonical]=file
+            redirects[public]=canonical
+            redirects[canonical+'/']=canonical
+        else:
+            resources[public]=file
+    return resources,redirects
 
 
 def run(github,personal,report_path):
@@ -80,7 +96,8 @@ def run(github,personal,report_path):
             previous=None
             for target,output in outputs.items():
                 config=get_deployment(target)
-                server=ThreadingHTTPServer(('127.0.0.1',0),partial(MountHandler,config=config,directory=output))
+                resources,redirects=mount_routes(output,config)
+                server=ThreadingHTTPServer(('127.0.0.1',0),partial(MountHandler,config=config,directory=output,resources=resources,redirects=redirects))
                 servers.append(server);threading.Thread(target=server.serve_forever,daemon=True).start()
                 origin=f'http://127.0.0.1:{server.server_port}'
                 home=origin+config.base_path
@@ -159,6 +176,9 @@ def run(github,personal,report_path):
                 assert records(page)==before
                 assert context.request.get(origin+'/static/app.js').status==404
                 assert context.request.get(home+'static/missing.js').status==404
+                for suffix in ('..%2fREADME.md','works/unknown%0d%0aX-Probe:%20yes.html'):
+                    rejected=context.request.get(home+suffix)
+                    assert rejected.status==404 and 'x-probe' not in rejected.headers
                 # A valid missing SVG falls back without selecting another work.
                 page.route('**/static/artwork/*.svg*',lambda route:route.continue_() if '/base.svg' in route.request.url else route.fulfill(status=404,body='missing'))
                 page.goto(origin+path,wait_until='networkidle')
@@ -182,7 +202,8 @@ def run(github,personal,report_path):
         for server in servers: server.shutdown();server.server_close()
     report_path.parent.mkdir(parents=True,exist_ok=True)
     report_path.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    print(json.dumps({key:value for key,value in report.items() if key!='different_files'},ensure_ascii=False))
+    json.dump({key:value for key,value in report.items() if key!='different_files'},sys.stdout,ensure_ascii=False)
+    sys.stdout.write('\n')
 
 
 if __name__=='__main__':
