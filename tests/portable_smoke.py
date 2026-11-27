@@ -151,6 +151,7 @@ def run(github,personal,report_path):
                     assert response.status==200
                     assert page.locator('link[rel="canonical"]').get_attribute('href')==info['url']
                     assert page.locator('meta[property="og:url"]').get_attribute('content')==info['url']
+                    assert page.locator('meta[name="robots"]').get_attribute('content')==config.frontend()['index_robots']
                     assert page.locator('meta[property="og:image"]').get_attribute('content').startswith(config.public_base+'static/share/')
                     expect(page.locator('#sharedTextCredit')).to_be_visible()
                     context.close()
@@ -167,6 +168,7 @@ def run(github,personal,report_path):
                 page.locator('#retryBtn').click();expect(page.locator('#sharedNotice')).to_be_hidden()
                 assert page.url==home
                 assert page.locator('link[rel="canonical"]').get_attribute('href')==config.public_base
+                assert page.locator('meta[name="robots"]').get_attribute('content')==config.frontend()['index_robots']
                 assert page.locator('meta[property^="og:"]').count()==0
                 assert records(page)['daily']==[]
                 before=records(page)

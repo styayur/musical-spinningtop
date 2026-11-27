@@ -45,6 +45,11 @@ class DeploymentTests(unittest.TestCase):
                 page = (output/'works'/(work_key(ROW['id'])+'.html')).read_text(encoding='utf-8')
                 self.assertIn('<base href="'+config.base_path+'">',page)
                 self.assertIn('property="og:url" content="'+config.public_url(ROW['id'])+'"',page)
+                robots = 'noindex,follow' if target == 'personal' else 'index,follow'
+                self.assertIn('name="robots" content="'+robots+'"', page)
+                self.assertIn('name="robots" content="'+robots+'"', (output/'index.html').read_text(encoding='utf-8'))
+                self.assertIn('property="og:image"', page)
+                self.assertIn('name="twitter:card"', page)
                 missing = (output/'404.html').read_text(encoding='utf-8')
                 self.assertIn('name="robots" content="noindex"',missing)
                 self.assertNotIn('property="og:url"',missing)

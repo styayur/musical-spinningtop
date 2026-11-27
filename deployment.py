@@ -5,7 +5,7 @@ import html
 import json
 import re
 
-APP_VERSION = '2.1.1-dev'
+APP_VERSION = '2.1.1'
 TARGETS = {
     'github': ('https://styayur.github.io', '/musical-spinningtop/', '.html'),
     'personal': ('https://styayur.co.uk', '/spinningtop/', ''),
@@ -62,7 +62,8 @@ class Deployment:
                 'local_card_path': './static/share/' if static else '/share-cards/',
                 'artwork_path': './static/artwork/' if static else '/artwork/',
                 'mode': 'static' if static else 'flask',
-                'index_robots': 'index,follow', 'missing_robots': 'noindex'}
+                'index_robots': 'noindex,follow' if self.target == 'personal' else 'index,follow',
+                'missing_robots': 'noindex'}
 
 
 def get_deployment(target='github'):

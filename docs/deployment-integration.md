@@ -38,7 +38,7 @@ The existing IndexedDB name and data format are unchanged. Each origin keeps its
 
 `build-manifest.json` schema 1 records:
 
-- `app_version` (currently `2.1.1-dev`), `source_sha`, `source_dirty` (`null` for source exports).
+- `app_version` (`2.1.1`), `source_sha`, `source_dirty` (`null` for source exports).
 - Full deployment configuration; catalogue timestamp and exact `site-catalog.json` SHA-256.
 - Artwork, extractor and share-card versions (5, 4 and 1, unchanged).
 - `files`: relative POSIX paths, byte sizes and SHA-256 for every payload file.
@@ -54,7 +54,7 @@ The host owns all route and header configuration; none is emitted into the app m
 2. Serve `works/<key>.html` at `works/<key>`; redirect the `.html` and trailing-slash variants to the extensionless canonical URL. Work HTML uses the absolute mount base so resources and exit navigation remain correct through normalization.
 3. Serve the app `404.html` with HTTP 404 for unknown app routes. Missing JS/SVG/PNG must retain HTTP 404, never rewrite to the host homepage or an arbitrary work. The host also needs a root `404.html` and must avoid SPA fallback for this mount. Cloudflare documents extensionless HTML redirects and nearest-404 lookup, and otherwise assumes an SPA when the root 404 is absent: [Serving Pages](https://developers.cloudflare.com/pages/configuration/serving-pages/).
 4. Scope CSP to the app. Tested policy: `default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: https:; connect-src 'self'; base-uri 'self'; object-src 'none'`. HTTPS images allow existing explicitly licensed external images; hosts may restrict these origins deliberately. Do not permit arbitrary scripts or relax host-wide policies. Inline executable scripts, social SDKs and third-party tracking are unnecessary. Preserve user-activated download/clipboard/native-share permissions as appropriate; platform links simply open the chosen platform.
-5. Valid work and homepage HTML are indexable and canonical to the selected public target; missing works are `noindex`. Staging/preview noindex headers are the host's responsibility. Keep HTML, scripts, catalogues and sharing index coherent on deploy; immutable image filenames may be cached. Old missing image URLs fall back without drawing another work.
+5. GitHub work/homepage HTML remain `index,follow`; personal work/homepage HTML use `noindex,follow`. Both retain canonical and social metadata for the selected target; missing works are `noindex`. Mirror the personal policy in scoped response headers at the host. Staging/preview noindex headers are the host's responsibility. Keep HTML, scripts, catalogues and sharing index coherent on deploy; immutable image filenames may be cached. Old missing image URLs fall back without drawing another work.
 
 Cloudflare's documented limits are 20,000 files on Free and 25 MiB per asset; paid plans support 100,000 files with the documented Wrangler setting. Count the **entire host** plus this app against those limits, not just the app. See [Pages limits](https://developers.cloudflare.com/pages/platform/limits/) (checked 2026-11-27). This task tests a strict local mount and simulated URL normalization, not a Cloudflare deployment.
 
